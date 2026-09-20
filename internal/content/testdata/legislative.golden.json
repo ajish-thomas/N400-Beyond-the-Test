@@ -1,0 +1,583 @@
+{
+  "Chapter": {
+    "id": "legislative",
+    "number": 2,
+    "title": "The Legislative Branch (Congress)",
+    "objectives": [
+      "The Legislative Branch of the U.S. government.",
+      "The House of Representatives.",
+      "The Senate.",
+      "The process for making federal laws."
+    ],
+    "questions": [
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      27,
+      28,
+      29,
+      30,
+      31,
+      33,
+      34,
+      35,
+      41,
+      43,
+      44,
+      64
+    ],
+    "images": [
+      "ch02-oval-office"
+    ],
+    "source_start": 18,
+    "source_end": 23,
+    "editorial_notes": [
+      "This text edition preserves the prose, objectives, sidebar, diagram and map labels, and captions. Map geography and uncredited illustrations are not reproduced. The credited Oval Office photograph is included. Page 23 contains no chapter content.",
+      "The page 22 lawmaking diagram has no extractable text in the PDF. Its labels were transcribed from the rendered page and checked separately. The prose describes a congressional veto override, while the simplified diagram does not; both are retained as printed.",
+      "The line-break hyphen in ‘representa-tives’ on page 18 is joined to form ‘representatives’. The California and Wyoming examples, vote counts, and eligibility descriptions are reproduced from this 2025 textbook without supplementation."
+    ]
+  },
+  "Blocks": [
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 18,
+      "Anchor": "page-18",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Legislative Branch is one branch or part of the government. Another name for the Legislative Branch is the U.S. Congress.",
+      "Page": 18,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Constitution says that Congress makes federal laws. When the Founders were writing the Constitution, they believed that the power to make laws is the most important power in government. This is why the first section of the Constitution describes Congress and the power to make federal laws.",
+      "Page": 18,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "During the Constitutional Convention, the Founders agreed that the people who make laws should represent the states or parts of states where they lived.",
+      "Page": 18,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "When the Constitutional Convention started, the Founders did not agree on how many representatives each state should have in Congress. Some people thought that the number of representatives from each state should be based on the number of people living in the state. Others thought that each state should have the same number of representatives, no matter how many people lived in the state. They came to an agreement to have two parts to the U.S. Congress. The two parts to the U.S. Congress are the House of Representatives and the Senate.",
+      "Page": 18,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "States that have more people have more representatives in the House of Representatives, and every state in the United States has two U.S. Senators.",
+      "Page": 18,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 19,
+      "Anchor": "page-19",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "U.S. Government\n├─ Legislative Branch (Congress)\n│  └─ U.S. Congress\n│     ├─ U.S. House of Representatives\n│     └─ U.S. Senate\n├─ Executive Branch (President)\n└─ Judicial Branch (Supreme Court)",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "THE HOUSE OF REPRESENTATIVES",
+      "Page": 19,
+      "Anchor": "section-8",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "Voting Members of the House of Representatives",
+      "Page": 19,
+      "Anchor": "section-9",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are 435 voting members in the House of Representatives.",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Each state is divided into congressional districts. The 435 voting members of the House of Representatives come from congressional districts from each of the 50 states. Each congressional district elects a person to serve as a representative in the House of Representatives.",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Some states have more representatives in the House of Representatives than others.",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "This is because states that have more people have more representatives in the House of Representatives.",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "House of Representatives\nWyoming\n1 voting member\nCalifornia\n52 voting members",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Example:",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "California:",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 19,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "is the state with the most people.",
+          "Children": null
+        },
+        {
+          "Text": "has 52 voting members in the House of Representatives.",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Wyoming:",
+      "Page": 19,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 19,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "is the state with the least people.",
+          "Children": null
+        },
+        {
+          "Text": "has one voting member in the House of Representatives.",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 20,
+      "Anchor": "page-20",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "Electing Members of the House of Representatives",
+      "Page": 20,
+      "Anchor": "section-21",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Members of the House of Representatives are elected every two years.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To get elected to the House of Representatives, a person must be at least 25 years of age and live in the state where the congressional district is located.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "One right that is only for U.S. citizens is to run for federal office. This means that a person must be a U.S. citizen to get elected to the House of Representatives.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To find the name of your Representative for your congressional district please visit: house.gov.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "The Speaker of the House",
+      "Page": 20,
+      "Anchor": "section-26",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The leader of the House of Representatives is called the Speaker of the House.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To find the name of the current Speaker of the House, please visit: speaker.gov.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "The United States Capitol in Washington, D.C., is the meeting place of the nation’s legislature, the U.S. Congress.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "THE SENATE",
+      "Page": 20,
+      "Anchor": "section-30",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "U.S. Senators",
+      "Page": 20,
+      "Anchor": "section-31",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are 100 U.S. Senators in the Senate. Senators represent all the people of a state.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Each state has two U.S. Senators.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Example:",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 20,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "The states of California and Wyoming both have two U.S. Senators.",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Wyoming\nCalifornia",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "Electing U.S. Senators",
+      "Page": 20,
+      "Anchor": "section-37",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "U.S. Senators are elected for six years.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To get elected to the Senate, a person must be at least 30 years of age and they must live in the state that they represent.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "One right that is only for U.S. citizens is to run for federal office. This means that a person must be a U.S. citizen to get elected to the Senate.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To find the name of your U.S. Senators, please visit: senate.gov.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "sidebar",
+      "Text": "Washington, D.C., does not have any senators because it is not a U.S. state. Washington, D.C., residents should answer that D.C. does not have a senator.",
+      "Page": 20,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 21,
+      "Anchor": "page-21",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "U.S. Congress\nTwo Parts\n├─ U.S. House of Representatives\n│  ├─ 435 U.S. Representatives in the House of Representatives\n│  ├─ The number of representatives for a state depends on the number of people that live there\n│  ├─ Represent a district\n│  └─ 2-year terms for U.S. Representatives\n└─ U.S. Senate\n   ├─ 100 U.S. Senators in the U.S. Senate\n   ├─ Each state has two senators\n   ├─ Represent all of the people of a state\n   └─ 6-year terms for U.S. Senators",
+      "Page": 21,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 22,
+      "Anchor": "page-22",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "MAKING FEDERAL LAWS",
+      "Page": 22,
+      "Anchor": "section-46",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Constitution says that Congress makes federal laws. A “law” is another word for a “rule” that people must follow. A “federal law” is another word for a “rule” that everyone in the United States must follow.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "When members of Congress want to make a new law, they write a “bill.” A bill is a proposal for a new law. For Congress to pass a bill, a majority of both the House of Representatives and the Senate must vote for it. This means that more than half of the voting members in the House of Representatives and U.S. Senators must vote in support of the bill.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "For example, there are 435 voting members in the House of Representatives. For a bill to pass the House of Representatives, 218 members (or the majority of those voting and present) must vote in favor of the bill.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are 100 U.S. Senators in the Senate. For most bills to pass the Senate, 51 U.S. Senators (or the majority of those voting and present) must vote in favor of it.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "If both parts of Congress pass the bill, then the bill is sent to the President of the United States.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "If the President agrees with the bill, then the President signs the bill into law. This means that everyone in the country must follow the law that the President signed.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "If the President does not agree with the bill, then the President vetoes the bill. The word “veto” means that the President did not sign the bill. Then the bill does not become a law unless Congress votes to override the veto.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "How Congress Makes a Federal Law\nA bill starts with an idea that people want to become a law\n↓\nCongress writes a bill\n↓\nHouse of Representatives\nNO / YES\nA majority of the 435 voting members approve\n↓\nSenate\nNO / YES\nA majority of the 100 voting members approve\n├─ The president signs the bill\n│  └─ The bill becomes a law\n└─ The president vetoes the bill\n   └─ The bill does NOT become a law",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "The Oval Office of the White House. Photo by Cecil Stoughton.",
+      "Page": 22,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ch02-oval-office",
+      "Image": {
+        "id": "ch02-oval-office",
+        "file": "ch02-oval-office.png",
+        "page": 22,
+        "caption": "The Oval Office of the White House. Photo by Cecil Stoughton.",
+        "credit": "Courtesy of the John F. Kennedy Presidential Library and Museum.",
+        "chapters": [
+          "legislative"
+        ]
+      }
+    }
+  ]
+}

@@ -54,7 +54,8 @@ func TestRoutes(t *testing.T) {
 		{"/questions/128", 200, "Veterans Day"},
 		{"/static/app.css", 200, "prefers-color-scheme"},
 		{"/static/theme.js", 200, "n400-theme"},
-		{"/learn", 200, "1 of 12 chapters"},
+		{"/learn", 200, "2 of 12 chapters"},
+		{"/learn/legislative", 200, "How Congress Makes a Federal Law"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
@@ -86,30 +87,34 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	for _, id := range []string{"constitution", "legislative"} {
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/"+id, nil))
+		file := "testdata/" + id + ".golden.html"
+		if *updateReaderGolden {
+			if err := os.MkdirAll("testdata", 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(file, w.Body.Bytes(), 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		want, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(w.Body.Bytes(), want) {
+			t.Fatal("reader differs from reviewed golden")
+		}
+	}
 	w := httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/constitution", nil))
-	file := "testdata/constitution.golden.html"
-	if *updateReaderGolden {
-		if err := os.MkdirAll("testdata", 0755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(file, w.Body.Bytes(), 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	want, err := os.ReadFile(file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(w.Body.Bytes(), want) {
-		t.Fatal("reader differs from reviewed golden")
-	}
 	for _, s := range []string{"Courtesy of the Library of Congress.", "Courtesy of the National Archives.", "/questions/81", "5 distinct answers required", "https://www.uscis.gov/citizenship/testupdates", "is a called a governor", "Respresentatives"} {
 		if !strings.Contains(w.Body.String(), s) {
 			t.Errorf("reader missing %q", s)
 		}
 	}
-	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}} {
+	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}, {"ch02-oval-office.png", "image/png"}} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/images/"+tc.file, nil))
 		if w.Code != 200 || w.Header().Get("Content-Type") != tc.kind || w.Body.Len() == 0 {
@@ -120,6 +125,21 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/2", nil))
 	if !strings.Contains(w.Body.String(), `href="/learn/constitution"`) {
 		t.Fatal("missing chapter backlink")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/legislative", nil))
+	for _, s := range []string{"Photo by Cecil Stoughton.", "Courtesy of the John F. Kennedy Presidential Library and Museum.", "Congress votes to override the veto", "The bill does NOT become a law", "20 questions"} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("legislative reader missing %q", s)
+		}
+	}
+	if strings.Count(w.Body.String(), `href="https://www.uscis.gov/citizenship/testupdates"`) != 3 {
+		t.Fatal("legislative reader must flag all three changing questions")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/18", nil))
+	if !strings.Contains(w.Body.String(), `href="/learn/constitution"`) || !strings.Contains(w.Body.String(), `href="/learn/legislative"`) {
+		t.Fatal("Q18 missing one of its chapter backlinks")
 	}
 }
 

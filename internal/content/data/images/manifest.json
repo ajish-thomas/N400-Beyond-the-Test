@@ -22,5 +22,13 @@
     "caption": "Signing of mutual cooperation treaty with Japan in the East Room of the White House, January 1960.",
     "credit": "Courtesy of the Library of Congress.",
     "chapters": ["constitution"]
+  },
+  {
+    "id": "ch02-oval-office",
+    "file": "ch02-oval-office.png",
+    "page": 22,
+    "caption": "The Oval Office of the White House. Photo by Cecil Stoughton.",
+    "credit": "Courtesy of the John F. Kennedy Presidential Library and Museum.",
+    "chapters": ["legislative"]
   }
 ]

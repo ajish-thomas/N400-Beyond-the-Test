@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
-	"reflect"
 	"regexp"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -22,34 +22,38 @@ func TestChapterGolden(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Blocks are runtime fields, deliberately excluded from front matter JSON.
-	fixture := struct {
-		Chapter Chapter
-		Blocks  []Block
-	}{c.Chapters[0], c.Chapters[0].Blocks}
-	got, err := json.MarshalIndent(fixture, "", "  ")
-	if err != nil {
-		t.Fatal(err)
+	for _, chapter := range c.Chapters {
+		t.Run(chapter.ID, func(t *testing.T) {
+			// Blocks are runtime fields, deliberately excluded from front matter JSON.
+			fixture := struct {
+				Chapter Chapter
+				Blocks  []Block
+			}{chapter, chapter.Blocks}
+			got, err := json.MarshalIndent(fixture, "", "  ")
+			if err != nil {
+				t.Fatal(err)
+			}
+			got = append(got, '\n')
+			file := "testdata/" + chapter.ID + ".golden.json"
+			if *updateChapterGolden {
+				if err := os.MkdirAll("testdata", 0755); err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(file, got, 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			want, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(got, want) {
+				t.Fatal("chapter differs from reviewed golden; inspect original source before updating")
+			}
+		})
 	}
-	got = append(got, '\n')
-	file := "testdata/constitution.golden.json"
-	if *updateChapterGolden {
-		if err := os.MkdirAll("testdata", 0755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(file, got, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	want, err := os.ReadFile(file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(got, want) {
-		t.Fatal("chapter differs from reviewed golden; inspect original source before updating")
-	}
-	if len(c.Chapters) != 1 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Images) != 3 {
-		t.Fatal("unexpected Chapter 1 inventory")
+	if len(c.Chapters) != 2 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Images) != 4 {
+		t.Fatal("unexpected published chapter inventory")
 	}
 }
 
@@ -65,51 +69,66 @@ func TestChapterSourceCoverage(t *testing.T) {
 		t.Fatal(err)
 	}
 	pages := strings.Split(string(raw), "\f")
-	ch := c.Chapters[0]
-	authored := map[int]string{8: strings.Join(ch.Objectives, " ")}
-	for _, b := range ch.Blocks {
-		authored[b.Page] += " " + b.Text
-		if b.Image != nil {
-			authored[b.Page] += " " + b.Image.Credit
-		}
-		for _, item := range b.Items {
-			authored[b.Page] += " " + item.Text + " " + strings.Join(item.Children, " ")
-		}
+	b, err := os.ReadFile("data/raw/study-guide-visual-supplement.json")
+	if err != nil {
+		t.Fatal(err)
 	}
-	words := regexp.MustCompile(`[\p{L}\p{N}]+`)
-	inventory := func(text string) map[string]int {
-		m := map[string]int{}
-		for _, word := range words.FindAllString(strings.ToLower(text), -1) {
-			m[word]++
-		}
-		return m
+	var supplement map[int]string
+	if err := json.Unmarshal(b, &supplement); err != nil {
+		t.Fatal(err)
 	}
-	number := regexp.MustCompile(`^\d+$`)
-	for page := ch.SourceStart; page <= ch.SourceEnd; page++ {
-		var source []string
-		for _, line := range strings.Split(pages[page-1], "\n") {
-			line = strings.TrimSpace(line)
-			if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || line == "CHAPTER 1: THE U.S. CONSTITUTION" || line == "CHAPTER 1" || line == "THE U.S. CONSTITUTION" || line == "In this chapter, you will learn about:" {
-				continue
+	for _, ch := range c.Chapters {
+		t.Run(ch.ID, func(t *testing.T) {
+			authored := map[int]string{ch.SourceStart: strings.Join(ch.Objectives, " ")}
+			for _, b := range ch.Blocks {
+				authored[b.Page] += " " + b.Text
+				if b.Image != nil {
+					authored[b.Page] += " " + b.Image.Credit
+				}
+				for _, item := range b.Items {
+					authored[b.Page] += " " + item.Text + " " + strings.Join(item.Children, " ")
+				}
 			}
-			source = append(source, line)
-		}
-		want, got := inventory(strings.Join(source, " ")), inventory(authored[page])
-		var differences []string
-		for word, n := range want {
-			if got[word] != n {
-				differences = append(differences, fmt.Sprintf("%s: source=%d chapter=%d", word, n, got[word]))
+			words := regexp.MustCompile(`[\p{L}\p{N}]+`)
+			inventory := func(text string) map[string]int {
+				m := map[string]int{}
+				for _, word := range words.FindAllString(strings.ToLower(text), -1) {
+					m[word]++
+				}
+				return m
 			}
-		}
-		for word, n := range got {
-			if want[word] == 0 {
-				differences = append(differences, fmt.Sprintf("%s: source=0 chapter=%d", word, n))
+			number := regexp.MustCompile(`^\d+$`)
+			for page := ch.SourceStart; page <= ch.SourceEnd; page++ {
+				var source []string
+				for _, line := range strings.Split(pages[page-1], "\n") {
+					line = strings.TrimSpace(line)
+					if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || line == fmt.Sprintf("CHAPTER %d: %s", ch.Number, strings.ToUpper(ch.Title)) || line == fmt.Sprintf("CHAPTER %d", ch.Number) || line == strings.ToUpper(ch.Title) || line == "In this chapter, you will learn about:" {
+						continue
+					}
+					source = append(source, line)
+				}
+				sourceText := strings.Join(source, " ")
+				if page == 18 {
+					sourceText = strings.ReplaceAll(sourceText, "representa- tives", "representatives")
+				}
+				want, got := inventory(sourceText+" "+supplement[page]), inventory(authored[page])
+				var differences []string
+				for word, n := range want {
+					if got[word] != n {
+						differences = append(differences, fmt.Sprintf("%s: source=%d chapter=%d", word, n, got[word]))
+					}
+				}
+				for word, n := range got {
+					if want[word] == 0 {
+						differences = append(differences, fmt.Sprintf("%s: source=0 chapter=%d", word, n))
+					}
+				}
+				sort.Strings(differences)
+				if len(differences) > 0 {
+					t.Errorf("page %d word coverage differs:\n%s", page, strings.Join(differences, "\n"))
+				}
 			}
-		}
-		sort.Strings(differences)
-		if len(differences) > 0 {
-			t.Errorf("page %d word coverage differs:\n%s", page, strings.Join(differences, "\n"))
-		}
+		})
 	}
 }
 
@@ -120,10 +139,26 @@ func TestChapterReferences(t *testing.T) {
 	}
 	for _, ch := range c.Chapters {
 		for _, id := range ch.Questions {
-			if !reflect.DeepEqual(c.Questions[id-1].Chapters, []string{ch.ID}) {
+			if !slices.Contains(c.Questions[id-1].Chapters, ch.ID) {
 				t.Errorf("Q%d missing reverse chapter link", id)
 			}
 		}
+	}
+	for _, q := range c.Questions {
+		for _, id := range q.Chapters {
+			found := false
+			for _, ch := range c.Chapters {
+				if ch.ID == id && slices.Contains(ch.Questions, q.ID) {
+					found = true
+				}
+			}
+			if !found {
+				t.Errorf("Q%d has an invalid chapter backlink %s", q.ID, id)
+			}
+		}
+	}
+	if !slices.Equal(c.Questions[17].Chapters, []string{"constitution", "legislative"}) {
+		t.Fatal("Q18 should link to both published chapters")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")

@@ -1,5 +1,87 @@
 # N400 Civics Study App — Implementation Plan
 
+## Implementation status — September 20, 2026
+
+This section records the actual implementation. The phase descriptions below
+remain the target specification; they are not claims that every feature exists.
+
+| Area | Status | Implemented / remaining |
+|---|---|---|
+| Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
+| Phase 2: chapters | In progress | Chapters 1–2 text editions are implemented and source-verified, with 25 and 20 question links respectively and four credited images total. Chapters 3–12 remain. |
+| Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
+| Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
+| Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
+| Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, and curated image routes. Welcome, Library, Flashcards, Practice, and Settings remain. |
+| Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
+
+### Current behavior and settled implementation choices
+
+- The UI uses the requested field-guide design: warm paper light mode and warm
+  charcoal dark mode, with a local browser **Light / Dark / Auto** preference.
+  This supersedes the original navy palette described in Phase 4.
+- The interface is native HTML/CSS with one embedded theme script. No third-party
+  JavaScript is required yet; HTMX/Alpine have not been vendored.
+- Every question offers “I got this right” as an **unsaved self-check**. There is
+  no automated grading or persistent progress yet.
+- All eight changing questions display the permanent USCIS verification link and
+  the original source instructions. No current officeholder names are bundled or
+  resolved yet. There are no outbound lookup clients; `--offline` is accepted in
+  preparation for them, not evidence that future network paths have been tested.
+- Chapter content uses strictly decoded JSON front matter (a YAML subset) and a
+  documented, limited Markdown syntax, rendered through escaped Go templates.
+  Chapter links are authored once and reverse links are derived at startup.
+- Chapters are labeled **text editions**. Prose, objectives, sidebar text,
+  diagram/map labels, and printed captions are retained; map geography and
+  uncredited illustrations are not reproduced. This does not yet satisfy the
+  full visual-content scope of the release plan. Credited images retain source
+  resolution; downscaling has not been implemented.
+- Runtime validation checks questions, chapter references, image captions and
+  credits, approved image files, and bidirectional links. Full 128-question
+  chapter coverage remains a release gate once all chapters are authored.
+
+### Verification and known limits
+
+- Passing at the Chapter 1–2 milestone: `go test -race ./...`, `go vet ./...`, native
+  build, source word coverage by page, chapter/reader goldens, and route/image
+  tests. The initial implementation also passed all six cross-platform builds.
+- Chromium checks passed for theme switching/persistence, system appearance,
+  chapter contents anchors, four images, question backlinks, and no horizontal
+  overflow at 380px. Automatic browser launch has not been manually checked.
+- `make lint` is **not fully verified**: the available Staticcheck revision cannot
+  read this machine's Go 1.27 export format. Vet passes; Staticcheck needs a
+  compatible toolchain/tool version.
+- Source word inventories detect omissions/additions, not reading order. Chapter 2
+  was also visually reviewed page-by-page against the Study Guide PDF (pages
+  18–23): prose, the two "U.S. Congress" tree diagrams, the lawmaking flowchart,
+  the credited Oval Office photo, and the blank page 23 all match the source.
+  The uncredited Capitol photo on page 20 is omitted per the image-review policy;
+  its printed caption is retained as reader text. Chapter 2's page 22 lawmaking
+  diagram has no extractable text in the PDF; its visually transcribed labels
+  are recorded in `data/raw/study-guide-visual-supplement.json`.
+- The grading test contract needs resolution before Phase 3: every official
+  bullet must self-match **as an item**, but one item cannot pass a question that
+  requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
+  not factual answers to grade. No contradictory grading behavior is implemented.
+
+### Source corrections to the planning notes
+
+The supplied Q&A PDF has **22** Q48 bullets, **six** Q67 bullets, and section
+boundaries Q16–62 (System of Government), Q63–72 (Rights and Responsibilities).
+The original planning counts/ranges below are corrected accordingly. Required
+answer counts are unchanged. Source typos and source-specific wording are retained
+and flagged in chapter notes, not silently corrected.
+
+### Next work
+
+1. Author Chapters 3–12 with question mappings and licensed image review. Verify
+   complete 128-question coverage when finished.
+2. Author the reference library and its source-checked links.
+3. Add officials/state snapshots and Census district data, then the tested engines
+   and remaining UI workflows described below.
+
+---
+
 ## Context
 
 Goal: an application to prepare for the USCIS civics test (part of the N-400
@@ -10,7 +92,7 @@ naturalization application) that does two jobs at once:
    government and history, so the material means something rather than being
    memorized noise.
 
-Today the repo is four PDFs and no code. This plan builds a **single Go binary**
+The project began with four PDFs and no code. This plan targets a **single Go binary**
 serving a modern, responsive web UI with four sections — **Learn**, **Library**,
 **Flashcards**, **Practice Test** — all content derived from the official PDFs,
 working fully offline, with tests that verify the content against its sources.
@@ -57,9 +139,9 @@ The bullets are a menu, and you must name several *different* items from it.
 | Q | Question | Required | Bullets offered |
 |---|---|---|---|
 | 10 | Name **two** important ideas from the Declaration of Independence and the U.S. Constitution. | 2 | 6 |
-| 48 | What are **two** Cabinet-level positions? | 2 | 19 |
+| 48 | What are **two** Cabinet-level positions? | 2 | 22 |
 | 65 | What are **three** rights of everyone living in the United States? | 3 | 6 |
-| 67 | Name **two** promises that new citizens make in the Oath of Allegiance. | 2 | 5 |
+| 67 | Name **two** promises that new citizens make in the Oath of Allegiance. | 2 | 6 |
 | 69 | What are **two** examples of civic participation in the United States? | 2 | 10 |
 | 81 | There were 13 original states. Name **five**. | 5 | 13 |
 | 126 | Name **three** national U.S. holidays. | 3 | 11 |
@@ -338,7 +420,7 @@ Text layer is clean and machine-parseable:
 - Answers as `• ` bullets under each question.
 - Three sections / eight subsections:
   - `AMERICAN GOVERNMENT` -> `A: Principles of American Government` (1–15),
-    `B: System of Government` (16–~72), `C: Rights and Responsibilities` (~73–87)
+    `B: System of Government` (16–62), `C: Rights and Responsibilities` (63–72)
   - `AMERICAN HISTORY` -> `A: Colonial Period and Independence`, `B: 1800s`,
     `C: Recent American History and Other Important Historical Information`
   - `SYMBOLS AND HOLIDAYS` -> `A: Symbols`, `B: Holidays`

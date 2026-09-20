@@ -1,7 +1,7 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first Chapter 1 content milestone are implemented;
+PDFs. Phase 1 and the first two chapters' content milestones are implemented;
 this is not a release of the full plan.
 
 ## Run
@@ -35,14 +35,15 @@ for amd64 and arm64 with cgo disabled.
   a Light / Dark / Auto selector saved locally in the browser, keyboard-accessible answer reveals and an
   “I got this right” self-check. Self-checks are not persisted yet.
 - Development extraction of all four PDFs to checked-in raw text.
-- `/learn` and `/learn/constitution`: Chapter 1's source-verified text edition,
-  learning objectives, source-page markers, contents navigation, sidebar,
-  diagram/map text, and 25 bidirectional question links.
-- Three reviewed Study Guide images with their printed captions and credits.
-  Source coverage by page, parsed chapter golden, reader HTML golden, and
+- `/learn`, `/learn/constitution`, and `/learn/legislative`: Chapters 1–2's
+  source-verified text editions, learning objectives, source-page markers,
+  contents navigation, sidebar, diagram/map text, and 25 plus 20 bidirectional
+  question links (Q18 links to both).
+- Four reviewed Study Guide images with their printed captions and credits.
+  Source coverage by page, parsed chapter goldens, reader HTML goldens, and
   manifest/file/reference checks run without PDFs or poppler.
 
-Not implemented: Chapters 2–12, library transcription, remaining image curation, official/state
+Not implemented: Chapters 3–12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -71,8 +72,8 @@ For local image curation, `go run ./cmd/ingest --images` also requires `pdfimage
 It extracts **only the Study Guide** into ignored `data/images/_extracted/`.
 This unreviewed directory may contain AP material: do not publish or embed it.
 Almanac images are never extracted. `go run ./cmd/ingest --curated-images`
-re-extracts only the three reviewed Chapter 1 images using an explicit allowlist.
-They are retained at their source resolution (about 2.4 MB total). If a source PDF
+re-extracts only the four reviewed Chapter 1–2 images using an explicit allowlist.
+They are retained at their source resolution (about 3.1 MB total). If a source PDF
 changes, recheck the image identity, printed caption, credit, and licensing before
 accepting new output; extraction indices alone are not provenance.
 
@@ -113,9 +114,19 @@ unchanged and is flagged in the reader's source notes. The chapter-coverage chec
 compares word inventories per source page; visual review and the golden separately
 pin reading order, which word counts alone cannot prove.
 
-Next: transcribe Chapter 2, continue through the remaining chapters and their
+Chapter 2 was visually reviewed against PDF pages 18–23 the same way: prose, both
+“U.S. Congress” tree diagrams, the lawmaking flowchart, the credited Oval Office
+photo and its credit, and blank page 23 all match the source. The uncredited
+Capitol photo on page 20 is omitted; its printed caption is retained as reader
+text. The line-break hyphen in “representa-tives” on page 18 is joined. Page 22's
+lawmaking diagram has no extractable PDF text layer; its labels were transcribed
+separately into `data/raw/study-guide-visual-supplement.json` and are checked by
+the same source-coverage test as the rest of the chapter.
+
+Next: author Chapter 3 and continue through the remaining chapters and their
 question mappings, then the reference library. Full 128-question chapter coverage
-remains a release gate; this first chapter covers 25 questions.
+remains a release gate; the first two chapters cover 25 and 20 questions
+(Q18 is shared between them).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -125,6 +136,9 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
+The Chapter 2 milestone passed the same race/vet/build checks and goldens; its
+content was verified by direct visual PDF review above rather than a separate
+Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's
 export format; full `make lint` remains unverified pending a compatible tool.
 

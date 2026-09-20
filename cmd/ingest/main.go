@@ -20,7 +20,7 @@ func main() {
 	source := flag.String("source", ".", "directory containing the four source PDFs")
 	out := flag.String("out", "internal/content/data", "extraction output directory")
 	images := flag.Bool("images", false, "extract unreviewed Study Guide images for local curation (never embedded)")
-	curated := flag.Bool("curated-images", false, "extract the three reviewed Chapter 1 images")
+	curated := flag.Bool("curated-images", false, "extract the reviewed Study Guide images")
 	flag.Parse()
 	if err := run(*source, *out, *images); err != nil {
 		log.Fatal(err)
