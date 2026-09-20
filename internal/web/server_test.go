@@ -1,6 +1,8 @@
 package web
 
 import (
+	"bytes"
+	"flag"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -26,7 +28,7 @@ func TestEmbeddedAssetsFromEmptyDirectory(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, path := range []string{"/", "/questions/81", "/static/app.css"} {
+	for _, path := range []string{"/", "/questions/81", "/static/app.css", "/learn/constitution", "/images/ch01-signing.jpg"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", path, nil))
 		if w.Code != 200 {
@@ -51,6 +53,12 @@ func TestRoutes(t *testing.T) {
 		{"/questions/1", 200, "Republic"},
 		{"/questions/128", 200, "Veterans Day"},
 		{"/static/app.css", 200, "prefers-color-scheme"},
+		{"/static/theme.js", 200, "n400-theme"},
+		{"/learn", 200, "1 of 12 chapters"},
+		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
+		{"/learn/missing", 404, "404"},
+		{"/images/missing.jpg", 404, "404"},
+		{"/images/manifest.json", 404, "404"},
 		{"/missing", 404, "404"}, {"/questions/0", 404, "404"}, {"/questions/129", 404, "404"}, {"/questions/nope", 404, "404"}, {"/static/missing", 404, "404"},
 	} {
 		t.Run(tc.path, func(t *testing.T) {
@@ -68,6 +76,50 @@ func TestRoutes(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("POST", "/questions", nil))
 	if w.Code != http.StatusMethodNotAllowed {
 		t.Fatalf("POST status %d", w.Code)
+	}
+}
+
+var updateReaderGolden = flag.Bool("update-reader-golden", false, "update reviewed reader HTML snapshot")
+
+func TestChapterReaderGoldenAndImages(t *testing.T) {
+	h, err := New()
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/constitution", nil))
+	file := "testdata/constitution.golden.html"
+	if *updateReaderGolden {
+		if err := os.MkdirAll("testdata", 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(file, w.Body.Bytes(), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	want, err := os.ReadFile(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(w.Body.Bytes(), want) {
+		t.Fatal("reader differs from reviewed golden")
+	}
+	for _, s := range []string{"Courtesy of the Library of Congress.", "Courtesy of the National Archives.", "/questions/81", "5 distinct answers required", "https://www.uscis.gov/citizenship/testupdates", "is a called a governor", "Respresentatives"} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("reader missing %q", s)
+		}
+	}
+	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}} {
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, httptest.NewRequest("GET", "/images/"+tc.file, nil))
+		if w.Code != 200 || w.Header().Get("Content-Type") != tc.kind || w.Body.Len() == 0 {
+			t.Errorf("image %s not served correctly", tc.file)
+		}
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/2", nil))
+	if !strings.Contains(w.Body.String(), `href="/learn/constitution"`) {
+		t.Fatal("missing chapter backlink")
 	}
 }
 

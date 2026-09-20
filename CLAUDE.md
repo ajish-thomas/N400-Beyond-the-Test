@@ -11,8 +11,10 @@ naturalization application) that does two jobs at once:
 2. **Actually learn.** Go past flashcard level into a real guide to American
    government and history, so the material means something.
 
-**Current state:** Phase 1 implemented: extraction pipeline, validated question
-corpus, and offline question browser. See `README.md` for implemented scope,
+**Current state:** Phase 1 plus the first Phase 2 chapter: extraction pipeline,
+validated question corpus, offline question browser, selectable light/dark theme,
+and Chapter 1 text reader with 25 question links and three credited images.
+See `README.md` for implemented scope,
 verification commands, source discrepancies, and remaining phases.
 `PLAN.md` is the detailed specification — read it before writing code.
 

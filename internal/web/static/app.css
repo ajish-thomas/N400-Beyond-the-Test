@@ -76,7 +76,41 @@ footer { border-top:1px solid var(--ink); padding-block:28px 40px; display:grid;
 :focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
 .skip { position:absolute; left:16px; top:-100px; background:var(--paper); padding:12px; z-index:2; }
 .skip:focus { top:0; }
+.chapter-feature { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:12px 0 32px; border-bottom:1px solid var(--line); }
+.chapter-feature h2 { font:400 32px/1.2 Georgia,serif; margin:12px 0; }
+.chapter-feature p:not(.eyebrow) { color:var(--muted); font-size:13px; }
+.chapter-list { padding:0; list-style:none; margin-top:44px; border-top:1px solid var(--ink); }
+.chapter-list li { padding:28px 0; border-bottom:1px solid var(--line); }
+.chapter-list h2 { font:400 32px Georgia,serif; }
+.chapter-list p,.chapter-source { color:var(--muted); font-size:13px; }
+.reader-layout { display:grid; grid-template-columns:220px minmax(0,1fr); gap:60px; align-items:start; margin-block:50px 64px; }
+.chapter-toc { position:sticky; top:24px; display:flex; flex-direction:column; align-items:stretch; gap:12px; font-size:11px; line-height:1.5; border-top:1px solid var(--line); padding-top:18px; }
+.chapter-toc a { text-decoration:none; }
+.chapter-toc a:hover { text-decoration:underline; color:var(--accent); }
+.chapter-reader { min-width:0; max-width:760px; font:20px/1.8 Georgia,"Times New Roman",serif; }
+.chapter-reader p { margin:24px 0; }
+.chapter-reader h2 { font:600 26px/1.3 var(--display); letter-spacing:-.025em; margin:40px 0 24px; scroll-margin-top:24px; }
+.chapter-reader h3 { font:600 21px/1.4 var(--display); margin:36px 0 20px; }
+.chapter-reader li { margin-block:10px; }
+.objectives { background:var(--paper); border-top:2px solid var(--accent); padding:22px 28px; }
+.objectives h2 { font-size:16px; margin:0; }
+.objectives ul { font:16px/1.7 system-ui,sans-serif; padding-left:20px; }
+.source-page { font:11px ui-monospace,monospace; color:var(--muted); margin:48px 0 24px; padding-top:15px; border-top:1px solid var(--line); }
+.source-image { margin:32px 0; }
+.source-image img { display:block; width:auto; max-width:100%; height:auto; max-height:640px; margin:auto; }
+.source-image figcaption,.text-diagram figcaption { font:12px/1.65 system-ui,sans-serif; color:var(--muted); margin-top:12px; }
+.image-credit { display:block; }
+.text-diagram { margin:32px 0; padding:20px; border:1px solid var(--line); background:var(--paper); }
+.text-diagram figcaption { margin:0 0 20px; }
+.text-diagram pre { font:13px/1.8 ui-monospace,monospace; white-space:pre-wrap; overflow-wrap:anywhere; margin:0; }
+.source-sidebar p { margin:12px 0; }
+.omitted-illustration { font:13px/1.7 system-ui,sans-serif; color:var(--muted); border-left:1px solid var(--line); padding-left:18px; margin:24px 0; }
+.omitted-illustration span { font-size:10px; text-transform:uppercase; letter-spacing:.05em; }
+.omitted-illustration p { margin:6px 0; }
+.source-notes { border-top:1px solid var(--line); margin-top:48px; font:13px/1.8 system-ui,sans-serif; color:var(--muted); }
+.source-notes h2 { font-size:16px; color:var(--ink); }
 @media(max-width:900px) {
+  .reader-layout { grid-template-columns:170px minmax(0,1fr); gap:28px; }
   header,main,footer { padding-inline:28px; }
   header { flex-wrap:wrap; padding-block:22px; }
   .hero { gap:32px; grid-template-columns:1.2fr 1fr; }
@@ -84,11 +118,16 @@ footer { border-top:1px solid var(--ink); padding-block:28px 40px; display:grid;
   .cards a { column-gap:18px; }
 }
 @media(max-width:620px) {
+  .reader-layout { grid-template-columns:1fr; gap:24px; margin-block:28px 44px; }
+  .chapter-toc { position:static; }
+  .chapter-reader { font-size:18px; }
+  .objectives { padding:20px; }
+  .chapter-feature { align-items:flex-start; flex-direction:column; }
   header,main,footer { padding-inline:20px; }
   header { gap:20px; }
   .brand-caption { max-width:none; }
   .header-tools { width:100%; justify-content:space-between; gap:12px; }
-  header nav { gap:16px; }
+  header nav { gap:12px; }
   header nav a { font-size:12px; }
   .theme-control { padding-left:12px; gap:0; }
   .theme-control label { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }

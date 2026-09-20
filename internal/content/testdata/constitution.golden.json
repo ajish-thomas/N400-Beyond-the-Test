@@ -1,0 +1,702 @@
+{
+  "Chapter": {
+    "id": "constitution",
+    "number": 1,
+    "title": "The U.S. Constitution",
+    "objectives": [
+      "The U.S. Constitution.",
+      "When the Constitution was written.",
+      "What the Constitution says.",
+      "Why the Constitution is the most important document in the United States government."
+    ],
+    "questions": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      13,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      41,
+      46,
+      47,
+      50,
+      51,
+      52,
+      58,
+      59,
+      60,
+      61,
+      81,
+      82
+    ],
+    "images": [
+      "ch01-signing",
+      "ch01-constitution",
+      "ch01-treaty"
+    ],
+    "source_start": 8,
+    "source_end": 17,
+    "editorial_notes": [
+      "This text edition preserves the chapter prose, sidebar, diagram labels, map labels, and captions. Diagrams are transcribed as text; map labels are listed without reproducing the geography. Three credited images are included. Uncredited illustrations are omitted, with their printed captions retained. Page 17 contains no chapter content.",
+      "Source wording is retained, including ‘Respresentatives’ in the page 10 diagram, ‘is a called a governor’ on page 14, and the page 13 wording ‘print the dollar bills and coins’. The source calls the Constitution’s articles ‘sections’. These are source details, not editorial corrections."
+    ]
+  },
+  "Blocks": [
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 8,
+      "Anchor": "page-8",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The U.S. Constitution was written in 1787. It is the oldest written constitution in the world. The Constitution sets up the government and enshrines the basic rights of the American People.",
+      "Page": 8,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Constitution was written during the period when the country was created. Another word for created is “founded.” The period when the country was created is called the Founding Era. In 1787, famous leaders from around the country like George Washington, Benjamin Franklin, James Madison, and Alexander Hamilton came to Philadelphia, Pennsylvania, for a Constitutional Convention. The leaders who met at the Constitutional Convention are sometimes called the Founders. The Founders wrote the Constitution at the Constitutional Convention.",
+      "Page": 8,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "When the Founders wrote the Constitution in 1787, it had a Preamble and seven sections. There have been changes made to the Constitution since it was written. A change to the Constitution is called an amendment. There are 27 amendments to the Constitution. The 27 amendments are listed after the seven sections of the original Constitution.",
+      "Page": 8,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 9,
+      "Anchor": "page-9",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "“Scene at the Signing of the Constitution,” by Howard Chandler Christy.",
+      "Page": 9,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ch01-signing",
+      "Image": {
+        "id": "ch01-signing",
+        "file": "ch01-signing.jpg",
+        "page": 9,
+        "caption": "“Scene at the Signing of the Constitution,” by Howard Chandler Christy.",
+        "credit": "Courtesy of the Library of Congress.",
+        "chapters": [
+          "constitution"
+        ]
+      }
+    },
+    {
+      "Kind": "heading",
+      "Text": "WE THE PEOPLE",
+      "Page": 9,
+      "Anchor": "section-6",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The beginning of the Constitution is called the Preamble. The Preamble to the Constitution explains why the Founders wrote the Constitution.",
+      "Page": 9,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Preamble also says that under the Constitution, the people of the United States will have self-government. This means that the people of the United States are not governed by a king or a queen. Instead, the people of the United States govern themselves. The people of the United States govern themselves by electing representatives who serve in the local, state, and U.S. governments.",
+      "Page": 9,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The idea of self-government is in the first three words of the Constitution. These words are, “We the people”.",
+      "Page": 9,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "The Constitution of the United States.",
+      "Page": 9,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ch01-constitution",
+      "Image": {
+        "id": "ch01-constitution",
+        "file": "ch01-constitution.jpg",
+        "page": 9,
+        "caption": "The Constitution of the United States.",
+        "credit": "Courtesy of the National Archives.",
+        "chapters": [
+          "constitution"
+        ]
+      }
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 10,
+      "Anchor": "page-10",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "THE FEDERAL GOVERNMENT",
+      "Page": 10,
+      "Anchor": "section-12",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "The Three Branches of Government",
+      "Page": 10,
+      "Anchor": "section-13",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The first three sections of the Constitution set up the U.S. government. These sections of the Constitution describe the three branches or parts of the U.S. government. The U.S. government is also called the federal government.",
+      "Page": 10,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The three branches of government are called the Legislative Branch, the Executive Branch, and the Judicial Branch.",
+      "Page": 10,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "U.S. Government\n├─ Legislative Branch (Congress)\n├─ Executive Branch (President)\n└─ Judicial Branch (Supreme Court)",
+      "Page": 10,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Legislative Branch is also called Congress. There are two parts to the U.S. Congress. They are called the House of Representatives and the Senate.",
+      "Page": 10,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Two Parts of Congress\nU.S.Congress\n├─ U.S.House of Respresentatives\n└─ U.S. Senate",
+      "Page": 10,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 11,
+      "Anchor": "page-11",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The President of the United States is in charge of the Executive Branch. Other parts of the Executive Branch include:",
+      "Page": 11,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 11,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "The Vice President of the United States",
+          "Children": null
+        },
+        {
+          "Text": "The President’s Cabinet",
+          "Children": [
+            "In government, a “cabinet” is another word for a “group of advisors.” The President’s Cabinet advises the President."
+          ]
+        },
+        {
+          "Text": "The Executive Departments and agencies in the U.S. government",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The parts of the Judicial Branch are the Supreme Court and other federal courts. The Supreme Court is the highest court in the U.S.",
+      "Page": 11,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "The U.S. Capitol in Washington, D.C.",
+      "Page": 11,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 12,
+      "Anchor": "page-12",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "Separation of Powers",
+      "Page": 12,
+      "Anchor": "section-25",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "During the Constitutional Convention, the Founders were afraid that if one person or group has too much power, then they could take over the country. They decided to separate the powers of government so that no one person or group could become too powerful. The Constitution gives each branch of government different powers. This is called “separation of powers.” Separation of powers stops one branch from becoming too powerful.",
+      "Page": 12,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The powers of each branch of government are:",
+      "Page": 12,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 12,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "The Legislative Branch (Congress) makes federal laws.",
+          "Children": null
+        },
+        {
+          "Text": "The Executive Branch enforces federal laws.",
+          "Children": null
+        },
+        {
+          "Text": "The Judicial Branch reviews federal laws.",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "3 Branches of Government\nConstitution (provided a separation of powers)\n├─ Legislative Branch (makes federal laws)\n│  └─ Congress\n│     ├─ Senate\n│     └─ House of Representatives\n├─ Executive Branch (enforces federal laws)\n│  └─ President\n│     ├─ Vice President\n│     └─ Cabinet\n└─ Judicial Branch (reviews federal laws)\n   ├─ Supreme Court\n   └─ Other Federal Courts",
+      "Page": 12,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 13,
+      "Anchor": "page-13",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "subheading",
+      "Text": "Powers of the Federal Government",
+      "Page": 13,
+      "Anchor": "section-31",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Constitution also lists the powers that the federal government has, such as the power to protect the people of the United States.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "For example, under the Constitution, the federal government has the power to create an army to defend the nation, and to declare war if the U.S. has been attacked or is under threat.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The federal government also has the power to make treaties. A treaty is an agreement between two or more countries. Sometimes the federal government signs treaties with other countries to end wars or conflicts. Other times, the federal government signs treaties with countries to work together on issues like trade.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Another power that the federal government has under the Constitution is to print money. Only the U.S. government has the power to print the dollar bills and coins that people use for money in the United States.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "Members of the U.S. military.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "U.S. coins and currency.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "Signing of mutual cooperation treaty with Japan in the East Room of the White House, January 1960.",
+      "Page": 13,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ch01-treaty",
+      "Image": {
+        "id": "ch01-treaty",
+        "file": "ch01-treaty.png",
+        "page": 13,
+        "caption": "Signing of mutual cooperation treaty with Japan in the East Room of the White House, January 1960.",
+        "credit": "Courtesy of the Library of Congress.",
+        "chapters": [
+          "constitution"
+        ]
+      }
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 14,
+      "Anchor": "page-14",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "STATE GOVERNMENTS",
+      "Page": 14,
+      "Anchor": "section-40",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The fourth section of the Constitution explains how state governments are set up. This section also explains how new states can join the United States.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Constitution says that each state will have a government that has a legislative branch, an executive branch, and a judicial branch.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The person in charge of the executive branch for a state government is a called a governor. Each of the 50 states has a governor. To find out who is the governor of your state now, please visit: usa.gov/state-governor.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Under the Constitution, powers not delegated to the United States by the Constitution, nor prohibited by it to the states, are reserved for the states respectively, or to the people.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "For example, state governments have the power to provide the people of their state with protection and safety. One way that state governments do this is by providing the people in their state with police departments and fire departments.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "State governments also have the power to provide the people of their state with schooling and education. Each state in the U.S. has its own educational system for students in grade school, colleges and universities, and adult education programs.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "sidebar",
+      "Text": "Washington, D.C., does not have a governor because it is not a U.S. state. Washington, D.C., residents should answer that D.C. does not have a governor.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "Students in a U.S. classroom.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "Fighting fires is among a state’s powers.",
+      "Page": 14,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 15,
+      "Anchor": "page-15",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "CHANGING THE CONSTITUTION",
+      "Page": 15,
+      "Anchor": "section-51",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The fifth section of the Constitution explains how the Constitution can be changed. A change to the Constitution is called an amendment. The Founders wanted the people of the United States to be able to make changes to the Constitution. They believed that in order to have self-government, the people of the United States should be able to make changes to the Constitution and the government.",
+      "Page": 15,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "For an amendment to be added to the Constitution it must be approved by three-fourths of the states in the United States. Today there are 50 states in the U.S. That means that 38 out of the 50 states must approve an amendment for it to be added to the Constitution. There are 27 amendments to the Constitution.",
+      "Page": 15,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "SUPREME LAW OF THE LAND",
+      "Page": 15,
+      "Anchor": "section-54",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The sixth section of the Constitution says the Constitution is the supreme law of the land in the United States. This means that everyone living in the United States must follow the Constitution. In the United States, we support the “rule of law.” This means that we believe that no one is above the law, and everyone must follow the law. This also means that the U.S. government, state governments, and local governments must follow the Constitution and the rule of law.",
+      "Page": 15,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "Statue of Lady Justice",
+      "Page": 15,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 16,
+      "Anchor": "page-16",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "APPROVING THE CONSTITUTION",
+      "Page": 16,
+      "Anchor": "section-58",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The seventh section of the Constitution says that the people of the United States had to approve the Constitution for it to become the law of the land. When the Founders wrote the Constitution, there were 13 states in the U.S. The Constitution says that nine of the 13 original states must approve the Constitution. In 1788, New Hampshire became the ninth state to approve the Constitution, and all 13 original states approved the Constitution by 1790.",
+      "Page": 16,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "This map identifies the 13 original states and when they approved the Constitution.\n\nMassachusetts\nNew York (July 26, 1788)\nNew Hampshire (June 21, 1788)\nMassachusetts (February 6, 1788)\nRhode Island (May 29, 1790)\nPennsylvania (December 12, 1787)\nConnecticut (January 9, 1788)\nNew Jersey (December 18, 1787)\nDelaware (December 7, 1787)\nMaryland (April 28, 1788)\nVirginia (June 25, 1788)\nNorth Carolina (November 21, 1789)\nAtlantic Ocean\nSouth Carolina (May 23, 1788)\nGeorgia (January 2, 1788)",
+      "Page": 16,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "AMENDMENTS TO THE CONSTITUTION",
+      "Page": 16,
+      "Anchor": "section-61",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "When the Constitution was written in 1787, it did not list any of the rights of individuals. Many of the Founders believed that the Constitution should include a list of the rights of people living in the United States.",
+      "Page": 16,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Founders decided to add 10 amendments to the Constitution. The first 10 amendments to the Constitution are called the Bill of Rights. The Bill of Rights lists some of the basic rights of people living in the United States.",
+      "Page": 16,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are 27 amendments to the Constitution. Some of the amendments that were added to the Constitution after the Bill of Rights describe who can be a U.S. citizen, and who can vote in elections in the United States.",
+      "Page": 16,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "The Bill of Rights to the U.S. Constitution.",
+      "Page": 16,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    }
+  ]
+}

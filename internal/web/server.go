@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"net/http"
 	"strconv"
+	"time"
 
 	"n400/internal/content"
 )
@@ -17,20 +18,25 @@ import (
 var assets embed.FS
 
 type page struct {
-	Title     string
-	Questions []content.Question
-	Question  *content.Question
-	Home      bool
-	Starred   bool
-	Previous  int
-	Next      int
+	Title           string
+	Questions       []content.Question
+	Question        *content.Question
+	Home            bool
+	Starred         bool
+	Previous        int
+	Next            int
+	Learn           bool
+	Chapters        []content.Chapter
+	Chapter         *content.Chapter
+	RelatedChapters []content.Chapter
 }
 
 func New() (http.Handler, error) {
-	questions, err := content.Load()
+	catalog, err := content.LoadCatalog()
 	if err != nil {
 		return nil, fmt.Errorf("loading study content: %w", err)
 	}
+	questions := catalog.Questions
 	tmpl, err := template.ParseFS(assets, "templates/*.gohtml")
 	if err != nil {
 		return nil, fmt.Errorf("loading templates: %w", err)
@@ -50,6 +56,32 @@ func New() (http.Handler, error) {
 	}
 	mux := http.NewServeMux()
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(static))))
+	mux.HandleFunc("GET /images/{file}", func(w http.ResponseWriter, r *http.Request) {
+		name := r.PathValue("file")
+		b, err := catalog.ImageBytes(name)
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		http.ServeContent(w, r, name, time.Time{}, bytes.NewReader(b))
+	})
+	mux.HandleFunc("GET /learn", func(w http.ResponseWriter, r *http.Request) {
+		render(w, page{Title: "Learn the story behind the answers", Learn: true, Chapters: catalog.Chapters})
+	})
+	mux.HandleFunc("GET /learn/{chapter}", func(w http.ResponseWriter, r *http.Request) {
+		for _, chapter := range catalog.Chapters {
+			if chapter.ID != r.PathValue("chapter") {
+				continue
+			}
+			p := page{Title: chapter.Title, Chapter: &chapter}
+			for _, id := range chapter.Questions {
+				p.Questions = append(p.Questions, questions[id-1])
+			}
+			render(w, p)
+			return
+		}
+		http.NotFound(w, r)
+	})
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
 		render(w, page{Title: "Your civics study desk", Home: true})
 	})
@@ -70,6 +102,13 @@ func New() (http.Handler, error) {
 		}
 		q := questions[id-1]
 		p := page{Title: fmt.Sprintf("Question %d", id), Question: &q}
+		for _, chapterID := range q.Chapters {
+			for _, chapter := range catalog.Chapters {
+				if chapter.ID == chapterID {
+					p.RelatedChapters = append(p.RelatedChapters, chapter)
+				}
+			}
+		}
 		if id > 1 {
 			p.Previous = id - 1
 		}

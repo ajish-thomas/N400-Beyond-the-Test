@@ -1,0 +1,28 @@
+{{define "chapter"}}
+{{with .Chapter}}
+<p class="eyebrow"><a href="/learn">Learn</a> / Chapter {{.Number}} / Text edition</p>
+<h1>{{.Title}}</h1>
+<p class="chapter-source">USCIS · <cite>One Nation, One People: The USCIS Civics Test Textbook</cite> · Pages {{.SourceStart}}–{{.SourceEnd}}</p>
+<div class="reader-layout">
+<nav class="chapter-toc" aria-label="Chapter contents"><span class="eyebrow">In this chapter</span><a href="#objectives">Learning objectives</a>{{range .Blocks}}{{if eq .Kind "heading"}}<a href="#{{.Anchor}}">{{.Text}}</a>{{end}}{{end}}<a href="#chapter-questions">Questions covered</a><a href="#source-notes">Source notes</a></nav>
+<article class="chapter-reader" aria-label="Chapter text">
+<section class="objectives" id="objectives"><h2>In this chapter, you will learn about:</h2><ul>{{range .Objectives}}<li>{{.}}</li>{{end}}</ul></section>
+{{range .Blocks}}
+{{if eq .Kind "page"}}<div class="source-page" id="{{.Anchor}}">Source page {{.Page}}</div>
+{{else if eq .Kind "heading"}}<h2 id="{{.Anchor}}">{{.Text}}</h2>
+{{else if eq .Kind "subheading"}}<h3 id="{{.Anchor}}">{{.Text}}</h3>
+{{else if eq .Kind "paragraph"}}<p>{{.Text}}</p>
+{{else if eq .Kind "sidebar"}}<aside class="source-sidebar"><span class="eyebrow">Source sidebar</span><p>{{.Text}}</p></aside>
+{{else if eq .Kind "list"}}<ul>{{range .Items}}<li>{{.Text}}{{if .Children}}<ul>{{range .Children}}<li>{{.}}</li>{{end}}</ul>{{end}}</li>{{end}}</ul>
+{{else if eq .Kind "diagram"}}<figure class="text-diagram"><figcaption>Source diagram / map labels · text transcription</figcaption><pre>{{.Text}}</pre></figure>
+{{else if eq .Kind "caption"}}<div class="omitted-illustration"><span>Source caption · illustration not reproduced</span><p>{{.Text}}</p></div>
+{{else if eq .Kind "image"}}{{with .Image}}<figure class="source-image"><img src="/images/{{.File}}" alt="{{.Caption}}" width="{{.Width}}" height="{{.Height}}" loading="lazy"><figcaption>{{.Caption}} <span class="image-credit">{{.Credit}}</span></figcaption></figure>{{end}}
+{{end}}
+{{end}}
+<section class="source-notes" id="source-notes"><h2>Source notes</h2>{{range .EditorialNotes}}<p>{{.}}</p>{{end}}</section>
+</article></div>
+{{end}}
+<section id="chapter-questions"><div class="section-heading"><h2>Questions covered in this chapter</h2><span class="section-number">{{len .Questions}} questions</span></div>
+<p class="muted">Question links are editorial study aids. The source textbook does not assign question numbers to its chapters.</p>
+<ol class="questions">{{range .Questions}}<li value="{{.ID}}"><a href="/questions/{{.ID}}">{{.Prompt}}</a> {{if .Is6520}}<span class="badge">★ 65/20</span>{{end}}{{if gt .RequiredCount 1}}<small>{{.RequiredCount}} distinct answers required</small>{{end}}{{if .Changing}}<p class="muted">This answer may change. Verify at <a href="https://www.uscis.gov/citizenship/testupdates" rel="noreferrer">uscis.gov/citizenship/testupdates</a>.</p>{{end}}</li>{{end}}</ol></section>
+{{end}}

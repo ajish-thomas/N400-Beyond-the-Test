@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ch01-signing",
+    "file": "ch01-signing.jpg",
+    "page": 9,
+    "caption": "“Scene at the Signing of the Constitution,” by Howard Chandler Christy.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["constitution"]
+  },
+  {
+    "id": "ch01-constitution",
+    "file": "ch01-constitution.jpg",
+    "page": 9,
+    "caption": "The Constitution of the United States.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["constitution"]
+  },
+  {
+    "id": "ch01-treaty",
+    "file": "ch01-treaty.png",
+    "page": 13,
+    "caption": "Signing of mutual cooperation treaty with Japan in the East Room of the White House, January 1960.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["constitution"]
+  }
+]

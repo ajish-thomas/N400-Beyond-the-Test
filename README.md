@@ -1,7 +1,8 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. This is the first implementation milestone, not a release of the full plan.
+PDFs. Phase 1 and the first Chapter 1 content milestone are implemented;
+this is not a release of the full plan.
 
 ## Run
 
@@ -16,7 +17,8 @@ make build
 ```
 
 Open http://127.0.0.1:8400. The server binds only to loopback, validates all
-embedded questions at startup, and shuts down on Ctrl+C. You can move the binary
+embedded questions, chapters, image credits, and cross-references at startup,
+and shuts down on Ctrl+C. You can move the binary
 to another directory and run it without this repository. `go build ./cmd/n400`
 also produces the complete app. `make build-all` builds Linux, macOS, and Windows
 for amd64 and arm64 with cgo disabled.
@@ -33,8 +35,14 @@ for amd64 and arm64 with cgo disabled.
   a Light / Dark / Auto selector saved locally in the browser, keyboard-accessible answer reveals and an
   “I got this right” self-check. Self-checks are not persisted yet.
 - Development extraction of all four PDFs to checked-in raw text.
+- `/learn` and `/learn/constitution`: Chapter 1's source-verified text edition,
+  learning objectives, source-page markers, contents navigation, sidebar,
+  diagram/map text, and 25 bidirectional question links.
+- Three reviewed Study Guide images with their printed captions and credits.
+  Source coverage by page, parsed chapter golden, reader HTML golden, and
+  manifest/file/reference checks run without PDFs or poppler.
 
-Not implemented: chapter/library transcription, curated images, official/state
+Not implemented: Chapters 2–12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -56,13 +64,26 @@ make ingest  # dev only: requires poppler's pdftotext
 `--source` overrides their directory. It extracts `internal/content/data/raw/`
 and generates `internal/content/data/questions.json`. Review any generated diff
 against the original source before accepting a new golden; do not blindly update
-it to fix a failing test. Tests consume only those checked-in text/JSON files.
+it to fix a failing test. Tests consume checked-in text, JSON, Markdown, and images.
 Text is reflowed across PDF lines; punctuation and wording are retained.
 
 For local image curation, `go run ./cmd/ingest --images` also requires `pdfimages`.
 It extracts **only the Study Guide** into ignored `data/images/_extracted/`.
 This unreviewed directory may contain AP material: do not publish or embed it.
-No images are currently shipped. Almanac images are never extracted.
+Almanac images are never extracted. `go run ./cmd/ingest --curated-images`
+re-extracts only the three reviewed Chapter 1 images using an explicit allowlist.
+They are retained at their source resolution (about 2.4 MB total). If a source PDF
+changes, recheck the image identity, printed caption, credit, and licensing before
+accepting new output; extraction indices alone are not provenance.
+
+Chapter authoring uses JSON front matter (a YAML subset) and a small Markdown
+subset, rendered with escaped Go templates and no Markdown dependency. See
+`internal/content/data/chapters/README.txt`. To update goldens after source review:
+
+```sh
+go test ./internal/content -run TestChapterGolden -update-chapter-golden
+go test ./internal/web -run TestChapterReaderGoldenAndImages -update-reader-golden
+```
 
 ## Source review notes and next steps
 
@@ -82,15 +103,29 @@ as an item, while whole-question success still requires N distinct items.
 “Answers will vary” and “Visit…” are source instructions, not factual answers;
 changing questions need resolved answers before automated grading.
 
-Next: Phase 2 content authoring, beginning with Chapter 1 and its source-verified
-question mapping; then library transcription and licensed image curation.
+Chapter 1 was visually reviewed against PDF pages 8–17. All prose, objectives,
+sidebar text, diagram/map labels, and captions are retained. Diagrams are text
+transcriptions; the map's geography is not reproduced. Uncredited illustrations
+are omitted and their printed captions remain visible. Page 17 is blank except
+its footer. This is explicitly labeled a text edition, not a complete facsimile.
+Source wording, including “Respresentatives” and “is a called a governor,” remains
+unchanged and is flagged in the reader's source notes. The chapter-coverage check
+compares word inventories per source page; visual review and the golden separately
+pin reading order, which word counts alone cannot prove.
+
+Next: transcribe Chapter 2, continue through the remaining chapters and their
+question mappings, then the reference library. Full 128-question chapter coverage
+remains a release gate; this first chapter covers 25 questions.
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
 repository. The theme redesign was checked in Chromium: light/dark rendering,
 saved theme across navigation, Auto tracking system appearance, and no horizontal
 overflow at 380px on the home page, question list, and answer reader. Automatic
-browser launch has not been manually verified. The locally cached Staticcheck revision could not analyze Go 1.27's
+browser launch has not been manually verified. The Chapter 1 milestone also passed
+race tests, vet, the native build, and Chromium checks at desktop and 380px widths
+for contents anchors, all three images, question links, and chapter backlinks.
+The locally cached Staticcheck revision could not analyze Go 1.27's
 export format; full `make lint` remains unverified pending a compatible tool.
 
 Almanac text citation (required when its extracted text is reused): U.S.

@@ -39,7 +39,7 @@ func (q Question) Changing() bool { return q.AnswerKind != Fixed }
 
 // Only curated runtime data is embedded; raw source and unreviewed images are not.
 //
-//go:embed data/required_counts.json data/questions.json
+//go:embed data/required_counts.json data/questions.json data/chapters/*.md data/images/manifest.json data/images/*.jpg data/images/*.png
 var data embed.FS
 
 func RequiredCounts() (map[int]int, error) {
