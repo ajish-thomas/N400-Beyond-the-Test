@@ -1,7 +1,7 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first three chapters' content milestones are implemented;
+PDFs. Phase 1 and the first four chapters' content milestones are implemented;
 this is not a release of the full plan.
 
 ## Run
@@ -35,15 +35,17 @@ for amd64 and arm64 with cgo disabled.
   a Light / Dark / Auto selector saved locally in the browser, keyboard-accessible answer reveals and an
   “I got this right” self-check. Self-checks are not persisted yet.
 - Development extraction of all four PDFs to checked-in raw text.
-- `/learn`, `/learn/constitution`, `/learn/legislative`, and `/learn/executive`:
-  Chapters 1–3's source-verified text editions, learning objectives, source-page
-  markers, contents navigation, sidebar, diagram/map text, and 25, 20, and 12
-  bidirectional question links (Q18 links to two chapters, Q41 to all three).
+- `/learn`, `/learn/constitution`, `/learn/legislative`, `/learn/executive`, and
+  `/learn/judicial`: Chapters 1–4's source-verified text editions, learning
+  objectives, source-page markers, contents navigation, sidebar, diagram/map
+  text, and 25, 20, 12, and 8 bidirectional question links (Q18 links to two
+  chapters, Q41 to three, Q50 to two).
 - Five reviewed Study Guide images with their printed captions and credits.
+  Chapter 4 has none: none of its five photographs carry a printed credit.
   Source coverage by page, parsed chapter goldens, reader HTML goldens, and
   manifest/file/reference checks run without PDFs or poppler.
 
-Not implemented: Chapters 4–12, library transcription, remaining image curation, official/state
+Not implemented: Chapters 5–12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -137,10 +139,25 @@ concern as the eight changing answers. The elephant icon's caption is printed
 without a trailing period, unlike the donkey icon's; both are kept exactly as
 printed.
 
-Next: author Chapter 4 and continue through the remaining chapters and their
+Chapter 4 (The Judicial Branch) was visually reviewed against PDF pages 29–32
+the same way: prose, the repeated three-branch diagram, the Federal Court
+System pyramid, the Chief Justice duties list, and the majority sidebar all
+match the source, with extractable PDF text throughout. None of its five
+photographs (Thomas and Scalia, the Lady Justice statue, the courtroom, and
+the nine-justices group photo) carry a printed credit, so none are reproduced;
+printed captions are retained as reader text. This chapter's page 31 reuses
+the chapter title verbatim as a genuine section heading, and a stray "CHAPTER
+1: THE U.S. CONSTITUTION" running header bleeds onto its page 29 — both real
+source artifacts, not transcription mistakes. They exposed a bug in the
+source-coverage test's page-furniture filter (it was stripping the genuine
+page-31 heading and missing the stray page-29 banner); the filter was
+generalized rather than special-cased for this one chapter, and re-run against
+Chapters 1–3 to confirm no change to their existing goldens.
+
+Next: author Chapter 5 and continue through the remaining chapters and their
 question mappings, then the reference library. Full 128-question chapter coverage
-remains a release gate; the first three chapters cover 25, 20, and 12 questions
-(Q18 links to Chapters 1–2, Q41 links to all three).
+remains a release gate; the first four chapters cover 25, 20, 12, and 8 questions
+(Q18 links to Chapters 1–2, Q41 to Chapters 1–3, Q50 to Chapters 1 and 4).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -150,9 +167,9 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
-The Chapter 2 and Chapter 3 milestones passed the same race/vet/build checks and
-goldens; their content was verified by direct visual PDF review above rather
-than a separate Chromium pass.
+The Chapter 2–4 milestones passed the same race/vet/build checks and goldens;
+their content was verified by direct visual PDF review above rather than a
+separate Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's
 export format; full `make lint` remains unverified pending a compatible tool.
 

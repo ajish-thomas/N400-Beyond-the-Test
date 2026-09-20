@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–3 text editions are implemented and source-verified, with 25, 20, and 12 question links respectively and five credited images total. Chapters 4–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–4 text editions are implemented and source-verified, with 25, 20, 12, and 8 question links respectively and five credited images total (Chapter 4 has none). Chapters 5–12 remain. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -42,13 +42,14 @@ remain the target specification; they are not claims that every feature exists.
 
 ### Verification and known limits
 
-- Passing at the Chapter 1–3 milestone: `go test -race ./...`, `go vet ./...`, native
+- Passing at the Chapter 1–4 milestone: `go test -race ./...`, `go vet ./...`, native
   build, source word coverage by page, chapter/reader goldens, and route/image
   tests. The initial implementation also passed all six cross-platform builds.
 - Chromium checks passed for theme switching/persistence, system appearance,
   chapter contents anchors, four images, question backlinks, and no horizontal
   overflow at 380px. Automatic browser launch has not been manually checked.
-  Chapter 3's content was verified by direct visual PDF review instead (below).
+  Chapters 3 and 4's content was verified by direct visual PDF review instead
+  (below).
 - `make lint` is **not fully verified**: the available Staticcheck revision cannot
   read this machine's Go 1.27 export format. Vet passes; Staticcheck needs a
   compatible toolchain/tool version.
@@ -70,6 +71,18 @@ remain the target specification; they are not claims that every feature exists.
   omitted as uncredited, with printed captions kept as reader text where any
   exist. Omitting the sitting President's photo also avoids the same shelf-life
   problem as the eight changing answers.
+- Chapter 4 (pages 29–32) was visually reviewed the same way: prose, both
+  diagrams (the repeated three-branch tree and the Federal Court System
+  pyramid), the Chief Justice duties list, and the majority sidebar all match
+  the source, with extractable PDF text throughout. None of its five
+  photographs carry a printed credit, so none are reproduced. This chapter
+  exposed a real bug in the source-coverage test: its page 31 repeats the
+  chapter title verbatim as a genuine section heading, and a stray "CHAPTER 1:
+  THE U.S. CONSTITUTION" running header bleeds onto its page 29. The test's
+  page-furniture filter was generalized (any `CHAPTER N` banner line, and the
+  bare-title match restricted to the chapter's opening page only) rather than
+  hard-coding this chapter's two exceptions; re-run against Chapters 1–3
+  confirmed no behavior change for their existing goldens.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -85,7 +98,7 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapters 4–12 with question mappings and licensed image review. Verify
+1. Author Chapters 5–12 with question mappings and licensed image review. Verify
    complete 128-question coverage when finished.
 2. Author the reference library and its source-checked links.
 3. Add officials/state snapshots and Census district data, then the tested engines

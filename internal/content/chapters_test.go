@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 3 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Images) != 5 {
+	if len(c.Chapters) != 4 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Images) != 5 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -98,11 +98,20 @@ func TestChapterSourceCoverage(t *testing.T) {
 				return m
 			}
 			number := regexp.MustCompile(`^\d+$`)
+			// Running chapter-banner headers (e.g. "CHAPTER 4" or "CHAPTER 4: THE
+			// JUDICIAL BRANCH") are page furniture, not body content. A stray banner
+			// from an adjacent chapter can bleed onto a page (confirmed on page 29);
+			// this matches any chapter number, not just this chapter's own, so those
+			// artifacts are excluded too. The chapter title itself is only page
+			// furniture on the opening splash page: a later page can legitimately
+			// reuse the exact title text as a genuine section heading (chapter 4's
+			// page 31), which must still be counted.
+			banner := regexp.MustCompile(`^CHAPTER \d+(: .+)?$`)
 			for page := ch.SourceStart; page <= ch.SourceEnd; page++ {
 				var source []string
 				for _, line := range strings.Split(pages[page-1], "\n") {
 					line = strings.TrimSpace(line)
-					if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || line == fmt.Sprintf("CHAPTER %d: %s", ch.Number, strings.ToUpper(ch.Title)) || line == fmt.Sprintf("CHAPTER %d", ch.Number) || line == strings.ToUpper(ch.Title) || line == "In this chapter, you will learn about:" {
+					if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || banner.MatchString(line) || (page == ch.SourceStart && line == strings.ToUpper(ch.Title)) || line == "In this chapter, you will learn about:" {
 						continue
 					}
 					source = append(source, line)
@@ -162,6 +171,9 @@ func TestChapterReferences(t *testing.T) {
 	}
 	if !slices.Equal(c.Questions[40].Chapters, []string{"constitution", "legislative", "executive"}) {
 		t.Fatal("Q41 should link to all three published chapters")
+	}
+	if !slices.Equal(c.Questions[49].Chapters, []string{"constitution", "judicial"}) {
+		t.Fatal("Q50 should link to both chapters covering the judicial branch")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")

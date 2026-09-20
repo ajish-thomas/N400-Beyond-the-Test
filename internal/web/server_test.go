@@ -54,9 +54,10 @@ func TestRoutes(t *testing.T) {
 		{"/questions/128", 200, "Veterans Day"},
 		{"/static/app.css", 200, "prefers-color-scheme"},
 		{"/static/theme.js", 200, "n400-theme"},
-		{"/learn", 200, "3 of 12 chapters"},
+		{"/learn", 200, "4 of 12 chapters"},
 		{"/learn/legislative", 200, "How Congress Makes a Federal Law"},
 		{"/learn/executive", 200, "Commander in Chief"},
+		{"/learn/judicial", 200, "Statue of Lady Justice"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
@@ -88,7 +89,7 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"constitution", "legislative", "executive"} {
+	for _, id := range []string{"constitution", "legislative", "executive", "judicial"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/"+id, nil))
 		file := "testdata/" + id + ".golden.html"
@@ -157,6 +158,23 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	for _, path := range []string{"/learn/constitution", "/learn/legislative", "/learn/executive"} {
 		if !strings.Contains(w.Body.String(), `href="`+path+`"`) {
 			t.Errorf("Q41 missing chapter backlink to %s", path)
+		}
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/judicial", nil))
+	for _, s := range []string{"Statue of Lady Justice", "Courtroom of the Supreme Court of the United States.", "nine justices on the U.S. Supreme Court", "8 questions"} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("judicial reader missing %q", s)
+		}
+	}
+	if strings.Count(w.Body.String(), `href="https://www.uscis.gov/citizenship/testupdates"`) != 1 {
+		t.Fatal("judicial reader must flag its one changing question")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/50", nil))
+	for _, path := range []string{"/learn/constitution", "/learn/judicial"} {
+		if !strings.Contains(w.Body.String(), `href="`+path+`"`) {
+			t.Errorf("Q50 missing chapter backlink to %s", path)
 		}
 	}
 }
