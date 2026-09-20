@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 4 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Images) != 5 {
+	if len(c.Chapters) != 5 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Images) != 5 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -174,6 +174,12 @@ func TestChapterReferences(t *testing.T) {
 	}
 	if !slices.Equal(c.Questions[49].Chapters, []string{"constitution", "judicial"}) {
 		t.Fatal("Q50 should link to both chapters covering the judicial branch")
+	}
+	if !slices.Equal(c.Questions[12].Chapters, []string{"constitution", "executive", "rights"}) {
+		t.Fatal("Q13 (rule of law) should link to every chapter that repeats it")
+	}
+	if !slices.Equal(c.Questions[63].Chapters, []string{"legislative", "rights"}) {
+		t.Fatal("Q64 should link to both chapters covering federal-office citizenship")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")

@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–4 text editions are implemented and source-verified, with 25, 20, 12, and 8 question links respectively and five credited images total (Chapter 4 has none). Chapters 5–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–5 text editions are implemented and source-verified, with 25, 20, 12, 8, and 14 question links respectively and five credited images total (Chapters 4–5 have none). Chapters 6–12 remain. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -42,13 +42,13 @@ remain the target specification; they are not claims that every feature exists.
 
 ### Verification and known limits
 
-- Passing at the Chapter 1–4 milestone: `go test -race ./...`, `go vet ./...`, native
+- Passing at the Chapter 1–5 milestone: `go test -race ./...`, `go vet ./...`, native
   build, source word coverage by page, chapter/reader goldens, and route/image
   tests. The initial implementation also passed all six cross-platform builds.
 - Chromium checks passed for theme switching/persistence, system appearance,
   chapter contents anchors, four images, question backlinks, and no horizontal
   overflow at 380px. Automatic browser launch has not been manually checked.
-  Chapters 3 and 4's content was verified by direct visual PDF review instead
+  Chapters 3–5's content was verified by direct visual PDF review instead
   (below).
 - `make lint` is **not fully verified**: the available Staticcheck revision cannot
   read this machine's Go 1.27 export format. Vet passes; Staticcheck needs a
@@ -83,6 +83,19 @@ remain the target specification; they are not claims that every feature exists.
   bare-title match restricted to the chapter's opening page only) rather than
   hard-coding this chapter's two exceptions; re-run against Chapters 1–3
   confirmed no behavior change for their existing goldens.
+- Chapter 5 (Rights and Responsibilities, pages 33–37) was visually reviewed
+  the same way and caught a real transcription error before commit: a first
+  draft dropped "in federal elections" from one sentence, which the coverage
+  test flagged immediately (a concrete demonstration of why the test exists).
+  Of its five photographs, four have no printed credit and one (the 2008
+  voting-booth photo) is credited to a non-federal source, "Courtesy of the
+  Polling Place Photo Project"; none are reproduced pending a deliberate
+  licensing review of that credit, distinct from the no-credit-at-all
+  omissions elsewhere. One sentence about the Federalist Papers splits across
+  pages 33/34 in the source itself, reproduced as a matching mid-sentence
+  block split. Two source wording issues ("Civils Rights Act of 1964"; "will
+  raise their right hand say the Oath of Allegiance", missing "and") are kept
+  exactly as printed.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -98,8 +111,10 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapters 5–12 with question mappings and licensed image review. Verify
-   complete 128-question coverage when finished.
+1. Author Chapters 6–12 with question mappings and licensed image review. Verify
+   complete 128-question coverage when finished. Separately, decide whether to
+   pursue a licensing review for the Polling Place Photo Project credit on
+   Chapter 5's voting-booth photo (deferred, not blocking).
 2. Author the reference library and its source-checked links.
 3. Add officials/state snapshots and Census district data, then the tested engines
    and remaining UI workflows described below.

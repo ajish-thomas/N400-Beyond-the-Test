@@ -54,10 +54,11 @@ func TestRoutes(t *testing.T) {
 		{"/questions/128", 200, "Veterans Day"},
 		{"/static/app.css", 200, "prefers-color-scheme"},
 		{"/static/theme.js", 200, "n400-theme"},
-		{"/learn", 200, "4 of 12 chapters"},
+		{"/learn", 200, "5 of 12 chapters"},
 		{"/learn/legislative", 200, "How Congress Makes a Federal Law"},
 		{"/learn/executive", 200, "Commander in Chief"},
 		{"/learn/judicial", 200, "Statue of Lady Justice"},
+		{"/learn/rights", 200, "Federalist Papers"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
@@ -89,7 +90,7 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"constitution", "legislative", "executive", "judicial"} {
+	for _, id := range []string{"constitution", "legislative", "executive", "judicial", "rights"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/"+id, nil))
 		file := "testdata/" + id + ".golden.html"
@@ -175,6 +176,23 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	for _, path := range []string{"/learn/constitution", "/learn/judicial"} {
 		if !strings.Contains(w.Body.String(), `href="`+path+`"`) {
 			t.Errorf("Q50 missing chapter backlink to %s", path)
+		}
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/rights", nil))
+	for _, s := range []string{"James Madison, Alexander Hamilton, and John Jay", "Civils Rights Act of 1964", "Courtesy of the Polling Place Photo Project.", "14 questions"} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("rights reader missing %q", s)
+		}
+	}
+	if strings.Contains(w.Body.String(), `href="https://www.uscis.gov/citizenship/testupdates"`) {
+		t.Fatal("rights reader should flag no changing questions")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/64", nil))
+	for _, path := range []string{"/learn/legislative", "/learn/rights"} {
+		if !strings.Contains(w.Body.String(), `href="`+path+`"`) {
+			t.Errorf("Q64 missing chapter backlink to %s", path)
 		}
 	}
 }
