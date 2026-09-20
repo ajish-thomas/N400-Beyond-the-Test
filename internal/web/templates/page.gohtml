@@ -1,0 +1,21 @@
+{{define "page"}}<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Title}} · N400</title><script src="/static/theme.js"></script><link rel="stylesheet" href="/static/app.css"></head>
+<body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="/"><span class="brand-mark">N400</span><span class="brand-caption">A civics field guide</span></a><div class="header-tools"><nav aria-label="Main"><a href="/questions">All questions</a><a href="/questions?deck=6520">65/20 questions</a></nav><div class="theme-control" hidden><label for="theme">Theme</label><select id="theme" name="theme"><option value="light">Light</option><option value="dark">Dark</option><option value="auto">Auto</option></select></div></div></header>
+<main id="main">
+{{if .Home}}
+<div class="edition"><span>2025 question set</span><span>Study at your own pace / Offline</span></div>
+<section class="hero" aria-labelledby="hero-title"><h1 id="hero-title">Your civics<br><em>study desk.</em></h1><div><p class="intro">Start with the official questions. Take your time, recall an answer, and check it against the USCIS text.</p><a class="button" href="/questions/1">Start with question 1 <span aria-hidden="true">↗</span></a><p class="hero-note">One question. A little more understanding.</p></div></section>
+<div class="section-heading"><h2>Choose your study set</h2><span class="section-number">01 / The questions</span></div>
+<div class="cards"><a href="/questions"><strong>128</strong><span class="deck-title">Official questions</span><span class="deck-description">The complete question set ↗</span></a><a href="/questions?deck=6520"><strong>20</strong><span class="deck-title">Asterisk-marked questions</span><span class="deck-description">The 65/20 study set ↗</span></a></div>
+<aside class="milestone"><h2>A field guide in progress</h2><p>Question browsing and answer reveal are ready. Chapters, the reference library, grading, scheduled flashcards, practice tests, progress storage, and current-official lookups are still being built.</p></aside>
+{{else if .Question}}{{with .Question}}
+<p class="eyebrow">{{.Section}} / {{.Subsection}}</p><p class="question-index">Question {{.ID}} of 128 {{if .Is6520}}<span class="badge">★ 65/20</span>{{end}}</p><h1 class="prompt">{{.Prompt}}</h1>
+<p class="count">{{if gt .RequiredCount 1}}Name {{.RequiredCount}} distinct answers — any {{.RequiredCount}} of the following.{{else}}One acceptable answer is enough.{{end}}</p>
+{{if .Changing}}<aside class="warning"><strong>This answer depends on your location or may change.</strong><p>Verify at <a href="https://www.uscis.gov/citizenship/testupdates" rel="noreferrer">uscis.gov/citizenship/testupdates</a>. Current-official lookup is not implemented yet. The source instructions appear below.</p></aside>{{end}}
+<details class="answer"><summary>Reveal official answers</summary><ul>{{range .Answers}}<li>{{.Text}}</li>{{end}}</ul>{{if .Note}}<p>{{.Note}}</p>{{end}}<p class="muted">Parentheses mark optional text. Brackets contain reader guidance.</p>
+<label class="self-check"><input type="checkbox"> I got this right</label><p class="muted">Self-check only; this selection is not saved yet. The real test is oral and judged by a USCIS officer.</p></details>
+{{end}}<nav class="pagination" aria-label="Questions">{{if .Previous}}<a href="/questions/{{.Previous}}">← Previous</a>{{end}}<a href="/questions">All questions</a>{{if .Next}}<a href="/questions/{{.Next}}">Next →</a>{{end}}</nav>
+{{else}}
+<p class="eyebrow">Official USCIS source text</p><h1>{{if .Starred}}The 65/20 study set{{else}}{{.Title}}{{end}}</h1><p>{{len .Questions}} questions. Choose a question to recall and reveal its acceptable answers.</p><ol class="questions">{{range .Questions}}<li value="{{.ID}}"><a href="/questions/{{.ID}}">{{.Prompt}}</a> {{if .Is6520}}<span class="badge">★ 65/20</span>{{end}}{{if gt .RequiredCount 1}}<small>{{.RequiredCount}} distinct answers required</small>{{end}}</li>{{end}}</ol>
+{{end}}
+</main><footer><span class="footer-label">N400 / A civics field guide</span><span>Source: USCIS, <cite>128 Civics Questions and Answers (2025 version)</cite>, M-1778 (09/25). Independent study tool; not affiliated with USCIS.</span></footer></body></html>{{end}}

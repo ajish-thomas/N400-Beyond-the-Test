@@ -1,0 +1,778 @@
+# N400 Civics Study App — Implementation Plan
+
+## Context
+
+Goal: an application to prepare for the USCIS civics test (part of the N-400
+naturalization application) that does two jobs at once:
+
+1. **Pass the test.** Drill the official 128 questions until the answers are automatic.
+2. **Actually learn.** Go past flashcard level into a real guide to American
+   government and history, so the material means something rather than being
+   memorized noise.
+
+Today the repo is four PDFs and no code. This plan builds a **single Go binary**
+serving a modern, responsive web UI with four sections — **Learn**, **Library**,
+**Flashcards**, **Practice Test** — all content derived from the official PDFs,
+working fully offline, with tests that verify the content against its sources.
+
+### Decisions made
+
+| Decision | Choice |
+|---|---|
+| Frontend | Go `html/template` + vendored HTMX/Alpine + hand-written CSS. **No Node/npm.** `go build` is the entire build. |
+| Changing answers | First-run wizard collects **state + ZIP**. Bundled dated snapshots work offline; an on-demand refresh pulls current officeholders from keyless authoritative sources. Verification banner always shown. |
+| Images | Study Guide only, gov-source only. AP-credited image dropped. **No Citizen's Almanac images** (its license forbids reuse outside that publication). |
+| Content scope | 12 chapters + full reference library (Declaration, Constitution, 27 amendments, 7 speeches, symbols, 4 landmark cases). |
+
+---
+
+## The answer model (the subtlest part of this app)
+
+A civics answer is **not** a string. Each question carries a list of
+*acceptable answers*, and the question's wording says **how many distinct ones
+you must supply**. Getting this wrong means the app marks correct answers wrong.
+
+There are three distinct shapes, all verified against the PDF:
+
+**1. Variants — supply any one (`required_count: 1`).** The bullets are
+alternative phrasings or alternative valid facts. Any single one is a complete,
+fully correct answer.
+
+```
+2. What is the supreme law of the land? *
+     • (U.S.) Constitution                    <- one bullet, one answer
+
+41. Name one power of the president.
+     • Signs bills into law                   <- six bullets; ANY ONE is correct
+     • Vetoes bills
+     • Enforces laws
+     • Commander in Chief (of the military)
+     • Chief diplomat
+     • Appoints federal judges
+```
+
+**2. Enumerations — supply N distinct ones (`required_count: 2, 3, or 5`).**
+The bullets are a menu, and you must name several *different* items from it.
+
+| Q | Question | Required | Bullets offered |
+|---|---|---|---|
+| 10 | Name **two** important ideas from the Declaration of Independence and the U.S. Constitution. | 2 | 6 |
+| 48 | What are **two** Cabinet-level positions? | 2 | 19 |
+| 65 | What are **three** rights of everyone living in the United States? | 3 | 6 |
+| 67 | Name **two** promises that new citizens make in the Oath of Allegiance. | 2 | 5 |
+| 69 | What are **two** examples of civic participation in the United States? | 2 | 10 |
+| 81 | There were 13 original states. Name **five**. | 5 | 13 |
+| 126 | Name **three** national U.S. holidays. | 3 | 11 |
+
+**3. The trap: wording lies about cardinality.** A number in the question does
+**not** imply `required_count > 1`. These all say "two" or "three" but a *single*
+bullet is the whole answer:
+
+```
+16. Name the three branches of government.
+     • Legislative, executive, and judicial   <- ONE bullet answers it
+     • Congress, president, and the courts    <- or this one; they're variants
+
+19. What are the two parts of the U.S. Congress?
+     • Senate and House (of Representatives)  <- ONE bullet
+
+15. There are three branches of government. Why?
+     • So one part does not become too powerful
+     • Checks and balances                    <- variants, any one
+     • Separation of powers
+```
+
+**Therefore `required_count` cannot be derived by regex and must be authored
+per question, then validated** (see Phase 2.6). The seven questions in the table
+above are the complete `required_count > 1` set; every other question is 1.
+
+Two further wrinkles inside individual answer strings:
+
+- **Parentheses mark optional text.** `(U.S.) Constitution` must accept both
+  "Constitution" and "U.S. Constitution". `Serve (help, do important work for)
+  the nation (if needed)` must accept the bare core.
+- **Brackets are instructions to the reader, not answers.** `Answers will vary.
+  [District of Columbia residents should answer that D.C. does not have a
+  governor.]` — the bracketed text is guidance and must never be graded against.
+
+### Data model
+
+```go
+type Question struct {
+    ID            int
+    Section       string   // "American Government"
+    Subsection    string   // "A: Principles of American Government"
+    Prompt        string
+    Answers       []Answer
+    RequiredCount int      // 1 for most; 2, 3 or 5 for the seven enumerations
+    Is6520        bool     // one of the 20 asterisk-marked questions
+    AnswerKind    Kind     // Fixed | StateSpecific | CurrentOfficial
+    Chapters      []string // authored in Phase 2
+}
+
+type Answer struct {
+    Text     string // verbatim from the PDF, e.g. "(U.S.) Constitution"
+    Core     string // required portion,  e.g. "Constitution"
+    Full     string // with optionals,    e.g. "U.S. Constitution"
+    Guidance string // bracketed reader instruction; never graded
+}
+```
+
+`RequiredCount == 1` means *any one* of `Answers` is a complete response.
+`RequiredCount == n` means the user must supply *n distinct* members of `Answers`.
+
+---
+
+## Answers that change: onboarding, lookup and refresh
+
+**Eight questions** have no fixed answer. Four are also 65/20 questions (marked ★),
+so even the shortest study path hits them:
+
+| Q | Question | Varies by | Source |
+|---|---|---|---|
+| 23 | Who is one of your state's U.S. senators now? | state | congress-legislators |
+| 29 | Name your U.S. representative. | **district** (ZIP) | crosswalk + congress-legislators |
+| 30 ★ | Speaker of the House now? | time | Wikidata |
+| 38 ★ | President now? | time | Wikidata |
+| 39 ★ | Vice President now? | time | Wikidata |
+| 57 | Chief Justice now? | time | Wikidata |
+| 61 ★ | Governor of your state now? | state + time | Wikidata |
+| 62 | Capital of your state? | state | bundled static table |
+
+### One honest caveat about "web search"
+
+A Go binary cannot do open-ended web search the way a chat assistant can — and
+for *test answers* that is a feature, not a limitation. Search-engine snippets
+are exactly the wrong input for a fact that must be correct on interview day.
+So this is built as **targeted lookups against keyless, authoritative, structured
+sources** rather than a search engine: no API key, no scraping, no snippet
+parsing, no per-user cost, and a stable schema that can be tested against
+recorded fixtures. All three sources below were verified to respond correctly
+during planning.
+
+### Sources (all keyless, all verified)
+
+**1. ZIP -> congressional district — bundled, offline.**
+Census `tab20_cd11920_zcta520_natl.txt` (119th Congress <-> 2020 ZCTA relationship
+file), pipe-delimited, fetched once at ingest and trimmed to two columns
+(`GEOID_ZCTA5_20`, `GEOID_CD119_20`).
+
+    Measured: 40,147 pairs / 33,791 distinct ZIPs -> 432 KB raw, 88 KB gzipped.
+
+Small enough to embed outright, so district lookup needs **no network at all**.
+Source: `https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/tab20_cd11920_zcta520_natl.txt`
+
+> **ZIPs are not districts.** Verified in the data: some ZIPs span up to **four**
+> congressional districts (90002, 90022, 90640, 92324, 93550 among them). When a
+> ZIP maps to more than one district the wizard lists every candidate
+> representative and asks the user to pick — it never guesses. A user who is
+> unsure can enter a full street address and take the exact path below.
+
+**2. Exact district from a street address — optional, online.**
+Census Geocoder, keyless, returns a `119th Congressional Districts` geography
+layer (verified). Used only when the user opts into address entry to disambiguate
+a multi-district ZIP. The address is sent to the Census Bureau and **never
+stored** — the app keeps only the resulting district number.
+
+**3. Senators and representatives.**
+`unitedstates/congress-legislators` -> `legislators-current.json` (verified 200,
+~1.4 MB). Well-maintained public dataset keyed by state and district.
+
+**4. President / VP / Speaker / Chief Justice / governors.**
+Wikidata SPARQL, one query, no key. Offices by QID via `P1308` (officeholder);
+governors via `P6` on the state entity. Verified live during planning — a single
+query returned all four federal officeholders correctly, and `wd:Q1439 wdt:P6`
+returned the sitting governor of Texas.
+
+| Office | QID | Property |
+|---|---|---|
+| President | `Q11696` | `P1308` |
+| Vice President | `Q11699` | `P1308` |
+| Speaker of the House | `Q912994` | `P1308` |
+| Chief Justice | `Q11147` | `P1308` |
+| Governor of <state> | state QID | `P6` |
+
+### Offline-first, network-optional
+
+The binary ships with a **dated snapshot** of every value above. The app is fully
+usable with the network unplugged, forever. Network is strictly an enhancement:
+
+- **Startup never blocks on network.** No lookup on the hot path, ever.
+- The app knows the **exact date its data expires** (see "Staying current"
+  below) and warns ahead of it. It does **not** auto-fetch.
+- **Refresh is user-initiated** (a button in Settings, and on the prompt). It runs
+  with a short timeout against all sources concurrently, and **any failure is
+  non-fatal** — a source that times out keeps its previous value and reports so.
+- Fetched values are written to `~/.config/n400/officials-live.json`, which
+  overlays but never overwrites the embedded snapshot. "Reset to bundled" always
+  works.
+- Every fetched answer is labeled with its **source and fetch date** in the UI.
+- **A manual override always wins.** Any of the eight can be typed in by hand and
+  that value is treated as authoritative — the escape hatch for the day a source
+  is wrong or lags an appointment.
+- `--offline` disables all network code paths outright.
+
+### The rule that does not bend
+
+**The `uscis.gov/citizenship/testupdates` banner stays on all eight questions
+regardless of where the answer came from — bundled, fetched, or hand-entered.**
+None of these sources is USCIS. They are good enough to study against and not
+good enough to stake an interview on, and the app must never blur that line. The
+PDF's own instruction is reproduced verbatim alongside the value.
+
+---
+
+## Staying current (new Congress, elections, appointments)
+
+The app is offline-first, so "how does it update?" needs a real answer rather
+than a staleness guess. Three things change on three different clocks, and they
+fail differently — the design treats them differently.
+
+### The data tells us when it expires
+
+`legislators-current.json` carries an explicit `end` date on every term. Checked
+against live data during planning:
+
+| Term end | Count | Meaning |
+|---|---|---|
+| 2026-11-03 | 2 | appointed senators serving until a special election |
+| **2027-01-03** | **472** | **all representatives + 1/3 of senators — the 120th Congress seats** |
+| 2029-01-03 | 32 | senators, class continuing |
+| 2031-01-03 | 33 | senators, class continuing |
+
+So the app does not guess. At ingest, `cmd/ingest` records
+`expires_on = min(term.end)` across the bundled set, and the app computes a
+**hard expiry date** from the data itself. The UI can say the true thing —
+*"Your representative and senator data is current through January 3, 2027, when
+the 120th Congress is seated"* — and start prompting ahead of that date rather
+than after the answers have quietly gone wrong.
+
+### What changes, when, and how badly it breaks
+
+| Data | Changes | On a stale copy |
+|---|---|---|
+| President / VP | Jan 20 after a presidential election | **Wrong immediately** |
+| Speaker | New Congress, or a mid-term ouster (2023 precedent) | **Wrong immediately**, unpredictably |
+| Representatives, ~1/3 of Senate | Jan 3 of odd years | **Wrong immediately** |
+| Chief Justice, appointed senators | Irregular (death, retirement, resignation) | Wrong without warning |
+| Governors | Nov even years; VA/NJ/KY/LA/MS odd years | Wrong immediately |
+| **District boundaries** (crosswalk) | Redistricting: post-census (2032) + mid-decade court orders | **Usually still correct** — degrades gently |
+| State capitals | Effectively never | Fine |
+| USCIS questions / chapters | When USCIS revises the test | Needs a rebuild, not a data refresh |
+
+That sixth row is the useful nuance: a stale *crosswalk* is mostly harmless
+because district lines only move on redistricting, while a stale *officeholder
+name* is wrong the morning after a transition. The app's warnings are
+proportionate to that — it does not nag about geography the way it nags about
+names.
+
+### Three update paths, in order of user effort
+
+**1. Refresh button — covers every officeholder, takes a second.**
+Settings -> *Refresh current officials*. Online, user-initiated, concurrent,
+short timeout, per-source failures non-fatal. Writes `officials-live.json` to
+the config dir as an overlay. This is the normal answer for a new Congress: on
+January 4, 2027, press the button.
+
+**2. Sidecar file — no network, no new binary, no infrastructure.**
+Drop a JSON file in `~/.config/n400/` and it overlays the embedded data on next
+start. Same schema as the bundled snapshot, validated on load with clear errors.
+This is the escape hatch for an air-gapped machine, a source that has gone away,
+or a value the app got wrong. Documented in the README with a worked example.
+
+**3. New binary — for content, not just data.**
+A USCIS test revision, new chapters, or new images require re-ingesting the PDFs
+and rebuilding. `make ingest && make build-all`. The app shows its content
+version and build date in Settings so it is obvious when a rebuild is the answer.
+The app does **not** self-update: silently swapping a study binary is worse than
+telling someone to download one.
+
+### Handling the Congress-number rollover
+
+The crosswalk URL embeds the Congress number —
+`.../rel2020/cd-sld/tab20_cd{N}20_zcta520_natl.txt` — so it moves from `cd119`
+to `cd120` in January 2027. Verified during planning: `cd118` and `cd119` both
+return HTTP 200, the pattern is stable, and **`cd120` is currently 404** —
+Census publishes the new file some time after the Congress is seated.
+
+`cmd/ingest` therefore:
+
+1. Derives the expected Congress number from the date —
+   `N = (odd_year - 1789)/2 + 1`, seated Jan 3 of odd years. Verified:
+   2025/2026 -> 119, 2027/2028 -> 120, 2033 -> 123.
+2. Requests that file; **on 404, falls back to `N-1` and logs loudly** rather
+   than failing the build. The 404 is expected for months after a new Congress,
+   and the previous file's districts remain correct absent redistricting.
+3. Records which Congress the bundled crosswalk actually came from, so Settings
+   can display *"district map: 119th Congress"* honestly.
+
+-> *verify:* Congress-number derivation is a pure function with table tests
+across decade and century boundaries; the 404 fallback is tested against an
+`httptest` server returning 404 for `cd120` and 200 for `cd119`, asserting the
+ingest succeeds with the older file and records the older number.
+
+### What the user actually experiences
+
+- **Normal day:** nothing. No prompts, no network.
+- **Approaching expiry** (data says Jan 3, 2027): a quiet, dismissible banner —
+  *"A new Congress is seated Jan 3, 2027. Your representative and senator
+  answers will need a refresh then."*
+- **Past expiry, online:** the banner becomes a one-click refresh.
+- **Past expiry, offline:** affected answers are flagged individually as
+  *"may have changed — verify at uscis.gov/citizenship/testupdates"*. Everything
+  else in the app — 120 of 128 questions, all chapters, the whole library —
+  is unaffected and stays fully usable.
+
+The eight changing questions are the only part of this app with a shelf life.
+The other 120 questions, the 12 chapters, and the entire reference library never
+go stale.
+
+---
+
+## What the source PDFs actually contain (verified)
+
+**`2025-Civics-Test-128-Questions-and-Answers.pdf`** (19pp) — ground truth.
+Text layer is clean and machine-parseable:
+
+- Questions numbered `1.`–`128.`, **no gaps** (verified).
+- Answers as `• ` bullets under each question.
+- Three sections / eight subsections:
+  - `AMERICAN GOVERNMENT` -> `A: Principles of American Government` (1–15),
+    `B: System of Government` (16–~72), `C: Rights and Responsibilities` (~73–87)
+  - `AMERICAN HISTORY` -> `A: Colonial Period and Independence`, `B: 1800s`,
+    `C: Recent American History and Other Important Historical Information`
+  - `SYMBOLS AND HOLIDAYS` -> `A: Symbols`, `B: Holidays`
+- **Exactly 20** asterisk-marked (65/20) questions, verified:
+  `2, 7, 12, 20, 30, 36, 38, 39, 44, 52, 61, 66, 74, 78, 86, 94, 113, 115, 121, 126`.
+- **Variable answers**: `Answers will vary` (Q23 senator, Q29 representative,
+  governor, state capital) and `Visit uscis.gov/citizenship/testupdates`
+  (Q30 Speaker, Q38 President, Q39 VP, Chief Justice).
+- Test rules: officer asks up to 20 of 128, **pass at 12**. 65/20 applicants
+  are asked 10 of the 20 starred, **pass at 6**.
+
+**`USCIS-2025-Civics-Test-Study-Guide.pdf`** (88pp, 40MB) — *"One Nation, One
+People: The USCIS Civics Test Textbook"*. 12 chapters, each opening with a
+`❏`-bulleted "In this chapter, you will learn about:" list. Body page numbers
+match PDF page numbers (verified at Ch. 2). 110 embedded images with printed
+credit captions.
+
+| Ch | Title | Pages |
+|---|---|---|
+| 1 | The U.S. Constitution | 8–17 |
+| 2 | The Legislative Branch | 18–23 |
+| 3 | The Executive Branch | 24–28 |
+| 4 | The Judicial Branch | 29–32 |
+| 5 | Rights and Responsibilities | 33–37 |
+| 6 | U.S. Geography | 38–42 |
+| 7 | Early American History | 43–46 |
+| 8 | The American Revolutionary War and the Declaration of Independence | 47–51 |
+| 9 | A New Government and an Expanding Nation | 52–57 |
+| 10 | The Civil War | 58–61 |
+| 11 | American History: 1900–2001 | 62–68 |
+| 12 | American Symbols and Holidays | 69–76 |
+| — | Index: 128 Questions and Answers | 77–88 |
+
+> **Important gap:** the Study Guide contains **no explicit question-number
+> markers** in chapter bodies (verified by grep). The question->chapter mapping
+> does not exist in any source and **must be authored by hand** (Phase 2.2).
+
+**`DOI-Constitution-M-654.pdf`** (64pp) — Declaration of Independence +
+Constitution. Clean structural markers: `Article. I.`–`Article. VII.`,
+`Section. N.`, `Amendment I.`–`Amendment XXVII.`, with footnote digits appended
+to amendment headings (`Amendment XIII.16`) that the parser must strip.
+
+**`CitizensAlmanac-M-76.pdf`** (112pp) — text is public information and reusable
+**with citation**; images are **not**. Usable: Rights/Responsibilities of a
+Citizen; anthems & symbols (Star-Spangled Banner, America the Beautiful, The New
+Colossus, Pledge, Flag, Motto, Great Seal); 7 speeches (Washington Farewell,
+Lincoln 1st Inaugural, Gettysburg, FDR Four Freedoms, JFK Inaugural, MLK I Have
+a Dream, Reagan Brandenburg Gate); founding documents; 4 landmark Supreme Court
+cases (Marbury, Plessy dissent, Barnette, Brown); Prominent Foreign-Born Americans.
+
+---
+
+## Architecture
+
+```
+n400/
+  cmd/
+    n400/main.go            # the app: serve + open browser
+    ingest/main.go          # dev-only: PDFs -> data/raw/*.txt + images (needs poppler)
+  internal/
+    content/
+      questions.go          # Question/Answer models, loader
+      parse_questions.go    # raw text -> []Question
+      parse_answer.go       # "(U.S.) Constitution" -> Core/Full/Guidance
+      parse_constitution.go # raw text -> Document tree
+      chapters.go           # Markdown chapter loader
+      library.go            # speeches/symbols/cases loader
+      images.go             # image manifest loader
+      validate.go           # cross-reference integrity checks
+      data/                 # <-- go:embed root, all checked in
+        raw/                #   pdftotext output (checked in; keeps tests hermetic)
+        questions.json      #   generated, checked in
+        required_counts.json#   authored cardinality overrides
+        chapters/*.md       #   authored, front-mattered
+        library/*.md        #   authored
+        constitution.json   #   generated
+        officials.json      #   dated snapshot (federal + governors)
+        states.json         #   50 states + DC + territories, capitals, QIDs
+        zcta_cd.txt.gz      #   embedded ZIP -> district crosswalk (88 KB)
+        images/             #   curated JPEG/PNG + manifest.json
+    quiz/
+      engine.go             # selection, scoring, pass thresholds
+      grade.go              # answer normalization + set matching
+    flashcard/
+      deck.go               # deck construction + filters
+      scheduler.go          # Leitner boxes, injectable clock
+    officials/
+      snapshot.go           # load bundled + live overlay, staleness check
+      district.go           # ZIP -> district(s) via embedded Census crosswalk
+      fetch_congress.go     # congress-legislators client
+      fetch_wikidata.go     # Wikidata SPARQL client
+      fetch_geocoder.go     # Census geocoder (address -> district)
+      resolve.go            # question ID -> displayed answer + provenance
+    store/
+      store.go              # progress persistence (JSON, atomic writes)
+    web/
+      server.go routes.go handlers_*.go
+      templates/*.gohtml
+      static/{app.css, htmx.min.js, alpine.min.js, fonts/}
+```
+
+**Runtime:** binds `127.0.0.1:8400` (`--port` to override), opens the default
+browser (`--no-browser` to skip), serves everything from `embed.FS`. Fully
+offline. Cross-compiles to linux/darwin/windows with no cgo.
+
+**Progress storage:** one JSON file in `os.UserConfigDir()/n400/progress.json`,
+written atomically (temp file + rename), behind a `store.Store` interface so
+SQLite can replace it later if history outgrows it. Not now.
+
+---
+
+## Phase 1 — Skeleton and extraction pipeline
+
+**1.1** `go mod init`; `cmd/n400/main.go` serving a page from `embed.FS`, graceful
+shutdown, `--port` / `--no-browser`.
+-> *verify:* `go build && ./n400` opens a browser to a working page.
+
+**1.2** `cmd/ingest` — dev-only, shells out to `pdftotext -layout` and
+`pdfimages -j`, writes `internal/content/data/raw/*.txt` and
+`data/images/_extracted/`. Poppler is a **dev** dependency, documented in README.
+-> *verify:* raw text files appear and are committed. **From here on tests never
+touch the PDFs or need poppler** — they parse the checked-in raw text, keeping
+CI hermetic and fast.
+
+**1.3** `parse_answer.go` — split one bullet into `Core` / `Full` / `Guidance`:
+strip `(optional)` parens into Core-vs-Full, lift `[bracketed]` text into
+Guidance, preserve `Text` verbatim.
+-> *verify:* table tests over every real-world shape in the PDF —
+`(U.S.) Constitution`, `Serve (help, do important work for) the nation (if needed)`,
+`Presidents Day (Washington's Birthday)`, `Secretary of War (Defense)`,
+`Answers will vary. [District of Columbia residents...]`, and plain strings.
+
+**1.4** `parse_questions.go` — raw text -> `[]Question`. Must handle: page-break
+furniture (`N of 19`, `uscis.gov/citizenship`), the asterisk both trailing a
+prompt and isolated on its own line (1 occurrence), prompts wrapping across
+lines, answers wrapping across lines, and bracketed clarifications.
+-> *verify (tests):* exactly 128 questions; IDs 1–128 contiguous; exactly 20
+`Is6520` and the ID set equals the verified list; every question has >= 1 answer;
+every Section/Subsection in the known set; **golden-file test** pinning the full
+parse so future parser edits cannot silently corrupt content.
+
+---
+
+## Phase 2 — Content authoring (the long pole)
+
+**2.1 Chapters** — 12 Markdown files, e.g. `data/chapters/01-constitution.md`:
+
+```yaml
+---
+id: constitution
+number: 1
+title: The U.S. Constitution
+objectives:          # from the ❏ list on the chapter's first page
+  - The U.S. Constitution.
+  - When the Constitution was written.
+questions: [1, 2, 3, 4, 5, 6, 7, 10, 14, 15]
+images: [ch01-christy-signing, ch01-constitution-archives]
+source_pages: "8-17"
+---
+Body prose, reflowed from the PDF's two-column layout...
+```
+
+Prose is transcribed faithfully from the Study Guide — no paraphrasing, no
+invention. The two-column layout means `pdftotext -layout` output needs manual
+reflow per chapter.
+
+**2.2 Question -> chapter mapping** — the hand-authored link no source provides.
+Each of the 128 questions maps to >= 1 chapter; the reverse index powers
+"questions covered in this chapter."
+-> *verify:* every question ID appears in >= 1 chapter list; every chapter has
+>= 1 question; no chapter references a nonexistent ID; union covers all 128.
+
+**2.3 Library** — `data/library/`:
+- `constitution.json` generated by `parse_constitution.go`: Declaration,
+  Preamble, Articles I–VII with Sections, Amendments I–XXVII. Footnote digits
+  stripped from headings; ratification dates attached.
+- Speeches, symbols/anthems, landmark cases as Markdown from the Almanac,
+  **each carrying the required citation**: *U.S. Department of Homeland Security,
+  U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's
+  Almanac, Washington, DC, 2014.*
+- Cross-links: Q6 "What does the Bill of Rights protect?" -> Amendments I–X.
+
+-> *verify:* 27 amendments numbered I–XXVII; 7 articles; Declaration non-empty;
+no heading retains a stray footnote digit; every cross-link resolves.
+
+**2.4 Images** — curate the 110 extracted files down to keepers.
+`data/images/manifest.json`:
+
+```json
+{ "id": "ch01-christy-signing",
+  "file": "ch01-christy-signing.jpg",
+  "page": 9,
+  "caption": "\"Scene at the Signing of the Constitution,\" by Howard Chandler Christy.",
+  "credit": "Courtesy of the Library of Congress.",
+  "chapters": ["constitution"] }
+```
+
+Curation drops page furniture, logos, gradients and color-separation artifacts
+(the `index`-color entries in `pdfimages -list` are usually these), and **drops
+the AP-credited image**. Every surviving image renders with caption and credit
+visible. Downscale to ~1600px max and re-encode to keep the binary reasonable.
+-> *verify:* every manifest `file` exists in `embed.FS`; every embedded image
+appears in the manifest (no orphans); every entry has a non-empty `credit`; no
+entry credits the Associated Press; every `chapters` ref resolves.
+
+**2.5 Officials + states (bundled snapshots)** — `officials.json` (`as_of` +
+President, VP, Speaker, Chief Justice, all 50 governors) and `states.json`
+(50 states + DC + territories -> capital, Wikidata QID, senators, plus the
+DC/territory special-case wording the PDF spells out verbatim). `zcta_cd.txt.gz`
+is produced by `cmd/ingest` from the Census relationship file.
+-> *verify:* every `CurrentOfficial` question resolves from `officials.json`;
+every `StateSpecific` question resolves for all 50 states + DC; DC and territory
+edge cases reproduce the PDF's exact wording (D.C. has no senators, no governor,
+is not a state); the crosswalk contains a known-good sample of ZIPs including at
+least one four-district ZIP.
+
+**2.6 `required_counts.json`** — the authored cardinality table. Only the seven
+enumeration questions deviate from 1:
+
+```json
+{ "10": 2, "48": 2, "65": 3, "67": 2, "69": 2, "81": 5, "126": 3 }
+```
+
+-> *verify:* (a) every listed question's `RequiredCount` <= its number of
+answers; (b) **a guard test that greps every prompt for a cardinality word
+("name two", "what are three", "name five") and asserts each hit is either in
+this table or on an explicit reviewed-exceptions list** — so if USCIS revises
+the PDF and adds an enumeration question, the test fails loudly instead of the
+app silently accepting one answer where three are required. The reviewed
+exceptions are the wording-lies cases: Q15, Q16, Q19, Q28, Q37 and friends.
+
+---
+
+## Phase 3 — Engines
+
+**3.1 Grading** (`internal/quiz/grade.go`). The real test is **oral**, judged by
+an officer, so grading is advisory and generous, never punitive.
+
+*Normalization* (applied to both user input and every acceptable answer):
+lowercase; strip punctuation and diacritics; collapse whitespace; drop leading
+articles; normalize digits <-> words ("27" == "twenty-seven", "2" == "two");
+normalize "U.S." / "US" / "United States".
+
+*Single-answer match* (`RequiredCount == 1`) — input matches if, for any
+`Answer`, it equals `Core` or `Full`, or contains `Core` at token boundaries.
+Containment handles "the U.S. Constitution" against `(U.S.) Constitution`.
+
+*Set match* (`RequiredCount == n`) — this is where the app earns its keep:
+
+1. Split the user's input on commas, semicolons, newlines and " and ".
+2. Match each fragment against the answer list independently.
+3. **Enforce distinctness** — two fragments matching the *same* `Answer` count
+   once. Answering "New York, New York, New York" to Q81 is one state, not five.
+4. Report `matched k of n required`, naming which items landed and how many are
+   still needed, rather than a bare wrong.
+5. Partial credit is shown but does not pass the question.
+
+*Override* — an explicit **"I got this right"** button on every question. The
+user is the authority; the override feeds progress tracking. This is the safety
+valve for any normalization gap.
+
+-> *verify:*
+- **Self-match test:** for all 128 questions, every official answer string must
+  grade as correct when submitted verbatim. This is the single most important
+  test in the codebase.
+- **Enumeration tests:** for each of the seven, submitting exactly N distinct
+  valid items passes; N-1 fails with the right "need 1 more" message; N copies
+  of the same item fails on distinctness; N valid items in any order passes;
+  mixed separators ("Vote and run for office") parse correctly.
+- **Optional-paren tests:** `Constitution` and `U.S. Constitution` both pass Q2.
+- **Guidance tests:** bracketed reader instructions are never treated as
+  acceptable answers.
+- **Near-miss table:** realistic misspellings and paraphrases, each with an
+  asserted expected verdict, so grading changes are visible in the diff.
+
+**3.2 Quiz engine** (`internal/quiz/engine.go`):
+- **Official mock:** 20 drawn from all 128, pass at 12. Stops early once pass or
+  fail is mathematically determined, mirroring the real interview.
+- **65/20 mode:** 10 drawn from the 20 starred, pass at 6.
+- **Custom drill:** filter by section, chapter, or "questions I've missed."
+- **Multiple-choice mode:** only offered for `RequiredCount == 1` questions —
+  distractors sampled from *other* questions' answers in the same subsection.
+  Enumeration questions stay free-text, since a multiple-choice "pick three"
+  would misrepresent the real oral format.
+-> *verify:* seeded-RNG determinism; 20 unique questions, never a duplicate;
+65/20 draws only from the starred set; threshold arithmetic at boundaries
+(11 vs 12, 5 vs 6); early-stop fires at the right moment; distractors never
+equal a correct answer; MC mode never selects an enumeration question.
+
+**3.3 Flashcard scheduler** (`internal/flashcard/scheduler.go`) — Leitner boxes
+(5 boxes, intervals 1/2/4/8/16 days). Correct -> promote; wrong -> box 1. Clock
+injected as an interface so tests are deterministic. Enumeration cards show the
+full menu on the reverse with the required count stated ("name any 3 of these 11").
+-> *verify:* promotion/demotion transitions; due-date computation across day
+boundaries; a card answered correctly 5 times stops appearing daily; deck filters
+(section, chapter, 65/20, starred, missed) return the right sets.
+
+**3.4 Store** (`internal/store`) — attempt history, per-card box state, starred
+questions, state profile.
+-> *verify:* round-trip; atomic write leaves no partial file on simulated
+failure; corrupt or missing file recovers to empty state rather than crashing;
+concurrent access clean under `-race`.
+
+**3.5 Officials resolution** (`internal/officials`) — the overlay chain
+(manual override -> live fetch -> bundled snapshot), staleness computation, and
+ZIP -> district lookup over the embedded crosswalk.
+-> *verify:* overlay precedence in every combination; staleness boundary at
+exactly the threshold day; a four-district ZIP returns four candidates; an
+unknown ZIP returns a clean "not found" rather than an error; DC/territory ZIPs
+produce the special-case wording.
+**All network clients are tested against `httptest` servers replaying recorded
+fixtures — no test ever touches the live network.** Fixture tests cover: happy
+path, HTTP 500, timeout, malformed JSON, empty result set, and a schema change
+(unexpected field shape), each asserting the previous value survives and the
+failure is reported rather than swallowed.
+
+---
+
+## Phase 4 — Web UI
+
+Hand-written design system in `static/app.css`: CSS custom properties for the
+palette, light **and** dark via `prefers-color-scheme`, a type scale, responsive
+down to ~380px since "cross-platform" includes reading on a phone. Restrained
+palette — deep navy, off-white, one red accent — not flag cosplay. System font
+stack plus one self-hosted serif for chapter prose.
+
+| Route | Purpose |
+|---|---|
+| `GET /welcome` · `POST /welcome` | First-run wizard: state + ZIP -> district (with candidate picker if the ZIP spans several), optional address disambiguation, optional initial refresh. Skippable. |
+| `GET /` | Dashboard: progress, due flashcards, next chapter, "take a test" |
+| `GET /learn` · `/learn/{chapter}` | Chapter list; reader with objectives, prose, images+credits, linked questions |
+| `GET /library` · `/library/constitution/{ref}` · `/library/{doc}` | Reference browser |
+| `GET /flashcards` · `POST /flashcards/{id}/answer` | Deck picker; card flip (Alpine) + HTMX answer posting |
+| `GET /practice` · `POST /practice/start` · `/practice/{session}/answer` | Mode picker, question flow, results with review links into Learn |
+| `GET /questions` · `/questions/{id}` | Browse all 128; single question with all acceptable answers, required count, chapter links, ⚠ banner if changeable |
+| `GET /settings` · `POST /settings/refresh` | State/ZIP/district profile, manual answer overrides, **Refresh current officials**, reset to bundled, content `as_of` dates |
+
+UI must make cardinality obvious wherever a question appears: an enumeration
+question renders **"Name 3 — any three of the following"** above its input, and
+the input shows live progress ("2 of 3 named") as the user types.
+
+-> *verify:* `httptest` over every route (status, content-type, key content);
+golden HTML snapshots for the chapter reader and results page; 404s for unknown
+chapter/question/session IDs; a test asserting every changeable-answer question
+renders the uscis.gov banner; a test asserting all seven enumeration questions
+render their required count.
+
+---
+
+## Phase 5 — Build and release
+
+- `Makefile`: `test` (`go test -race ./...`), `lint` (`go vet` + staticcheck),
+  `build`, `build-all` (linux/darwin/windows × amd64/arm64), `ingest`.
+- README: how to run, how to re-ingest when USCIS updates the PDFs, how to
+  refresh `officials.json`.
+- Test asserting the binary is self-contained: server starts and serves `/` with
+  the working directory set to an empty temp dir.
+
+---
+
+## Critical files
+
+| File | Role |
+|---|---|
+| `internal/content/parse_questions.go` | Ground truth. Everything depends on it being exactly right. |
+| `internal/quiz/grade.go` | Subtlest logic in the app. Wrong here = the app tells you you're wrong when you're right. |
+| `internal/content/data/required_counts.json` | Seven questions where "any one answer" is not enough. Authored, guard-tested. |
+| `internal/content/validate.go` | Cross-reference integrity net (questions <-> chapters <-> images <-> library). Runs as a test **and** at server startup. |
+| `internal/content/data/chapters/*.md` | Bulk of the authoring work; carries the question->chapter mapping. |
+| `internal/content/data/officials.json` | The bundled snapshot — the thing that goes stale. Dated, banner-flagged, refreshable. |
+| `internal/officials/resolve.go` | The overlay chain (override -> sidecar -> live -> bundled), expiry computation, and provenance labelling for all eight changing answers. |
+
+## Verification
+
+```bash
+go test -race ./...     # unit + golden + httptest; hermetic (no PDFs, no poppler)
+go vet ./...
+go build ./cmd/n400 && ./n400
+```
+
+Manual smoke before calling it done:
+
+1. Read a chapter — prose intact, images render with credits, linked questions appear.
+2. Run a full 20-question mock — threshold correct, results link back into Learn.
+3. Run 65/20 mode — only starred questions appear.
+4. **Answer Q81 with "New Hampshire, Massachusetts, Rhode Island, Connecticut,
+   New York"** — passes. Answer it with the same state five times — fails on
+   distinctness with a clear message.
+5. **Answer Q2 with "Constitution"** and again with "the U.S. Constitution" —
+   both pass.
+6. Flashcard a deck, close the app, reopen — progress survived.
+7. Run the first-run wizard with a Texas ZIP — correct district and
+   representative. Re-run with **90002** (four districts) — the candidate picker
+   appears and does not guess.
+8. Set state to DC — Q23/Q61/Q62 show the PDF's exact special-case wording.
+9. Hit **Refresh current officials** — President/VP/Speaker/Chief Justice/governor
+   update and show source + fetch date. Unplug the network and hit it again —
+   clear per-source failure message, previous values intact, app still usable.
+10. Confirm the uscis.gov banner is present on all eight changing questions in
+   every state: bundled, freshly fetched, and hand-overridden.
+11. Run with `--offline` — no outbound connections (verify with `ss`/`tcpdump`),
+   everything else works.
+12. Open `/learn` at phone width — no horizontal scroll.
+13. Disconnect the network entirely — every section still works.
+
+## Risks
+
+- **Chapter transcription is the long pole.** 12 chapters of two-column PDF prose
+  needing manual reflow. Mitigation: do Chapter 1 end-to-end first to calibrate
+  effort before committing to all 12.
+- **Grading generosity is a judgment call.** Too strict and the app punishes
+  correct answers; too loose and it builds false confidence. Mitigation: the
+  self-match test as a hard floor, the near-miss table as a visible record of
+  where the line sits, and the "I got this right" override as the escape hatch.
+- **Question->chapter mapping is authored, not derived.** Validation catches
+  *omissions*, not *bad* mappings — worth a read-through once complete.
+- **Upstream sources can change shape or go away.** Wikidata is
+  community-edited; the Census and legislators files are versioned by Congress
+  number. Mitigated by: the bundled snapshot always being a working fallback,
+  the `N-1` ingest fallback for an unpublished Census file, fixture tests that
+  fail loudly on schema drift, refresh failures being non-fatal by construction,
+  and the sidecar file as a no-infrastructure manual override. The app degrades
+  to "offline with a stale-data banner", never to broken.
+- **Nobody presses the refresh button.** The likeliest real failure is a user
+  studying against January-2027 data in March 2027. Mitigated by deriving a hard
+  expiry date from the data instead of guessing, warning *before* it lands, and
+  flagging affected answers individually rather than relying on one banner the
+  user dismissed months ago.
+- **Wikidata is not USCIS.** A community edit could briefly show a wrong
+  officeholder. Mitigated by the permanent verification banner, visible source +
+  fetch-date labels, and the manual override. This is why refresh is
+  user-initiated and never silent.
+- **Privacy.** ZIP and state are stored locally only. A street address, if the
+  user opts into that path, goes to the Census Bureau and is never persisted —
+  stated plainly in the wizard, not buried.
+- **Image curation is manual.** 110 extracted files, most of them page furniture.
+  Budget real time for a contact sheet and picking keepers.

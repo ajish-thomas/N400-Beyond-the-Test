@@ -1,0 +1,4126 @@
+[
+  {
+    "ID": 1,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "What is the form of government of the United States?",
+    "Answers": [
+      {
+        "Text": "Republic",
+        "Core": "Republic",
+        "Full": "Republic",
+        "Guidance": ""
+      },
+      {
+        "Text": "Constitution-based federal republic",
+        "Core": "Constitution-based federal republic",
+        "Full": "Constitution-based federal republic",
+        "Guidance": ""
+      },
+      {
+        "Text": "Representative democracy",
+        "Core": "Representative democracy",
+        "Full": "Representative democracy",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 2,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "What is the supreme law of the land?",
+    "Answers": [
+      {
+        "Text": "(U.S.) Constitution",
+        "Core": "Constitution",
+        "Full": "U.S. Constitution",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 3,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "Name one thing the U.S. Constitution does.",
+    "Answers": [
+      {
+        "Text": "Forms the government",
+        "Core": "Forms the government",
+        "Full": "Forms the government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Defines powers of government",
+        "Core": "Defines powers of government",
+        "Full": "Defines powers of government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Defines the parts of government",
+        "Core": "Defines the parts of government",
+        "Full": "Defines the parts of government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Protects the rights of the people",
+        "Core": "Protects the rights of the people",
+        "Full": "Protects the rights of the people",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 4,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "The U.S. Constitution starts with the words “We the People.” What does “We the People” mean?",
+    "Answers": [
+      {
+        "Text": "Self-government",
+        "Core": "Self-government",
+        "Full": "Self-government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Popular sovereignty",
+        "Core": "Popular sovereignty",
+        "Full": "Popular sovereignty",
+        "Guidance": ""
+      },
+      {
+        "Text": "Consent of the governed",
+        "Core": "Consent of the governed",
+        "Full": "Consent of the governed",
+        "Guidance": ""
+      },
+      {
+        "Text": "People should govern themselves",
+        "Core": "People should govern themselves",
+        "Full": "People should govern themselves",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Example of) social contract",
+        "Core": "social contract",
+        "Full": "Example of social contract",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 5,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "How are changes made to the U.S. Constitution?",
+    "Answers": [
+      {
+        "Text": "Amendments",
+        "Core": "Amendments",
+        "Full": "Amendments",
+        "Guidance": ""
+      },
+      {
+        "Text": "The amendment process",
+        "Core": "The amendment process",
+        "Full": "The amendment process",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 6,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "What does the Bill of Rights protect?",
+    "Answers": [
+      {
+        "Text": "(The basic) rights of Americans",
+        "Core": "rights of Americans",
+        "Full": "The basic rights of Americans",
+        "Guidance": ""
+      },
+      {
+        "Text": "(The basic) rights of people living in the United States",
+        "Core": "rights of people living in the United States",
+        "Full": "The basic rights of people living in the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 7,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "How many amendments does the U.S. Constitution have?",
+    "Answers": [
+      {
+        "Text": "Twenty-seven (27)",
+        "Core": "Twenty-seven",
+        "Full": "Twenty-seven 27",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 8,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "Why is the Declaration of Independence important?",
+    "Answers": [
+      {
+        "Text": "It says America is free from British control.",
+        "Core": "It says America is free from British control.",
+        "Full": "It says America is free from British control.",
+        "Guidance": ""
+      },
+      {
+        "Text": "It says all people are created equal.",
+        "Core": "It says all people are created equal.",
+        "Full": "It says all people are created equal.",
+        "Guidance": ""
+      },
+      {
+        "Text": "It identifies inherent rights.",
+        "Core": "It identifies inherent rights.",
+        "Full": "It identifies inherent rights.",
+        "Guidance": ""
+      },
+      {
+        "Text": "It identifies individual freedoms.",
+        "Core": "It identifies individual freedoms.",
+        "Full": "It identifies individual freedoms.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 9,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "What founding document said the American colonies were free from Britain?",
+    "Answers": [
+      {
+        "Text": "Declaration of Independence",
+        "Core": "Declaration of Independence",
+        "Full": "Declaration of Independence",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 10,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "Name two important ideas from the Declaration of Independence and the U.S. Constitution.",
+    "Answers": [
+      {
+        "Text": "Equality",
+        "Core": "Equality",
+        "Full": "Equality",
+        "Guidance": ""
+      },
+      {
+        "Text": "Liberty",
+        "Core": "Liberty",
+        "Full": "Liberty",
+        "Guidance": ""
+      },
+      {
+        "Text": "Social contract",
+        "Core": "Social contract",
+        "Full": "Social contract",
+        "Guidance": ""
+      },
+      {
+        "Text": "Natural rights",
+        "Core": "Natural rights",
+        "Full": "Natural rights",
+        "Guidance": ""
+      },
+      {
+        "Text": "Limited government",
+        "Core": "Limited government",
+        "Full": "Limited government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Self-government",
+        "Core": "Self-government",
+        "Full": "Self-government",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 2,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 11,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "The words “Life, Liberty, and the pursuit of Happiness” are in what founding document?",
+    "Answers": [
+      {
+        "Text": "Declaration of Independence",
+        "Core": "Declaration of Independence",
+        "Full": "Declaration of Independence",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 12,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "What is the economic system of the United States?",
+    "Answers": [
+      {
+        "Text": "Capitalism",
+        "Core": "Capitalism",
+        "Full": "Capitalism",
+        "Guidance": ""
+      },
+      {
+        "Text": "Free market economy",
+        "Core": "Free market economy",
+        "Full": "Free market economy",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 13,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "What is the rule of law?",
+    "Answers": [
+      {
+        "Text": "Everyone must follow the law.",
+        "Core": "Everyone must follow the law.",
+        "Full": "Everyone must follow the law.",
+        "Guidance": ""
+      },
+      {
+        "Text": "Leaders must obey the law.",
+        "Core": "Leaders must obey the law.",
+        "Full": "Leaders must obey the law.",
+        "Guidance": ""
+      },
+      {
+        "Text": "Government must obey the law.",
+        "Core": "Government must obey the law.",
+        "Full": "Government must obey the law.",
+        "Guidance": ""
+      },
+      {
+        "Text": "No one is above the law.",
+        "Core": "No one is above the law.",
+        "Full": "No one is above the law.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 14,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "Many documents influenced the U.S. Constitution. Name one.",
+    "Answers": [
+      {
+        "Text": "Declaration of Independence",
+        "Core": "Declaration of Independence",
+        "Full": "Declaration of Independence",
+        "Guidance": ""
+      },
+      {
+        "Text": "Articles of Confederation",
+        "Core": "Articles of Confederation",
+        "Full": "Articles of Confederation",
+        "Guidance": ""
+      },
+      {
+        "Text": "Federalist Papers",
+        "Core": "Federalist Papers",
+        "Full": "Federalist Papers",
+        "Guidance": ""
+      },
+      {
+        "Text": "Anti-Federalist Papers",
+        "Core": "Anti-Federalist Papers",
+        "Full": "Anti-Federalist Papers",
+        "Guidance": ""
+      },
+      {
+        "Text": "Virginia Declaration of Rights",
+        "Core": "Virginia Declaration of Rights",
+        "Full": "Virginia Declaration of Rights",
+        "Guidance": ""
+      },
+      {
+        "Text": "Fundamental Orders of Connecticut",
+        "Core": "Fundamental Orders of Connecticut",
+        "Full": "Fundamental Orders of Connecticut",
+        "Guidance": ""
+      },
+      {
+        "Text": "Mayflower Compact",
+        "Core": "Mayflower Compact",
+        "Full": "Mayflower Compact",
+        "Guidance": ""
+      },
+      {
+        "Text": "Iroquois Great Law of Peace",
+        "Core": "Iroquois Great Law of Peace",
+        "Full": "Iroquois Great Law of Peace",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 15,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "A: Principles of American Government",
+    "Prompt": "There are three branches of government. Why?",
+    "Answers": [
+      {
+        "Text": "So one part does not become too powerful",
+        "Core": "So one part does not become too powerful",
+        "Full": "So one part does not become too powerful",
+        "Guidance": ""
+      },
+      {
+        "Text": "Checks and balances",
+        "Core": "Checks and balances",
+        "Full": "Checks and balances",
+        "Guidance": ""
+      },
+      {
+        "Text": "Separation of powers",
+        "Core": "Separation of powers",
+        "Full": "Separation of powers",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 16,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Name the three branches of government.",
+    "Answers": [
+      {
+        "Text": "Legislative, executive, and judicial",
+        "Core": "Legislative, executive, and judicial",
+        "Full": "Legislative, executive, and judicial",
+        "Guidance": ""
+      },
+      {
+        "Text": "Congress, president, and the courts",
+        "Core": "Congress, president, and the courts",
+        "Full": "Congress, president, and the courts",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 17,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "The President of the United States is in charge of which branch of government?",
+    "Answers": [
+      {
+        "Text": "Executive branch",
+        "Core": "Executive branch",
+        "Full": "Executive branch",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 18,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What part of the federal government writes laws?",
+    "Answers": [
+      {
+        "Text": "(U.S.) Congress",
+        "Core": "Congress",
+        "Full": "U.S. Congress",
+        "Guidance": ""
+      },
+      {
+        "Text": "(U.S. or national) legislature",
+        "Core": "legislature",
+        "Full": "U.S. or national legislature",
+        "Guidance": ""
+      },
+      {
+        "Text": "Legislative branch",
+        "Core": "Legislative branch",
+        "Full": "Legislative branch",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 19,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What are the two parts of the U.S. Congress?",
+    "Answers": [
+      {
+        "Text": "Senate and House (of Representatives)",
+        "Core": "Senate and House",
+        "Full": "Senate and House of Representatives",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 20,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Name one power of the U.S. Congress.",
+    "Answers": [
+      {
+        "Text": "Writes laws",
+        "Core": "Writes laws",
+        "Full": "Writes laws",
+        "Guidance": ""
+      },
+      {
+        "Text": "Declares war",
+        "Core": "Declares war",
+        "Full": "Declares war",
+        "Guidance": ""
+      },
+      {
+        "Text": "Makes the federal budget",
+        "Core": "Makes the federal budget",
+        "Full": "Makes the federal budget",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 21,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How many U.S. senators are there?",
+    "Answers": [
+      {
+        "Text": "One hundred (100)",
+        "Core": "One hundred",
+        "Full": "One hundred 100",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 22,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How long is a term for a U.S. senator?",
+    "Answers": [
+      {
+        "Text": "Six (6) years",
+        "Core": "Six years",
+        "Full": "Six 6 years",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 23,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who is one of your state’s U.S. senators now?",
+    "Answers": [
+      {
+        "Text": "Answers will vary. [District of Columbia residents and residents of U.S. territories should answer that D.C. (or the territory where the applicant lives) has no U.S. senators.]",
+        "Core": "Answers will vary.",
+        "Full": "Answers will vary.",
+        "Guidance": "District of Columbia residents and residents of U.S. territories should answer that D.C. (or the territory where the applicant lives) has no U.S. senators."
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "state_specific",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 24,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How many voting members are in the House of Representatives?",
+    "Answers": [
+      {
+        "Text": "Four hundred thirty-five (435)",
+        "Core": "Four hundred thirty-five",
+        "Full": "Four hundred thirty-five 435",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 25,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How long is a term for a member of the House of Representatives?",
+    "Answers": [
+      {
+        "Text": "Two (2) years",
+        "Core": "Two years",
+        "Full": "Two 2 years",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 26,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Why do U.S. representatives serve shorter terms than U.S. senators?",
+    "Answers": [
+      {
+        "Text": "To more closely follow public opinion",
+        "Core": "To more closely follow public opinion",
+        "Full": "To more closely follow public opinion",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 27,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How many senators does each state have?",
+    "Answers": [
+      {
+        "Text": "Two (2)",
+        "Core": "Two",
+        "Full": "Two 2",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 28,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Why does each state have two senators?",
+    "Answers": [
+      {
+        "Text": "Equal representation (for small states)",
+        "Core": "Equal representation",
+        "Full": "Equal representation for small states",
+        "Guidance": ""
+      },
+      {
+        "Text": "The Great Compromise (Connecticut Compromise)",
+        "Core": "The Great Compromise",
+        "Full": "The Great Compromise Connecticut Compromise",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 29,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Name your U.S. representative.",
+    "Answers": [
+      {
+        "Text": "Answers will vary. [Residents of territories with nonvoting Delegates or Resident Commissioners may provide the name of that Delegate or Commissioner. Also acceptable is any statement that the territory has no (voting) representatives in Congress.]",
+        "Core": "Answers will vary.",
+        "Full": "Answers will vary.",
+        "Guidance": "Residents of territories with nonvoting Delegates or Resident Commissioners may provide the name of that Delegate or Commissioner. Also acceptable is any statement that the territory has no (voting) representatives in Congress."
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "state_specific",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 30,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is the name of the Speaker of the House of Representatives now?",
+    "Answers": [
+      {
+        "Text": "Visit uscis.gov/citizenship/testupdates for the name of the Speaker of the House of Representatives.",
+        "Core": "Visit uscis.gov/citizenship/testupdates for the name of the Speaker of the House of Representatives.",
+        "Full": "Visit uscis.gov/citizenship/testupdates for the name of the Speaker of the House of Representatives.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "current_official",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 31,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who does a U.S. senator represent?",
+    "Answers": [
+      {
+        "Text": "Citizens of their state",
+        "Core": "Citizens of their state",
+        "Full": "Citizens of their state",
+        "Guidance": ""
+      },
+      {
+        "Text": "People of their state",
+        "Core": "People of their state",
+        "Full": "People of their state",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 32,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who elects U.S. senators?",
+    "Answers": [
+      {
+        "Text": "Citizens from their state",
+        "Core": "Citizens from their state",
+        "Full": "Citizens from their state",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 33,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who does a member of the House of Representatives represent?",
+    "Answers": [
+      {
+        "Text": "Citizens in their (congressional) district",
+        "Core": "Citizens in their district",
+        "Full": "Citizens in their congressional district",
+        "Guidance": ""
+      },
+      {
+        "Text": "Citizens in their district",
+        "Core": "Citizens in their district",
+        "Full": "Citizens in their district",
+        "Guidance": ""
+      },
+      {
+        "Text": "People from their (congressional) district",
+        "Core": "People from their district",
+        "Full": "People from their congressional district",
+        "Guidance": ""
+      },
+      {
+        "Text": "People in their district",
+        "Core": "People in their district",
+        "Full": "People in their district",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 34,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who elects members of the House of Representatives?",
+    "Answers": [
+      {
+        "Text": "Citizens from their (congressional) district",
+        "Core": "Citizens from their district",
+        "Full": "Citizens from their congressional district",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 35,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Some states have more representatives than other states. Why?",
+    "Answers": [
+      {
+        "Text": "(Because of) the state’s population",
+        "Core": "the state’s population",
+        "Full": "Because of the state’s population",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Because) they have more people",
+        "Core": "they have more people",
+        "Full": "Because they have more people",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Because) some states have more people",
+        "Core": "some states have more people",
+        "Full": "Because some states have more people",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 36,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "The President of the United States is elected for how many years?",
+    "Answers": [
+      {
+        "Text": "Four (4) years",
+        "Core": "Four years",
+        "Full": "Four 4 years",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 37,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "The President of the United States can serve only two terms. Why?",
+    "Answers": [
+      {
+        "Text": "(Because of) the 22nd Amendment",
+        "Core": "the 22nd Amendment",
+        "Full": "Because of the 22nd Amendment",
+        "Guidance": ""
+      },
+      {
+        "Text": "To keep the president from becoming too powerful",
+        "Core": "To keep the president from becoming too powerful",
+        "Full": "To keep the president from becoming too powerful",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 38,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is the name of the President of the United States now?",
+    "Answers": [
+      {
+        "Text": "Visit uscis.gov/citizenship/testupdates for the name of the President of the United States.",
+        "Core": "Visit uscis.gov/citizenship/testupdates for the name of the President of the United States.",
+        "Full": "Visit uscis.gov/citizenship/testupdates for the name of the President of the United States.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "current_official",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 39,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is the name of the Vice President of the United States now?",
+    "Answers": [
+      {
+        "Text": "Visit uscis.gov/citizenship/testupdates for the name of the Vice President of the United States.",
+        "Core": "Visit uscis.gov/citizenship/testupdates for the name of the Vice President of the United States.",
+        "Full": "Visit uscis.gov/citizenship/testupdates for the name of the Vice President of the United States.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "current_official",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 40,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "If the president can no longer serve, who becomes president?",
+    "Answers": [
+      {
+        "Text": "The Vice President (of the United States)",
+        "Core": "The Vice President",
+        "Full": "The Vice President of the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 41,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Name one power of the president.",
+    "Answers": [
+      {
+        "Text": "Signs bills into law",
+        "Core": "Signs bills into law",
+        "Full": "Signs bills into law",
+        "Guidance": ""
+      },
+      {
+        "Text": "Vetoes bills",
+        "Core": "Vetoes bills",
+        "Full": "Vetoes bills",
+        "Guidance": ""
+      },
+      {
+        "Text": "Enforces laws",
+        "Core": "Enforces laws",
+        "Full": "Enforces laws",
+        "Guidance": ""
+      },
+      {
+        "Text": "Commander in Chief (of the military)",
+        "Core": "Commander in Chief",
+        "Full": "Commander in Chief of the military",
+        "Guidance": ""
+      },
+      {
+        "Text": "Chief diplomat",
+        "Core": "Chief diplomat",
+        "Full": "Chief diplomat",
+        "Guidance": ""
+      },
+      {
+        "Text": "Appoints federal judges",
+        "Core": "Appoints federal judges",
+        "Full": "Appoints federal judges",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 42,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who is Commander in Chief of the U.S. military?",
+    "Answers": [
+      {
+        "Text": "The President (of the United States)",
+        "Core": "The President",
+        "Full": "The President of the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 43,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who signs bills to become laws?",
+    "Answers": [
+      {
+        "Text": "The President (of the United States)",
+        "Core": "The President",
+        "Full": "The President of the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 44,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who vetoes bills?",
+    "Answers": [
+      {
+        "Text": "The President (of the United States)",
+        "Core": "The President",
+        "Full": "The President of the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 45,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who appoints federal judges?",
+    "Answers": [
+      {
+        "Text": "The President (of the United States)",
+        "Core": "The President",
+        "Full": "The President of the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 46,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "The executive branch has many parts. Name one.",
+    "Answers": [
+      {
+        "Text": "President (of the United States)",
+        "Core": "President",
+        "Full": "President of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Cabinet",
+        "Core": "Cabinet",
+        "Full": "Cabinet",
+        "Guidance": ""
+      },
+      {
+        "Text": "Federal departments and agencies",
+        "Core": "Federal departments and agencies",
+        "Full": "Federal departments and agencies",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 47,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What does the President’s Cabinet do?",
+    "Answers": [
+      {
+        "Text": "Advises the President (of the United States)",
+        "Core": "Advises the President",
+        "Full": "Advises the President of the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 48,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What are two Cabinet-level positions?",
+    "Answers": [
+      {
+        "Text": "Attorney General",
+        "Core": "Attorney General",
+        "Full": "Attorney General",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Agriculture",
+        "Core": "Secretary of Agriculture",
+        "Full": "Secretary of Agriculture",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Commerce",
+        "Core": "Secretary of Commerce",
+        "Full": "Secretary of Commerce",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Education",
+        "Core": "Secretary of Education",
+        "Full": "Secretary of Education",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Energy",
+        "Core": "Secretary of Energy",
+        "Full": "Secretary of Energy",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Health and Human Services",
+        "Core": "Secretary of Health and Human Services",
+        "Full": "Secretary of Health and Human Services",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Homeland Security",
+        "Core": "Secretary of Homeland Security",
+        "Full": "Secretary of Homeland Security",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Housing and Urban Development",
+        "Core": "Secretary of Housing and Urban Development",
+        "Full": "Secretary of Housing and Urban Development",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of the Interior",
+        "Core": "Secretary of the Interior",
+        "Full": "Secretary of the Interior",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Labor",
+        "Core": "Secretary of Labor",
+        "Full": "Secretary of Labor",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of State",
+        "Core": "Secretary of State",
+        "Full": "Secretary of State",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Transportation",
+        "Core": "Secretary of Transportation",
+        "Full": "Secretary of Transportation",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of the Treasury",
+        "Core": "Secretary of the Treasury",
+        "Full": "Secretary of the Treasury",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of Veterans Affairs",
+        "Core": "Secretary of Veterans Affairs",
+        "Full": "Secretary of Veterans Affairs",
+        "Guidance": ""
+      },
+      {
+        "Text": "Secretary of War (Defense)",
+        "Core": "Secretary of War",
+        "Full": "Secretary of War Defense",
+        "Guidance": ""
+      },
+      {
+        "Text": "Vice-President",
+        "Core": "Vice-President",
+        "Full": "Vice-President",
+        "Guidance": ""
+      },
+      {
+        "Text": "Administrator of the Environmental Protection Agency",
+        "Core": "Administrator of the Environmental Protection Agency",
+        "Full": "Administrator of the Environmental Protection Agency",
+        "Guidance": ""
+      },
+      {
+        "Text": "Administrator of the Small Business Administration",
+        "Core": "Administrator of the Small Business Administration",
+        "Full": "Administrator of the Small Business Administration",
+        "Guidance": ""
+      },
+      {
+        "Text": "Director of the Central Intelligence Agency",
+        "Core": "Director of the Central Intelligence Agency",
+        "Full": "Director of the Central Intelligence Agency",
+        "Guidance": ""
+      },
+      {
+        "Text": "Director of the Office of Management and Budget",
+        "Core": "Director of the Office of Management and Budget",
+        "Full": "Director of the Office of Management and Budget",
+        "Guidance": ""
+      },
+      {
+        "Text": "Director of National Intelligence",
+        "Core": "Director of National Intelligence",
+        "Full": "Director of National Intelligence",
+        "Guidance": ""
+      },
+      {
+        "Text": "United States Trade Representative",
+        "Core": "United States Trade Representative",
+        "Full": "United States Trade Representative",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 2,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 49,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Why is the Electoral College important?",
+    "Answers": [
+      {
+        "Text": "It decides who is elected president.",
+        "Core": "It decides who is elected president.",
+        "Full": "It decides who is elected president.",
+        "Guidance": ""
+      },
+      {
+        "Text": "It provides a compromise between the popular election of the president and congressional selection.",
+        "Core": "It provides a compromise between the popular election of the president and congressional selection.",
+        "Full": "It provides a compromise between the popular election of the president and congressional selection.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 50,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is one part of the judicial branch?",
+    "Answers": [
+      {
+        "Text": "Supreme Court",
+        "Core": "Supreme Court",
+        "Full": "Supreme Court",
+        "Guidance": ""
+      },
+      {
+        "Text": "Federal Courts",
+        "Core": "Federal Courts",
+        "Full": "Federal Courts",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 51,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What does the judicial branch do?",
+    "Answers": [
+      {
+        "Text": "Reviews laws",
+        "Core": "Reviews laws",
+        "Full": "Reviews laws",
+        "Guidance": ""
+      },
+      {
+        "Text": "Explains laws",
+        "Core": "Explains laws",
+        "Full": "Explains laws",
+        "Guidance": ""
+      },
+      {
+        "Text": "Resolves disputes (disagreements) about the law",
+        "Core": "Resolves disputes about the law",
+        "Full": "Resolves disputes disagreements about the law",
+        "Guidance": ""
+      },
+      {
+        "Text": "Decides if a law goes against the (U.S.) Constitution",
+        "Core": "Decides if a law goes against the Constitution",
+        "Full": "Decides if a law goes against the U.S. Constitution",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 52,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is the highest court in the United States?",
+    "Answers": [
+      {
+        "Text": "Supreme Court",
+        "Core": "Supreme Court",
+        "Full": "Supreme Court",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 53,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How many seats are on the Supreme Court?",
+    "Answers": [
+      {
+        "Text": "Nine (9)",
+        "Core": "Nine",
+        "Full": "Nine 9",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 54,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How many Supreme Court justices are usually needed to decide a case?",
+    "Answers": [
+      {
+        "Text": "Five (5)",
+        "Core": "Five",
+        "Full": "Five 5",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 55,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "How long do Supreme Court justices serve?",
+    "Answers": [
+      {
+        "Text": "(For) life",
+        "Core": "life",
+        "Full": "For life",
+        "Guidance": ""
+      },
+      {
+        "Text": "Lifetime appointment",
+        "Core": "Lifetime appointment",
+        "Full": "Lifetime appointment",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Until) retirement",
+        "Core": "retirement",
+        "Full": "Until retirement",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 56,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Supreme Court justices serve for life. Why?",
+    "Answers": [
+      {
+        "Text": "To be independent (of politics)",
+        "Core": "To be independent",
+        "Full": "To be independent of politics",
+        "Guidance": ""
+      },
+      {
+        "Text": "To limit outside (political) influence",
+        "Core": "To limit outside influence",
+        "Full": "To limit outside political influence",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 57,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who is the Chief Justice of the United States now?",
+    "Answers": [
+      {
+        "Text": "Visit uscis.gov/citizenship/testupdates for the name of the Chief Justice of the United States.",
+        "Core": "Visit uscis.gov/citizenship/testupdates for the name of the Chief Justice of the United States.",
+        "Full": "Visit uscis.gov/citizenship/testupdates for the name of the Chief Justice of the United States.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "current_official",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 58,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Name one power that is only for the federal government.",
+    "Answers": [
+      {
+        "Text": "Print paper money",
+        "Core": "Print paper money",
+        "Full": "Print paper money",
+        "Guidance": ""
+      },
+      {
+        "Text": "Mint coins",
+        "Core": "Mint coins",
+        "Full": "Mint coins",
+        "Guidance": ""
+      },
+      {
+        "Text": "Declare war",
+        "Core": "Declare war",
+        "Full": "Declare war",
+        "Guidance": ""
+      },
+      {
+        "Text": "Create an army",
+        "Core": "Create an army",
+        "Full": "Create an army",
+        "Guidance": ""
+      },
+      {
+        "Text": "Make treaties",
+        "Core": "Make treaties",
+        "Full": "Make treaties",
+        "Guidance": ""
+      },
+      {
+        "Text": "Set foreign policy",
+        "Core": "Set foreign policy",
+        "Full": "Set foreign policy",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 59,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Name one power that is only for the states.",
+    "Answers": [
+      {
+        "Text": "Provide schooling and education",
+        "Core": "Provide schooling and education",
+        "Full": "Provide schooling and education",
+        "Guidance": ""
+      },
+      {
+        "Text": "Provide protection (police)",
+        "Core": "Provide protection",
+        "Full": "Provide protection police",
+        "Guidance": ""
+      },
+      {
+        "Text": "Provide safety (fire departments)",
+        "Core": "Provide safety",
+        "Full": "Provide safety fire departments",
+        "Guidance": ""
+      },
+      {
+        "Text": "Give a driver’s license",
+        "Core": "Give a driver’s license",
+        "Full": "Give a driver’s license",
+        "Guidance": ""
+      },
+      {
+        "Text": "Approve zoning and land use",
+        "Core": "Approve zoning and land use",
+        "Full": "Approve zoning and land use",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 60,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is the purpose of the 10th Amendment?",
+    "Answers": [
+      {
+        "Text": "(It states that the) powers not given to the federal government belong to the states or to the people.",
+        "Core": "powers not given to the federal government belong to the states or to the people.",
+        "Full": "It states that the powers not given to the federal government belong to the states or to the people.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 61,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "Who is the governor of your state now?",
+    "Answers": [
+      {
+        "Text": "Answers will vary. [District of Columbia residents should answer that D.C. does not have a governor.]",
+        "Core": "Answers will vary.",
+        "Full": "Answers will vary.",
+        "Guidance": "District of Columbia residents should answer that D.C. does not have a governor."
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "state_specific",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 62,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "B: System of Government",
+    "Prompt": "What is the capital of your state?",
+    "Answers": [
+      {
+        "Text": "Answers will vary. [District of Columbia residents should answer that D.C. is not a state and does not have a capital. Residents of U.S. territories should name the capital of the territory.]",
+        "Core": "Answers will vary.",
+        "Full": "Answers will vary.",
+        "Guidance": "District of Columbia residents should answer that D.C. is not a state and does not have a capital. Residents of U.S. territories should name the capital of the territory."
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "state_specific",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 63,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "There are four amendments to the U.S. Constitution about who can vote. Describe one of them.",
+    "Answers": [
+      {
+        "Text": "Citizens eighteen (18) and older (can vote).",
+        "Core": "Citizens eighteen and older .",
+        "Full": "Citizens eighteen 18 and older can vote.",
+        "Guidance": ""
+      },
+      {
+        "Text": "You don’t have to pay (a poll tax) to vote.",
+        "Core": "You don’t have to pay to vote.",
+        "Full": "You don’t have to pay a poll tax to vote.",
+        "Guidance": ""
+      },
+      {
+        "Text": "Any citizen can vote. (Women and men can vote.)",
+        "Core": "Any citizen can vote.",
+        "Full": "Any citizen can vote. Women and men can vote.",
+        "Guidance": ""
+      },
+      {
+        "Text": "A male citizen of any race (can vote).",
+        "Core": "A male citizen of any race .",
+        "Full": "A male citizen of any race can vote.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 64,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?",
+    "Answers": [
+      {
+        "Text": "Citizens",
+        "Core": "Citizens",
+        "Full": "Citizens",
+        "Guidance": ""
+      },
+      {
+        "Text": "Citizens of the United States",
+        "Core": "Citizens of the United States",
+        "Full": "Citizens of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "U.S. citizens",
+        "Core": "U.S. citizens",
+        "Full": "U.S. citizens",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 65,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "What are three rights of everyone living in the United States?",
+    "Answers": [
+      {
+        "Text": "Freedom of expression",
+        "Core": "Freedom of expression",
+        "Full": "Freedom of expression",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freedom of speech",
+        "Core": "Freedom of speech",
+        "Full": "Freedom of speech",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freedom of assembly",
+        "Core": "Freedom of assembly",
+        "Full": "Freedom of assembly",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freedom to petition the government",
+        "Core": "Freedom to petition the government",
+        "Full": "Freedom to petition the government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freedom of religion",
+        "Core": "Freedom of religion",
+        "Full": "Freedom of religion",
+        "Guidance": ""
+      },
+      {
+        "Text": "The right to bear arms",
+        "Core": "The right to bear arms",
+        "Full": "The right to bear arms",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 3,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 66,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "What do we show loyalty to when we say the Pledge of Allegiance?",
+    "Answers": [
+      {
+        "Text": "The United States",
+        "Core": "The United States",
+        "Full": "The United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "The flag",
+        "Core": "The flag",
+        "Full": "The flag",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 67,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "Name two promises that new citizens make in the Oath of Allegiance.",
+    "Answers": [
+      {
+        "Text": "Give up loyalty to other countries",
+        "Core": "Give up loyalty to other countries",
+        "Full": "Give up loyalty to other countries",
+        "Guidance": ""
+      },
+      {
+        "Text": "Defend the (U.S.) Constitution",
+        "Core": "Defend the Constitution",
+        "Full": "Defend the U.S. Constitution",
+        "Guidance": ""
+      },
+      {
+        "Text": "Obey the laws of the United States",
+        "Core": "Obey the laws of the United States",
+        "Full": "Obey the laws of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Serve in the military (if needed)",
+        "Core": "Serve in the military",
+        "Full": "Serve in the military if needed",
+        "Guidance": ""
+      },
+      {
+        "Text": "Serve (help, do important work for) the nation (if needed)",
+        "Core": "Serve the nation",
+        "Full": "Serve help, do important work for the nation if needed",
+        "Guidance": ""
+      },
+      {
+        "Text": "Be loyal to the United States",
+        "Core": "Be loyal to the United States",
+        "Full": "Be loyal to the United States",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 2,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 68,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "How can people become United States citizens?",
+    "Answers": [
+      {
+        "Text": "Be born in the United States, under the conditions set by the 14th Amendment",
+        "Core": "Be born in the United States, under the conditions set by the 14th Amendment",
+        "Full": "Be born in the United States, under the conditions set by the 14th Amendment",
+        "Guidance": ""
+      },
+      {
+        "Text": "Naturalize",
+        "Core": "Naturalize",
+        "Full": "Naturalize",
+        "Guidance": ""
+      },
+      {
+        "Text": "Derive citizenship (under conditions set by Congress)",
+        "Core": "Derive citizenship",
+        "Full": "Derive citizenship under conditions set by Congress",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 69,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "What are two examples of civic participation in the United States?",
+    "Answers": [
+      {
+        "Text": "Vote",
+        "Core": "Vote",
+        "Full": "Vote",
+        "Guidance": ""
+      },
+      {
+        "Text": "Run for office",
+        "Core": "Run for office",
+        "Full": "Run for office",
+        "Guidance": ""
+      },
+      {
+        "Text": "Join a political party",
+        "Core": "Join a political party",
+        "Full": "Join a political party",
+        "Guidance": ""
+      },
+      {
+        "Text": "Help with a campaign",
+        "Core": "Help with a campaign",
+        "Full": "Help with a campaign",
+        "Guidance": ""
+      },
+      {
+        "Text": "Join a civic group",
+        "Core": "Join a civic group",
+        "Full": "Join a civic group",
+        "Guidance": ""
+      },
+      {
+        "Text": "Join a community group",
+        "Core": "Join a community group",
+        "Full": "Join a community group",
+        "Guidance": ""
+      },
+      {
+        "Text": "Give an elected official your opinion (on an issue)",
+        "Core": "Give an elected official your opinion",
+        "Full": "Give an elected official your opinion on an issue",
+        "Guidance": ""
+      },
+      {
+        "Text": "Contact elected officials",
+        "Core": "Contact elected officials",
+        "Full": "Contact elected officials",
+        "Guidance": ""
+      },
+      {
+        "Text": "Support or oppose an issue or policy",
+        "Core": "Support or oppose an issue or policy",
+        "Full": "Support or oppose an issue or policy",
+        "Guidance": ""
+      },
+      {
+        "Text": "Write to a newspaper",
+        "Core": "Write to a newspaper",
+        "Full": "Write to a newspaper",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 2,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 70,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "What is one way Americans can serve their country?",
+    "Answers": [
+      {
+        "Text": "Vote",
+        "Core": "Vote",
+        "Full": "Vote",
+        "Guidance": ""
+      },
+      {
+        "Text": "Pay taxes",
+        "Core": "Pay taxes",
+        "Full": "Pay taxes",
+        "Guidance": ""
+      },
+      {
+        "Text": "Obey the law",
+        "Core": "Obey the law",
+        "Full": "Obey the law",
+        "Guidance": ""
+      },
+      {
+        "Text": "Serve in the military",
+        "Core": "Serve in the military",
+        "Full": "Serve in the military",
+        "Guidance": ""
+      },
+      {
+        "Text": "Run for office",
+        "Core": "Run for office",
+        "Full": "Run for office",
+        "Guidance": ""
+      },
+      {
+        "Text": "Work for local, state, or federal government",
+        "Core": "Work for local, state, or federal government",
+        "Full": "Work for local, state, or federal government",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 71,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "Why is it important to pay federal taxes?",
+    "Answers": [
+      {
+        "Text": "Required by law",
+        "Core": "Required by law",
+        "Full": "Required by law",
+        "Guidance": ""
+      },
+      {
+        "Text": "All people pay to fund the federal government",
+        "Core": "All people pay to fund the federal government",
+        "Full": "All people pay to fund the federal government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Required by the (U.S.) Constitution (16th Amendment)",
+        "Core": "Required by the Constitution",
+        "Full": "Required by the U.S. Constitution 16th Amendment",
+        "Guidance": ""
+      },
+      {
+        "Text": "Civic duty",
+        "Core": "Civic duty",
+        "Full": "Civic duty",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 72,
+    "Section": "AMERICAN GOVERNMENT",
+    "Subsection": "C: Rights and Responsibilities",
+    "Prompt": "It is important for all men age 18 through 25 to register for the Selective Service. Name one reason why.",
+    "Answers": [
+      {
+        "Text": "Required by law",
+        "Core": "Required by law",
+        "Full": "Required by law",
+        "Guidance": ""
+      },
+      {
+        "Text": "Civic duty",
+        "Core": "Civic duty",
+        "Full": "Civic duty",
+        "Guidance": ""
+      },
+      {
+        "Text": "Makes the draft fair, if needed",
+        "Core": "Makes the draft fair, if needed",
+        "Full": "Makes the draft fair, if needed",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 73,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "The colonists came to America for many reasons. Name one.",
+    "Answers": [
+      {
+        "Text": "Freedom",
+        "Core": "Freedom",
+        "Full": "Freedom",
+        "Guidance": ""
+      },
+      {
+        "Text": "Political liberty",
+        "Core": "Political liberty",
+        "Full": "Political liberty",
+        "Guidance": ""
+      },
+      {
+        "Text": "Religious freedom",
+        "Core": "Religious freedom",
+        "Full": "Religious freedom",
+        "Guidance": ""
+      },
+      {
+        "Text": "Economic opportunity",
+        "Core": "Economic opportunity",
+        "Full": "Economic opportunity",
+        "Guidance": ""
+      },
+      {
+        "Text": "Escape persecution",
+        "Core": "Escape persecution",
+        "Full": "Escape persecution",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 74,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Who lived in America before the Europeans arrived?",
+    "Answers": [
+      {
+        "Text": "American Indians",
+        "Core": "American Indians",
+        "Full": "American Indians",
+        "Guidance": ""
+      },
+      {
+        "Text": "Native Americans",
+        "Core": "Native Americans",
+        "Full": "Native Americans",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 75,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "What group of people was taken and sold as slaves?",
+    "Answers": [
+      {
+        "Text": "Africans",
+        "Core": "Africans",
+        "Full": "Africans",
+        "Guidance": ""
+      },
+      {
+        "Text": "People from Africa",
+        "Core": "People from Africa",
+        "Full": "People from Africa",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 76,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "What war did the Americans fight to win independence from Britain?",
+    "Answers": [
+      {
+        "Text": "American Revolution",
+        "Core": "American Revolution",
+        "Full": "American Revolution",
+        "Guidance": ""
+      },
+      {
+        "Text": "The (American) Revolutionary War",
+        "Core": "The Revolutionary War",
+        "Full": "The American Revolutionary War",
+        "Guidance": ""
+      },
+      {
+        "Text": "War for (American) Independence",
+        "Core": "War for Independence",
+        "Full": "War for American Independence",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 77,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Name one reason why the Americans declared independence from Britain.",
+    "Answers": [
+      {
+        "Text": "High taxes",
+        "Core": "High taxes",
+        "Full": "High taxes",
+        "Guidance": ""
+      },
+      {
+        "Text": "Taxation without representation",
+        "Core": "Taxation without representation",
+        "Full": "Taxation without representation",
+        "Guidance": ""
+      },
+      {
+        "Text": "British soldiers stayed in Americans’ houses (boarding, quartering)",
+        "Core": "British soldiers stayed in Americans’ houses",
+        "Full": "British soldiers stayed in Americans’ houses boarding, quartering",
+        "Guidance": ""
+      },
+      {
+        "Text": "They did not have self-government",
+        "Core": "They did not have self-government",
+        "Full": "They did not have self-government",
+        "Guidance": ""
+      },
+      {
+        "Text": "Boston Massacre",
+        "Core": "Boston Massacre",
+        "Full": "Boston Massacre",
+        "Guidance": ""
+      },
+      {
+        "Text": "Boston Tea Party (Tea Act)",
+        "Core": "Boston Tea Party",
+        "Full": "Boston Tea Party Tea Act",
+        "Guidance": ""
+      },
+      {
+        "Text": "Stamp Act",
+        "Core": "Stamp Act",
+        "Full": "Stamp Act",
+        "Guidance": ""
+      },
+      {
+        "Text": "Sugar Act",
+        "Core": "Sugar Act",
+        "Full": "Sugar Act",
+        "Guidance": ""
+      },
+      {
+        "Text": "Townshend Acts",
+        "Core": "Townshend Acts",
+        "Full": "Townshend Acts",
+        "Guidance": ""
+      },
+      {
+        "Text": "Intolerable (Coercive) Acts",
+        "Core": "Intolerable Acts",
+        "Full": "Intolerable Coercive Acts",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 78,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Who wrote the Declaration of Independence?",
+    "Answers": [
+      {
+        "Text": "(Thomas) Jefferson",
+        "Core": "Jefferson",
+        "Full": "Thomas Jefferson",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 79,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "When was the Declaration of Independence adopted?",
+    "Answers": [
+      {
+        "Text": "July 4, 1776",
+        "Core": "July 4, 1776",
+        "Full": "July 4, 1776",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 80,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "The American Revolution had many important events. Name one.",
+    "Answers": [
+      {
+        "Text": "(Battle of) Bunker Hill",
+        "Core": "Bunker Hill",
+        "Full": "Battle of Bunker Hill",
+        "Guidance": ""
+      },
+      {
+        "Text": "Declaration of Independence",
+        "Core": "Declaration of Independence",
+        "Full": "Declaration of Independence",
+        "Guidance": ""
+      },
+      {
+        "Text": "Washington Crossing the Delaware (Battle of Trenton)",
+        "Core": "Washington Crossing the Delaware",
+        "Full": "Washington Crossing the Delaware Battle of Trenton",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Battle of) Saratoga",
+        "Core": "Saratoga",
+        "Full": "Battle of Saratoga",
+        "Guidance": ""
+      },
+      {
+        "Text": "Valley Forge (Encampment)",
+        "Core": "Valley Forge",
+        "Full": "Valley Forge Encampment",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Battle of) Yorktown (British surrender at Yorktown)",
+        "Core": "Yorktown",
+        "Full": "Battle of Yorktown British surrender at Yorktown",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 81,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "There were 13 original states. Name five.",
+    "Answers": [
+      {
+        "Text": "New Hampshire",
+        "Core": "New Hampshire",
+        "Full": "New Hampshire",
+        "Guidance": ""
+      },
+      {
+        "Text": "Massachusetts",
+        "Core": "Massachusetts",
+        "Full": "Massachusetts",
+        "Guidance": ""
+      },
+      {
+        "Text": "Rhode Island",
+        "Core": "Rhode Island",
+        "Full": "Rhode Island",
+        "Guidance": ""
+      },
+      {
+        "Text": "Connecticut",
+        "Core": "Connecticut",
+        "Full": "Connecticut",
+        "Guidance": ""
+      },
+      {
+        "Text": "New York",
+        "Core": "New York",
+        "Full": "New York",
+        "Guidance": ""
+      },
+      {
+        "Text": "New Jersey",
+        "Core": "New Jersey",
+        "Full": "New Jersey",
+        "Guidance": ""
+      },
+      {
+        "Text": "Pennsylvania",
+        "Core": "Pennsylvania",
+        "Full": "Pennsylvania",
+        "Guidance": ""
+      },
+      {
+        "Text": "Delaware",
+        "Core": "Delaware",
+        "Full": "Delaware",
+        "Guidance": ""
+      },
+      {
+        "Text": "Maryland",
+        "Core": "Maryland",
+        "Full": "Maryland",
+        "Guidance": ""
+      },
+      {
+        "Text": "Virginia",
+        "Core": "Virginia",
+        "Full": "Virginia",
+        "Guidance": ""
+      },
+      {
+        "Text": "North Carolina",
+        "Core": "North Carolina",
+        "Full": "North Carolina",
+        "Guidance": ""
+      },
+      {
+        "Text": "South Carolina",
+        "Core": "South Carolina",
+        "Full": "South Carolina",
+        "Guidance": ""
+      },
+      {
+        "Text": "Georgia",
+        "Core": "Georgia",
+        "Full": "Georgia",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 5,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 82,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "What founding document was written in 1787?",
+    "Answers": [
+      {
+        "Text": "(U.S.) Constitution",
+        "Core": "Constitution",
+        "Full": "U.S. Constitution",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 83,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "The Federalist Papers supported the passage of the U.S. Constitution. Name one of the writers.",
+    "Answers": [
+      {
+        "Text": "(James) Madison",
+        "Core": "Madison",
+        "Full": "James Madison",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Alexander) Hamilton",
+        "Core": "Hamilton",
+        "Full": "Alexander Hamilton",
+        "Guidance": ""
+      },
+      {
+        "Text": "(John) Jay",
+        "Core": "Jay",
+        "Full": "John Jay",
+        "Guidance": ""
+      },
+      {
+        "Text": "Publius",
+        "Core": "Publius",
+        "Full": "Publius",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 84,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Why were the Federalist Papers important?",
+    "Answers": [
+      {
+        "Text": "They helped people understand the (U.S.) Constitution.",
+        "Core": "They helped people understand the Constitution.",
+        "Full": "They helped people understand the U.S. Constitution.",
+        "Guidance": ""
+      },
+      {
+        "Text": "They supported passing the (U.S.) Constitution.",
+        "Core": "They supported passing the Constitution.",
+        "Full": "They supported passing the U.S. Constitution.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 85,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Benjamin Franklin is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "Founded the first free public libraries",
+        "Core": "Founded the first free public libraries",
+        "Full": "Founded the first free public libraries",
+        "Guidance": ""
+      },
+      {
+        "Text": "First Postmaster General of the United States",
+        "Core": "First Postmaster General of the United States",
+        "Full": "First Postmaster General of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Helped write the Declaration of Independence",
+        "Core": "Helped write the Declaration of Independence",
+        "Full": "Helped write the Declaration of Independence",
+        "Guidance": ""
+      },
+      {
+        "Text": "Inventor",
+        "Core": "Inventor",
+        "Full": "Inventor",
+        "Guidance": ""
+      },
+      {
+        "Text": "U.S. diplomat",
+        "Core": "U.S. diplomat",
+        "Full": "U.S. diplomat",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 86,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "George Washington is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "“Father of Our Country”",
+        "Core": "“Father of Our Country”",
+        "Full": "“Father of Our Country”",
+        "Guidance": ""
+      },
+      {
+        "Text": "First president of the United States",
+        "Core": "First president of the United States",
+        "Full": "First president of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "General of the Continental Army",
+        "Core": "General of the Continental Army",
+        "Full": "General of the Continental Army",
+        "Guidance": ""
+      },
+      {
+        "Text": "President of the Constitutional Convention",
+        "Core": "President of the Constitutional Convention",
+        "Full": "President of the Constitutional Convention",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 87,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Thomas Jefferson is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "Writer of the Declaration of Independence",
+        "Core": "Writer of the Declaration of Independence",
+        "Full": "Writer of the Declaration of Independence",
+        "Guidance": ""
+      },
+      {
+        "Text": "Third president of the United States",
+        "Core": "Third president of the United States",
+        "Full": "Third president of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Doubled the size of the United States (Louisiana Purchase)",
+        "Core": "Doubled the size of the United States",
+        "Full": "Doubled the size of the United States Louisiana Purchase",
+        "Guidance": ""
+      },
+      {
+        "Text": "First Secretary of State",
+        "Core": "First Secretary of State",
+        "Full": "First Secretary of State",
+        "Guidance": ""
+      },
+      {
+        "Text": "Founded the University of Virginia",
+        "Core": "Founded the University of Virginia",
+        "Full": "Founded the University of Virginia",
+        "Guidance": ""
+      },
+      {
+        "Text": "Writer of the Virginia Statute on Religious Freedom",
+        "Core": "Writer of the Virginia Statute on Religious Freedom",
+        "Full": "Writer of the Virginia Statute on Religious Freedom",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 88,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "James Madison is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "“Father of the Constitution”",
+        "Core": "“Father of the Constitution”",
+        "Full": "“Father of the Constitution”",
+        "Guidance": ""
+      },
+      {
+        "Text": "Fourth president of the United States",
+        "Core": "Fourth president of the United States",
+        "Full": "Fourth president of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "President during the War of 1812",
+        "Core": "President during the War of 1812",
+        "Full": "President during the War of 1812",
+        "Guidance": ""
+      },
+      {
+        "Text": "One of the writers of the Federalist Papers",
+        "Core": "One of the writers of the Federalist Papers",
+        "Full": "One of the writers of the Federalist Papers",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 89,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "A: Colonial Period and Independence",
+    "Prompt": "Alexander Hamilton is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "First Secretary of the Treasury",
+        "Core": "First Secretary of the Treasury",
+        "Full": "First Secretary of the Treasury",
+        "Guidance": ""
+      },
+      {
+        "Text": "One of the writers of the Federalist Papers",
+        "Core": "One of the writers of the Federalist Papers",
+        "Full": "One of the writers of the Federalist Papers",
+        "Guidance": ""
+      },
+      {
+        "Text": "Helped establish the First Bank of the United States",
+        "Core": "Helped establish the First Bank of the United States",
+        "Full": "Helped establish the First Bank of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Aide to General George Washington",
+        "Core": "Aide to General George Washington",
+        "Full": "Aide to General George Washington",
+        "Guidance": ""
+      },
+      {
+        "Text": "Member of the Continental Congress",
+        "Core": "Member of the Continental Congress",
+        "Full": "Member of the Continental Congress",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 90,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "What territory did the United States buy from France in 1803?",
+    "Answers": [
+      {
+        "Text": "Louisiana Territory",
+        "Core": "Louisiana Territory",
+        "Full": "Louisiana Territory",
+        "Guidance": ""
+      },
+      {
+        "Text": "Louisiana",
+        "Core": "Louisiana",
+        "Full": "Louisiana",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 91,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "Name one war fought by the United States in the 1800s.",
+    "Answers": [
+      {
+        "Text": "War of 1812",
+        "Core": "War of 1812",
+        "Full": "War of 1812",
+        "Guidance": ""
+      },
+      {
+        "Text": "Mexican-American War",
+        "Core": "Mexican-American War",
+        "Full": "Mexican-American War",
+        "Guidance": ""
+      },
+      {
+        "Text": "Civil War",
+        "Core": "Civil War",
+        "Full": "Civil War",
+        "Guidance": ""
+      },
+      {
+        "Text": "Spanish-American War",
+        "Core": "Spanish-American War",
+        "Full": "Spanish-American War",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 92,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "Name the U.S. war between the North and the South.",
+    "Answers": [
+      {
+        "Text": "The Civil War",
+        "Core": "The Civil War",
+        "Full": "The Civil War",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 93,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "The Civil War had many important events. Name one.",
+    "Answers": [
+      {
+        "Text": "(Battle of) Fort Sumter",
+        "Core": "Fort Sumter",
+        "Full": "Battle of Fort Sumter",
+        "Guidance": ""
+      },
+      {
+        "Text": "Emancipation Proclamation",
+        "Core": "Emancipation Proclamation",
+        "Full": "Emancipation Proclamation",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Battle of) Vicksburg",
+        "Core": "Vicksburg",
+        "Full": "Battle of Vicksburg",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Battle of) Gettysburg",
+        "Core": "Gettysburg",
+        "Full": "Battle of Gettysburg",
+        "Guidance": ""
+      },
+      {
+        "Text": "Sherman’s March",
+        "Core": "Sherman’s March",
+        "Full": "Sherman’s March",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Surrender at) Appomattox",
+        "Core": "Appomattox",
+        "Full": "Surrender at Appomattox",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Battle of) Antietam/Sharpsburg",
+        "Core": "Antietam/Sharpsburg",
+        "Full": "Battle of Antietam/Sharpsburg",
+        "Guidance": ""
+      },
+      {
+        "Text": "Lincoln was assassinated.",
+        "Core": "Lincoln was assassinated.",
+        "Full": "Lincoln was assassinated.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 94,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "Abraham Lincoln is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "Freed the slaves (Emancipation Proclamation)",
+        "Core": "Freed the slaves",
+        "Full": "Freed the slaves Emancipation Proclamation",
+        "Guidance": ""
+      },
+      {
+        "Text": "Saved (or preserved) the Union",
+        "Core": "Saved the Union",
+        "Full": "Saved or preserved the Union",
+        "Guidance": ""
+      },
+      {
+        "Text": "Led the United States during the Civil War",
+        "Core": "Led the United States during the Civil War",
+        "Full": "Led the United States during the Civil War",
+        "Guidance": ""
+      },
+      {
+        "Text": "16th president of the United States",
+        "Core": "16th president of the United States",
+        "Full": "16th president of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Delivered the Gettysburg Address",
+        "Core": "Delivered the Gettysburg Address",
+        "Full": "Delivered the Gettysburg Address",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 95,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "What did the Emancipation Proclamation do?",
+    "Answers": [
+      {
+        "Text": "Freed the slaves",
+        "Core": "Freed the slaves",
+        "Full": "Freed the slaves",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freed slaves in the Confederacy",
+        "Core": "Freed slaves in the Confederacy",
+        "Full": "Freed slaves in the Confederacy",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freed slaves in the Confederate states",
+        "Core": "Freed slaves in the Confederate states",
+        "Full": "Freed slaves in the Confederate states",
+        "Guidance": ""
+      },
+      {
+        "Text": "Freed slaves in most Southern states",
+        "Core": "Freed slaves in most Southern states",
+        "Full": "Freed slaves in most Southern states",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 96,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "What U.S. war ended slavery?",
+    "Answers": [
+      {
+        "Text": "The Civil War",
+        "Core": "The Civil War",
+        "Full": "The Civil War",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 97,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "What amendment says all persons born or naturalized in the United States, and subject to the jurisdiction thereof, are U.S. citizens?",
+    "Answers": [
+      {
+        "Text": "14th Amendment",
+        "Core": "14th Amendment",
+        "Full": "14th Amendment",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 98,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "When did all men get the right to vote?",
+    "Answers": [
+      {
+        "Text": "After the Civil War",
+        "Core": "After the Civil War",
+        "Full": "After the Civil War",
+        "Guidance": ""
+      },
+      {
+        "Text": "During Reconstruction",
+        "Core": "During Reconstruction",
+        "Full": "During Reconstruction",
+        "Guidance": ""
+      },
+      {
+        "Text": "(With the) 15th Amendment",
+        "Core": "15th Amendment",
+        "Full": "With the 15th Amendment",
+        "Guidance": ""
+      },
+      {
+        "Text": "1870",
+        "Core": "1870",
+        "Full": "1870",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 99,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "B: 1800s",
+    "Prompt": "Name one leader of the women’s rights movement in the 1800s.",
+    "Answers": [
+      {
+        "Text": "Susan B. Anthony",
+        "Core": "Susan B. Anthony",
+        "Full": "Susan B. Anthony",
+        "Guidance": ""
+      },
+      {
+        "Text": "Elizabeth Cady Stanton",
+        "Core": "Elizabeth Cady Stanton",
+        "Full": "Elizabeth Cady Stanton",
+        "Guidance": ""
+      },
+      {
+        "Text": "Sojourner Truth",
+        "Core": "Sojourner Truth",
+        "Full": "Sojourner Truth",
+        "Guidance": ""
+      },
+      {
+        "Text": "Harriet Tubman",
+        "Core": "Harriet Tubman",
+        "Full": "Harriet Tubman",
+        "Guidance": ""
+      },
+      {
+        "Text": "Lucretia Mott",
+        "Core": "Lucretia Mott",
+        "Full": "Lucretia Mott",
+        "Guidance": ""
+      },
+      {
+        "Text": "Lucy Stone",
+        "Core": "Lucy Stone",
+        "Full": "Lucy Stone",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 100,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Name one war fought by the United States in the 1900s.",
+    "Answers": [
+      {
+        "Text": "World War I",
+        "Core": "World War I",
+        "Full": "World War I",
+        "Guidance": ""
+      },
+      {
+        "Text": "World War II",
+        "Core": "World War II",
+        "Full": "World War II",
+        "Guidance": ""
+      },
+      {
+        "Text": "Korean War",
+        "Core": "Korean War",
+        "Full": "Korean War",
+        "Guidance": ""
+      },
+      {
+        "Text": "Vietnam War",
+        "Core": "Vietnam War",
+        "Full": "Vietnam War",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Persian) Gulf War",
+        "Core": "Gulf War",
+        "Full": "Persian Gulf War",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 101,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Why did the United States enter World War I?",
+    "Answers": [
+      {
+        "Text": "Because Germany attacked U.S. (civilian) ships",
+        "Core": "Because Germany attacked U.S. ships",
+        "Full": "Because Germany attacked U.S. civilian ships",
+        "Guidance": ""
+      },
+      {
+        "Text": "To support the Allied Powers (England, France, Italy, and Russia)",
+        "Core": "To support the Allied Powers",
+        "Full": "To support the Allied Powers England, France, Italy, and Russia",
+        "Guidance": ""
+      },
+      {
+        "Text": "To oppose the Central Powers (Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria)",
+        "Core": "To oppose the Central Powers",
+        "Full": "To oppose the Central Powers Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 102,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "When did all women get the right to vote?",
+    "Answers": [
+      {
+        "Text": "1920",
+        "Core": "1920",
+        "Full": "1920",
+        "Guidance": ""
+      },
+      {
+        "Text": "After World War I",
+        "Core": "After World War I",
+        "Full": "After World War I",
+        "Guidance": ""
+      },
+      {
+        "Text": "(With the) 19th Amendment",
+        "Core": "19th Amendment",
+        "Full": "With the 19th Amendment",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 103,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "What was the Great Depression?",
+    "Answers": [
+      {
+        "Text": "Longest economic recession in modern history",
+        "Core": "Longest economic recession in modern history",
+        "Full": "Longest economic recession in modern history",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 104,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "When did the Great Depression start?",
+    "Answers": [
+      {
+        "Text": "The Great Crash (1929)",
+        "Core": "The Great Crash",
+        "Full": "The Great Crash 1929",
+        "Guidance": ""
+      },
+      {
+        "Text": "Stock market crash of 1929",
+        "Core": "Stock market crash of 1929",
+        "Full": "Stock market crash of 1929",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 105,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Who was president during the Great Depression and World War II?",
+    "Answers": [
+      {
+        "Text": "(Franklin) Roosevelt",
+        "Core": "Roosevelt",
+        "Full": "Franklin Roosevelt",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 106,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Why did the United States enter World War II?",
+    "Answers": [
+      {
+        "Text": "(Bombing of) Pearl Harbor",
+        "Core": "Pearl Harbor",
+        "Full": "Bombing of Pearl Harbor",
+        "Guidance": ""
+      },
+      {
+        "Text": "Japanese attacked Pearl Harbor",
+        "Core": "Japanese attacked Pearl Harbor",
+        "Full": "Japanese attacked Pearl Harbor",
+        "Guidance": ""
+      },
+      {
+        "Text": "To support the Allied Powers (England, France, and Russia)",
+        "Core": "To support the Allied Powers",
+        "Full": "To support the Allied Powers England, France, and Russia",
+        "Guidance": ""
+      },
+      {
+        "Text": "To oppose the Axis Powers (Germany, Italy, and Japan)",
+        "Core": "To oppose the Axis Powers",
+        "Full": "To oppose the Axis Powers Germany, Italy, and Japan",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 107,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Dwight Eisenhower is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "General during World War II",
+        "Core": "General during World War II",
+        "Full": "General during World War II",
+        "Guidance": ""
+      },
+      {
+        "Text": "President at the end of (during) the Korean War",
+        "Core": "President at the end of the Korean War",
+        "Full": "President at the end of during the Korean War",
+        "Guidance": ""
+      },
+      {
+        "Text": "34th president of the United States",
+        "Core": "34th president of the United States",
+        "Full": "34th president of the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Signed the Federal-Aid Highway Act of 1956 (Created the Interstate System)",
+        "Core": "Signed the Federal-Aid Highway Act of 1956",
+        "Full": "Signed the Federal-Aid Highway Act of 1956 Created the Interstate System",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 108,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Who was the United States’ main rival during the Cold War?",
+    "Answers": [
+      {
+        "Text": "Soviet Union",
+        "Core": "Soviet Union",
+        "Full": "Soviet Union",
+        "Guidance": ""
+      },
+      {
+        "Text": "USSR",
+        "Core": "USSR",
+        "Full": "USSR",
+        "Guidance": ""
+      },
+      {
+        "Text": "Russia",
+        "Core": "Russia",
+        "Full": "Russia",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 109,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "During the Cold War, what was one main concern of the United States?",
+    "Answers": [
+      {
+        "Text": "Communism",
+        "Core": "Communism",
+        "Full": "Communism",
+        "Guidance": ""
+      },
+      {
+        "Text": "Nuclear war",
+        "Core": "Nuclear war",
+        "Full": "Nuclear war",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 110,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Why did the United States enter the Korean War?",
+    "Answers": [
+      {
+        "Text": "To stop the spread of communism",
+        "Core": "To stop the spread of communism",
+        "Full": "To stop the spread of communism",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 111,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Why did the United States enter the Vietnam War?",
+    "Answers": [
+      {
+        "Text": "To stop the spread of communism",
+        "Core": "To stop the spread of communism",
+        "Full": "To stop the spread of communism",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 112,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "What did the civil rights movement do?",
+    "Answers": [
+      {
+        "Text": "Fought to end racial discrimination",
+        "Core": "Fought to end racial discrimination",
+        "Full": "Fought to end racial discrimination",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 113,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Martin Luther King, Jr. is famous for many things. Name one.",
+    "Answers": [
+      {
+        "Text": "Fought for civil rights",
+        "Core": "Fought for civil rights",
+        "Full": "Fought for civil rights",
+        "Guidance": ""
+      },
+      {
+        "Text": "Worked for equality for all Americans",
+        "Core": "Worked for equality for all Americans",
+        "Full": "Worked for equality for all Americans",
+        "Guidance": ""
+      },
+      {
+        "Text": "Worked to ensure that people would “not be judged by the color of their skin, but by the content of their character”",
+        "Core": "Worked to ensure that people would “not be judged by the color of their skin, but by the content of their character”",
+        "Full": "Worked to ensure that people would “not be judged by the color of their skin, but by the content of their character”",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 114,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Why did the United States enter the Persian Gulf War?",
+    "Answers": [
+      {
+        "Text": "To force the Iraqi military from Kuwait",
+        "Core": "To force the Iraqi military from Kuwait",
+        "Full": "To force the Iraqi military from Kuwait",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 115,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "What major event happened on September 11, 2001 in the United States?",
+    "Answers": [
+      {
+        "Text": "Terrorists attacked the United States",
+        "Core": "Terrorists attacked the United States",
+        "Full": "Terrorists attacked the United States",
+        "Guidance": ""
+      },
+      {
+        "Text": "Terrorists took over two planes and crashed them into the World Trade Center in New York City",
+        "Core": "Terrorists took over two planes and crashed them into the World Trade Center in New York City",
+        "Full": "Terrorists took over two planes and crashed them into the World Trade Center in New York City",
+        "Guidance": ""
+      },
+      {
+        "Text": "Terrorists took over a plane and crashed into the Pentagon in Arlington, Virginia",
+        "Core": "Terrorists took over a plane and crashed into the Pentagon in Arlington, Virginia",
+        "Full": "Terrorists took over a plane and crashed into the Pentagon in Arlington, Virginia",
+        "Guidance": ""
+      },
+      {
+        "Text": "Terrorists took over a plane originally aimed at Washington, D.C., and crashed in a field in Pennsylvania",
+        "Core": "Terrorists took over a plane originally aimed at Washington, D.C., and crashed in a field in Pennsylvania",
+        "Full": "Terrorists took over a plane originally aimed at Washington, D.C., and crashed in a field in Pennsylvania",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 116,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Name one U.S. military conflict after the September 11, 2001 attacks.",
+    "Answers": [
+      {
+        "Text": "(Global) War on Terror",
+        "Core": "War on Terror",
+        "Full": "Global War on Terror",
+        "Guidance": ""
+      },
+      {
+        "Text": "War in Afghanistan",
+        "Core": "War in Afghanistan",
+        "Full": "War in Afghanistan",
+        "Guidance": ""
+      },
+      {
+        "Text": "War in Iraq",
+        "Core": "War in Iraq",
+        "Full": "War in Iraq",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 117,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Name one American Indian tribe in the United States.",
+    "Answers": [
+      {
+        "Text": "Apache",
+        "Core": "Apache",
+        "Full": "Apache",
+        "Guidance": ""
+      },
+      {
+        "Text": "Blackfeet",
+        "Core": "Blackfeet",
+        "Full": "Blackfeet",
+        "Guidance": ""
+      },
+      {
+        "Text": "Cayuga",
+        "Core": "Cayuga",
+        "Full": "Cayuga",
+        "Guidance": ""
+      },
+      {
+        "Text": "Cherokee",
+        "Core": "Cherokee",
+        "Full": "Cherokee",
+        "Guidance": ""
+      },
+      {
+        "Text": "Cheyenne",
+        "Core": "Cheyenne",
+        "Full": "Cheyenne",
+        "Guidance": ""
+      },
+      {
+        "Text": "Chippewa",
+        "Core": "Chippewa",
+        "Full": "Chippewa",
+        "Guidance": ""
+      },
+      {
+        "Text": "Choctaw",
+        "Core": "Choctaw",
+        "Full": "Choctaw",
+        "Guidance": ""
+      },
+      {
+        "Text": "Creek",
+        "Core": "Creek",
+        "Full": "Creek",
+        "Guidance": ""
+      },
+      {
+        "Text": "Crow",
+        "Core": "Crow",
+        "Full": "Crow",
+        "Guidance": ""
+      },
+      {
+        "Text": "Hopi",
+        "Core": "Hopi",
+        "Full": "Hopi",
+        "Guidance": ""
+      },
+      {
+        "Text": "Huron",
+        "Core": "Huron",
+        "Full": "Huron",
+        "Guidance": ""
+      },
+      {
+        "Text": "Inupiat",
+        "Core": "Inupiat",
+        "Full": "Inupiat",
+        "Guidance": ""
+      },
+      {
+        "Text": "Lakota",
+        "Core": "Lakota",
+        "Full": "Lakota",
+        "Guidance": ""
+      },
+      {
+        "Text": "Mohawk",
+        "Core": "Mohawk",
+        "Full": "Mohawk",
+        "Guidance": ""
+      },
+      {
+        "Text": "Mohegan",
+        "Core": "Mohegan",
+        "Full": "Mohegan",
+        "Guidance": ""
+      },
+      {
+        "Text": "Navajo",
+        "Core": "Navajo",
+        "Full": "Navajo",
+        "Guidance": ""
+      },
+      {
+        "Text": "Oneida",
+        "Core": "Oneida",
+        "Full": "Oneida",
+        "Guidance": ""
+      },
+      {
+        "Text": "Onondaga",
+        "Core": "Onondaga",
+        "Full": "Onondaga",
+        "Guidance": ""
+      },
+      {
+        "Text": "Pueblo",
+        "Core": "Pueblo",
+        "Full": "Pueblo",
+        "Guidance": ""
+      },
+      {
+        "Text": "Seminole",
+        "Core": "Seminole",
+        "Full": "Seminole",
+        "Guidance": ""
+      },
+      {
+        "Text": "Seneca",
+        "Core": "Seneca",
+        "Full": "Seneca",
+        "Guidance": ""
+      },
+      {
+        "Text": "Shawnee",
+        "Core": "Shawnee",
+        "Full": "Shawnee",
+        "Guidance": ""
+      },
+      {
+        "Text": "Sioux",
+        "Core": "Sioux",
+        "Full": "Sioux",
+        "Guidance": ""
+      },
+      {
+        "Text": "Teton",
+        "Core": "Teton",
+        "Full": "Teton",
+        "Guidance": ""
+      },
+      {
+        "Text": "Tuscarora",
+        "Core": "Tuscarora",
+        "Full": "Tuscarora",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": "For a complete list of tribes, please visit bia.gov."
+  },
+  {
+    "ID": 118,
+    "Section": "AMERICAN HISTORY",
+    "Subsection": "C: Recent American History and Other Important Historical Information",
+    "Prompt": "Name one example of an American innovation.",
+    "Answers": [
+      {
+        "Text": "Light bulb",
+        "Core": "Light bulb",
+        "Full": "Light bulb",
+        "Guidance": ""
+      },
+      {
+        "Text": "Automobile (cars, internal combustion engine)",
+        "Core": "Automobile",
+        "Full": "Automobile cars, internal combustion engine",
+        "Guidance": ""
+      },
+      {
+        "Text": "Skyscrapers",
+        "Core": "Skyscrapers",
+        "Full": "Skyscrapers",
+        "Guidance": ""
+      },
+      {
+        "Text": "Airplane",
+        "Core": "Airplane",
+        "Full": "Airplane",
+        "Guidance": ""
+      },
+      {
+        "Text": "Assembly line",
+        "Core": "Assembly line",
+        "Full": "Assembly line",
+        "Guidance": ""
+      },
+      {
+        "Text": "Landing on the moon",
+        "Core": "Landing on the moon",
+        "Full": "Landing on the moon",
+        "Guidance": ""
+      },
+      {
+        "Text": "Integrated circuit (IC)",
+        "Core": "Integrated circuit",
+        "Full": "Integrated circuit IC",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 119,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "A: Symbols",
+    "Prompt": "What is the capital of the United States?",
+    "Answers": [
+      {
+        "Text": "Washington, D.C.",
+        "Core": "Washington, D.C.",
+        "Full": "Washington, D.C.",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 120,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "A: Symbols",
+    "Prompt": "Where is the Statue of Liberty?",
+    "Answers": [
+      {
+        "Text": "New York (Harbor)",
+        "Core": "New York",
+        "Full": "New York Harbor",
+        "Guidance": ""
+      },
+      {
+        "Text": "Liberty Island [Also acceptable are New Jersey, near New York City, and on the Hudson (River).]",
+        "Core": "Liberty Island",
+        "Full": "Liberty Island",
+        "Guidance": "Also acceptable are New Jersey, near New York City, and on the Hudson (River)."
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 121,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "A: Symbols",
+    "Prompt": "Why does the flag have 13 stripes?",
+    "Answers": [
+      {
+        "Text": "(Because there were) 13 original colonies",
+        "Core": "13 original colonies",
+        "Full": "Because there were 13 original colonies",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Because the stripes) represent the original colonies",
+        "Core": "represent the original colonies",
+        "Full": "Because the stripes represent the original colonies",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 122,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "A: Symbols",
+    "Prompt": "Why does the flag have 50 stars?",
+    "Answers": [
+      {
+        "Text": "(Because there is) one star for each state",
+        "Core": "one star for each state",
+        "Full": "Because there is one star for each state",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Because) each star represents a state",
+        "Core": "each star represents a state",
+        "Full": "Because each star represents a state",
+        "Guidance": ""
+      },
+      {
+        "Text": "(Because there are) 50 states",
+        "Core": "50 states",
+        "Full": "Because there are 50 states",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 123,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "A: Symbols",
+    "Prompt": "What is the name of the national anthem?",
+    "Answers": [
+      {
+        "Text": "The Star-Spangled Banner",
+        "Core": "The Star-Spangled Banner",
+        "Full": "The Star-Spangled Banner",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 124,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "A: Symbols",
+    "Prompt": "The Nation’s first motto was “E Pluribus Unum.” What does that mean?",
+    "Answers": [
+      {
+        "Text": "Out of many, one",
+        "Core": "Out of many, one",
+        "Full": "Out of many, one",
+        "Guidance": ""
+      },
+      {
+        "Text": "We all become one",
+        "Core": "We all become one",
+        "Full": "We all become one",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 125,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "B: Holidays",
+    "Prompt": "What is Independence Day?",
+    "Answers": [
+      {
+        "Text": "A holiday to celebrate U.S. independence (from Britain)",
+        "Core": "A holiday to celebrate U.S. independence",
+        "Full": "A holiday to celebrate U.S. independence from Britain",
+        "Guidance": ""
+      },
+      {
+        "Text": "The country’s birthday",
+        "Core": "The country’s birthday",
+        "Full": "The country’s birthday",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 126,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "B: Holidays",
+    "Prompt": "Name three national U.S. holidays.",
+    "Answers": [
+      {
+        "Text": "New Year’s Day",
+        "Core": "New Year’s Day",
+        "Full": "New Year’s Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Martin Luther King, Jr. Day",
+        "Core": "Martin Luther King, Jr. Day",
+        "Full": "Martin Luther King, Jr. Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Presidents Day (Washington’s Birthday)",
+        "Core": "Presidents Day",
+        "Full": "Presidents Day Washington’s Birthday",
+        "Guidance": ""
+      },
+      {
+        "Text": "Memorial Day",
+        "Core": "Memorial Day",
+        "Full": "Memorial Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Juneteenth",
+        "Core": "Juneteenth",
+        "Full": "Juneteenth",
+        "Guidance": ""
+      },
+      {
+        "Text": "Independence Day",
+        "Core": "Independence Day",
+        "Full": "Independence Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Labor Day",
+        "Core": "Labor Day",
+        "Full": "Labor Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Columbus Day",
+        "Core": "Columbus Day",
+        "Full": "Columbus Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Veterans Day",
+        "Core": "Veterans Day",
+        "Full": "Veterans Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Thanksgiving Day",
+        "Core": "Thanksgiving Day",
+        "Full": "Thanksgiving Day",
+        "Guidance": ""
+      },
+      {
+        "Text": "Christmas Day",
+        "Core": "Christmas Day",
+        "Full": "Christmas Day",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 3,
+    "Is6520": true,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 127,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "B: Holidays",
+    "Prompt": "What is Memorial Day?",
+    "Answers": [
+      {
+        "Text": "A holiday to honor soldiers who died in military service",
+        "Core": "A holiday to honor soldiers who died in military service",
+        "Full": "A holiday to honor soldiers who died in military service",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  },
+  {
+    "ID": 128,
+    "Section": "SYMBOLS AND HOLIDAYS",
+    "Subsection": "B: Holidays",
+    "Prompt": "What is Veterans Day?",
+    "Answers": [
+      {
+        "Text": "A holiday to honor people in the (U.S.) military",
+        "Core": "A holiday to honor people in the military",
+        "Full": "A holiday to honor people in the U.S. military",
+        "Guidance": ""
+      },
+      {
+        "Text": "A holiday to honor people who have served (in the U.S. military)",
+        "Core": "A holiday to honor people who have served",
+        "Full": "A holiday to honor people who have served in the U.S. military",
+        "Guidance": ""
+      }
+    ],
+    "RequiredCount": 1,
+    "Is6520": false,
+    "AnswerKind": "fixed",
+    "Chapters": null,
+    "Note": ""
+  }
+]

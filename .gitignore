@@ -1,0 +1,5 @@
+/bin/
+/n400
+/n400.exe
+/internal/content/data/images/_extracted/
+!go.mod
