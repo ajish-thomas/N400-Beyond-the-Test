@@ -11,18 +11,27 @@ and lie within source_start/source_end. Figure captions and credit lines live in
 the image manifest; the Markdown caption must match exactly. Source-only notes
 about transcription choices belong in editorial_notes, not in the book's prose.
 
-Chapter 1 was reviewed visually against supplied PDF pages 8–17. Page 17 is blank
-except the footer. Source word coverage is checked per page against checked-in
-raw text, with a full parsed golden in testdata. This is not a substitute for
-visual source review: counts alone cannot validate reading order or diagram edges.
+Each published chapter is reviewed visually against its supplied PDF pages
+(Chapter 1: 8–17; Chapter 2: 18–23; Chapter 3: 24–28). Source word coverage is
+checked per page against checked-in raw text, with a full parsed golden in
+testdata. This is not a substitute for visual source review: counts alone
+cannot validate reading order or diagram edges. A diagram with no extractable
+PDF text layer (Chapter 2's page 22 lawmaking flowchart) has its transcribed
+labels recorded separately in `data/raw/study-guide-visual-supplement.json` and
+checked by the same coverage test.
 
-Only the three credited images are reproduced. The other photographs and header
-art have no printed institutional credit and remain omitted. Diagram text is
-retained, including the printed typo Respresentatives. The page 16 map labels
-are transcribed, including its two Massachusetts labels and Atlantic Ocean;
-the map's geography is not reproduced. This is a text edition, not a facsimile.
+Only images with a printed institutional credit are reproduced (five so far).
+The other photographs and header art have no printed credit and remain
+omitted, with any printed caption retained as reader text. Diagram text is
+retained, including printed typos and inconsistencies (e.g. Chapter 1's
+Respresentatives, Chapter 3's uneven icon-caption punctuation). Chapter 1's
+page 16 map labels are transcribed, including its two Massachusetts labels and
+Atlantic Ocean; the map's geography is not reproduced. These are text editions,
+not facsimiles.
 
-Question links are authored from topics actually covered; Chapter 1 covers 25
-questions. Questions without a published chapter do not get speculative links.
-The all-128 chapter-coverage requirement is a release gate for the full 12-chapter
-corpus, not satisfied by this first chapter.
+Question links are authored from topics actually covered, and a question whose
+content is genuinely repeated across chapters (e.g. Q18, Q41) links to all of
+them. Questions without a published chapter do not get speculative links.
+Chapters 1–3 cover 25, 20, and 12 questions respectively. The all-128
+chapter-coverage requirement is a release gate for the full 12-chapter corpus,
+not satisfied yet.

@@ -1,0 +1,478 @@
+{
+  "Chapter": {
+    "id": "executive",
+    "number": 3,
+    "title": "The Executive Branch",
+    "objectives": [
+      "The Executive Branch.",
+      "The President of the United States.",
+      "The agencies in the federal government."
+    ],
+    "questions": [
+      13,
+      17,
+      30,
+      36,
+      38,
+      39,
+      40,
+      41,
+      42,
+      46,
+      47,
+      48
+    ],
+    "images": [
+      "ch03-voting"
+    ],
+    "source_start": 24,
+    "source_end": 28,
+    "editorial_notes": [
+      "This text edition preserves the prose, the repeated three-branch diagram, the full Cabinet-level position list, and the Line of Succession diagram. Only the printed-credit 1964 voting photograph is reproduced. Page 28 contains no chapter content.",
+      "The 2025 Cabinet photo, both presidential portraits, the FBI/USCIS seals, the six armed-forces seals, and the party icons have no printed institutional credit and are omitted; their printed captions (where any are printed) are retained as reader text. Reproducing a photograph of the sitting President would itself become a shelf-life liability like the eight changing answers, so omitting it follows both the credit-review policy and that concern.",
+      "The elephant icon's caption is printed without a trailing period, unlike the donkey icon's; both are reproduced exactly as printed. 'Secretary of War (Defense)' is retained exactly as printed in the Cabinet-level list, per the source correction already noted in PLAN.md for Q48."
+    ]
+  },
+  "Blocks": [
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 24,
+      "Anchor": "page-24",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Executive Branch is one branch or part of the U.S. government. The President of the United States is in charge of the Executive Branch.",
+      "Page": 24,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The other parts of the Executive Branch are the President’s Cabinet, the Vice President of the United States, and the Executive Departments and agencies in the federal government.",
+      "Page": 24,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "During the Constitutional Convention, the Founders were afraid that if the President had too much power, then the President would be above the law and could become a king or queen. The Founders believed that in the United States no one is above the law. This is called the “rule of law”. The Founders believed that the President should have the power to protect and serve the people of the United States. They also believed that the President should follow the rule of law.",
+      "Page": 24,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "THE PRESIDENT’S CABINET",
+      "Page": 24,
+      "Anchor": "section-4",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Executive Branch includes the Executive Departments and agencies that are part of the federal government. The Executive Departments and agencies help the President to enforce laws, protect the country, work with other countries, and provide services to the people of the United States.",
+      "Page": 24,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The people who lead the Executive Departments are mostly called Secretaries. For example, the person who leads the Department of Homeland Security is called the Secretary of Homeland Security.",
+      "Page": 24,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 25,
+      "Anchor": "page-25",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "U.S. Government\n├─ Legislative Branch (Congress)\n├─ Executive Branch (President)\n└─ Judicial Branch (Supreme Court)",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The leaders of the Executive Departments are also called Cabinet-level positions because the people who lead each agency are part of the President’s Cabinet. A “cabinet” is another word for a “group of advisors.” The President’s Cabinet advises the President.",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The President can also choose to have other people from the federal government serve on the Cabinet.",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Each Executive Department has many smaller agencies. For example, the Federal Bureau of Investigation (FBI) is part of the Department of Justice. Another example is U.S. Citizenship and Immigration Services (USCIS). USCIS is part of the Department of Homeland Security.",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The leader of the Department of Justice is not called a “Secretary.” The leader of the Department of Justice is called the Attorney General.",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "President Donald J. Trump’s Cabinet, 2025.",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Cabinet-level positions include:",
+      "Page": 25,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 25,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "Attorney General",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Agriculture",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Commerce",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Education",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Energy",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Health and Human Services",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Homeland Security",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Housing and Urban Development",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of the Interior",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Labor",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of State",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Transportation",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of the Treasury",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of Veterans Affairs",
+          "Children": null
+        },
+        {
+          "Text": "Secretary of War (Defense)",
+          "Children": null
+        },
+        {
+          "Text": "Vice-President",
+          "Children": null
+        },
+        {
+          "Text": "Administrator of the Environmental Protection Agency",
+          "Children": null
+        },
+        {
+          "Text": "Administrator of the Small Business Administration",
+          "Children": null
+        },
+        {
+          "Text": "Director of the Central Intelligence Agency",
+          "Children": null
+        },
+        {
+          "Text": "Director of the Office of Management and Budget",
+          "Children": null
+        },
+        {
+          "Text": "Director of National Intelligence",
+          "Children": null
+        },
+        {
+          "Text": "United States Trade Representative",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 26,
+      "Anchor": "page-26",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "THE COMMANDER IN CHIEF",
+      "Page": 26,
+      "Anchor": "section-17",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The President of the United States is the Commander in Chief of the military. This means that the President is in charge of everyone serving in U.S. military. Another term for the U.S. military is the U.S. Armed Forces.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "In the United States, serving in the U.S. Armed Forces is voluntary. Today there are over 2 million people serving in the U.S. Armed Forces. For more information about the U.S. Armed Forces, please visit: U.S. Department of Defense at www.defense.gov.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are six branches of the U.S. Armed Forces:",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "VOTING FOR PRESIDENT",
+      "Page": 26,
+      "Anchor": "section-21",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "U.S. citizens vote for President in November, and the President is elected for four years. A person can only be elected to be President two times. This means a person can get elected for four years, and then get reelected for four more years.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "When a person runs for President of the United States they are nominated by a political party. Today, there are two major political parties in the United States. One party is called the Democratic Party, and the other party is called the Republican Party.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To find the name of the President of the United States now, please visit: whitehouse.gov.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "A donkey icon represents the Democratic Party.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "An Elephant icon represents the Republican Party",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "A young woman cast her ballot in the 1964 presidential election.",
+      "Page": 26,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ch03-voting",
+      "Image": {
+        "id": "ch03-voting",
+        "file": "ch03-voting.png",
+        "page": 26,
+        "caption": "A young woman cast her ballot in the 1964 presidential election.",
+        "credit": "Courtesy of the Library of Congress.",
+        "chapters": [
+          "executive"
+        ]
+      }
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 27,
+      "Anchor": "page-27",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "President Donald Trump, 45th \u0026 47th President of the United States.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "President William McKinley, 25th President of the United States.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "THE VICE PRESIDENT",
+      "Page": 27,
+      "Anchor": "section-31",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The Vice President of the United States works for the President in the Executive Branch. The Vice President is the President of the Senate, an advisor to the President, and a member of the President’s Cabinet.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Under the Constitution, the role of the Vice President is very important. The Constitution says that if the President can no longer serve, then the Vice President becomes President. There have been some Presidents who have not served all four years of their term. For example, there are Presidents who died while serving in office. When this has happened, the Vice President becomes the President.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To find the name of the Vice President of the United States now, please visit: whitehouse.gov.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "If both the President and the Vice President can no longer serve, then the Speaker of the House of Representatives becomes President.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "To find the name of the current Speaker of the House, please visit: speaker.gov.",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Line of Succession\nPresident → Vice President → Speaker of the House",
+      "Page": 27,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    }
+  ]
+}

@@ -30,5 +30,13 @@
     "caption": "The Oval Office of the White House. Photo by Cecil Stoughton.",
     "credit": "Courtesy of the John F. Kennedy Presidential Library and Museum.",
     "chapters": ["legislative"]
+  },
+  {
+    "id": "ch03-voting",
+    "file": "ch03-voting.png",
+    "page": 26,
+    "caption": "A young woman cast her ballot in the 1964 presidential election.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["executive"]
   }
 ]

@@ -1,7 +1,7 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first two chapters' content milestones are implemented;
+PDFs. Phase 1 and the first three chapters' content milestones are implemented;
 this is not a release of the full plan.
 
 ## Run
@@ -35,15 +35,15 @@ for amd64 and arm64 with cgo disabled.
   a Light / Dark / Auto selector saved locally in the browser, keyboard-accessible answer reveals and an
   “I got this right” self-check. Self-checks are not persisted yet.
 - Development extraction of all four PDFs to checked-in raw text.
-- `/learn`, `/learn/constitution`, and `/learn/legislative`: Chapters 1–2's
-  source-verified text editions, learning objectives, source-page markers,
-  contents navigation, sidebar, diagram/map text, and 25 plus 20 bidirectional
-  question links (Q18 links to both).
-- Four reviewed Study Guide images with their printed captions and credits.
+- `/learn`, `/learn/constitution`, `/learn/legislative`, and `/learn/executive`:
+  Chapters 1–3's source-verified text editions, learning objectives, source-page
+  markers, contents navigation, sidebar, diagram/map text, and 25, 20, and 12
+  bidirectional question links (Q18 links to two chapters, Q41 to all three).
+- Five reviewed Study Guide images with their printed captions and credits.
   Source coverage by page, parsed chapter goldens, reader HTML goldens, and
   manifest/file/reference checks run without PDFs or poppler.
 
-Not implemented: Chapters 3–12, library transcription, remaining image curation, official/state
+Not implemented: Chapters 4–12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -72,8 +72,8 @@ For local image curation, `go run ./cmd/ingest --images` also requires `pdfimage
 It extracts **only the Study Guide** into ignored `data/images/_extracted/`.
 This unreviewed directory may contain AP material: do not publish or embed it.
 Almanac images are never extracted. `go run ./cmd/ingest --curated-images`
-re-extracts only the four reviewed Chapter 1–2 images using an explicit allowlist.
-They are retained at their source resolution (about 3.1 MB total). If a source PDF
+re-extracts only the five reviewed Chapter 1–3 images using an explicit allowlist.
+They are retained at their source resolution (about 4.5 MB total). If a source PDF
 changes, recheck the image identity, printed caption, credit, and licensing before
 accepting new output; extraction indices alone are not provenance.
 
@@ -123,10 +123,24 @@ lawmaking diagram has no extractable PDF text layer; its labels were transcribed
 separately into `data/raw/study-guide-visual-supplement.json` and are checked by
 the same source-coverage test as the rest of the chapter.
 
-Next: author Chapter 3 and continue through the remaining chapters and their
+Chapter 3 (The Executive Branch) was visually reviewed against PDF pages 24–28
+the same way: prose, both repeated three-branch diagrams, the 22-item
+Cabinet-level list, and the Line of Succession diagram all match the source,
+and every diagram has an extractable PDF text layer (no visual supplement entry
+needed, unlike Chapter 2). Of the seven images on these pages, only the 1964
+voting photo (page 26) carries a printed credit (Library of Congress) and is
+reproduced; the 2025 Cabinet photo, both presidential portraits, the FBI/USCIS
+and armed-forces seals, and the party icons have no printed credit and are
+omitted, with printed captions retained as reader text where any exist.
+Omitting the sitting President's photo also sidesteps the same shelf-life
+concern as the eight changing answers. The elephant icon's caption is printed
+without a trailing period, unlike the donkey icon's; both are kept exactly as
+printed.
+
+Next: author Chapter 4 and continue through the remaining chapters and their
 question mappings, then the reference library. Full 128-question chapter coverage
-remains a release gate; the first two chapters cover 25 and 20 questions
-(Q18 is shared between them).
+remains a release gate; the first three chapters cover 25, 20, and 12 questions
+(Q18 links to Chapters 1–2, Q41 links to all three).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -136,9 +150,9 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
-The Chapter 2 milestone passed the same race/vet/build checks and goldens; its
-content was verified by direct visual PDF review above rather than a separate
-Chromium pass.
+The Chapter 2 and Chapter 3 milestones passed the same race/vet/build checks and
+goldens; their content was verified by direct visual PDF review above rather
+than a separate Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's
 export format; full `make lint` remains unverified pending a compatible tool.
 

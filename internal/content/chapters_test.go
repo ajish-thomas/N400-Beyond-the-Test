@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 2 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Images) != 4 {
+	if len(c.Chapters) != 3 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Images) != 5 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -159,6 +159,9 @@ func TestChapterReferences(t *testing.T) {
 	}
 	if !slices.Equal(c.Questions[17].Chapters, []string{"constitution", "legislative"}) {
 		t.Fatal("Q18 should link to both published chapters")
+	}
+	if !slices.Equal(c.Questions[40].Chapters, []string{"constitution", "legislative", "executive"}) {
+		t.Fatal("Q41 should link to all three published chapters")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")
