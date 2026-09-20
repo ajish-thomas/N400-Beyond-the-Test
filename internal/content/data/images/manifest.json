@@ -86,5 +86,61 @@
     "caption": "General Reference Map, The National Atlas of the United States of America, 2003.",
     "credit": "Courtesy of the U.S. Geological Survey.",
     "chapters": ["geography"]
+  },
+  {
+    "id": "ch08-washington-command",
+    "file": "ch08-washington-command.jpg",
+    "page": 48,
+    "caption": "“Washington Taking Command of the American Army,” by Currier & Ives, 532915.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["revolution"]
+  },
+  {
+    "id": "ch08-washington-princeton",
+    "file": "ch08-washington-princeton.jpg",
+    "page": 48,
+    "caption": "“George Washington at Princeton,” by Charles Willson Peale.",
+    "credit": "Courtesy of the U.S. Senate.",
+    "chapters": ["revolution"]
+  },
+  {
+    "id": "ch08-declaration",
+    "file": "ch08-declaration.jpg",
+    "page": 49,
+    "caption": "The Declaration of Independence.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["revolution"]
+  },
+  {
+    "id": "ch08-trumbull",
+    "file": "ch08-trumbull.png",
+    "page": 49,
+    "caption": "In “Declaration of Independence,” by John Trumbull, Thomas Jefferson and his committee present the formal statement of independence from Great Britain.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["revolution"]
+  },
+  {
+    "id": "ch08-independence-hall",
+    "file": "ch08-independence-hall.jpg",
+    "page": 49,
+    "caption": "Assembly room of Independence Hall where the Declaration of Independence and the U.S. Constitution were both signed.",
+    "credit": "Courtesy of the National Park Service.",
+    "chapters": ["revolution"]
+  },
+  {
+    "id": "ch08-yorktown",
+    "file": "ch08-yorktown.jpg",
+    "page": 50,
+    "caption": "American, British and Hessian soldiers fight furiously at the Siege of Yorktown.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["revolution"]
+  },
+  {
+    "id": "ext-mitchell-map-revolution",
+    "file": "ext-mitchell-map-revolution.jpg",
+    "page": 49,
+    "caption": "Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["revolution"]
   }
 ]

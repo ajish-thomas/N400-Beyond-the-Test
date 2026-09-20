@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 7 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Images) != 11 {
+	if len(c.Chapters) != 8 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Chapters[7].Questions) != 11 || len(c.Images) != 18 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -131,18 +131,45 @@ func TestChapterSourceCoverage(t *testing.T) {
 					"oun": "", "M": "", "so": "", "yM": "", "is": "", "ur": "", "ver": "",
 					"iR": "", "Ri": "", "Ro": "", "siss": "", "Mis i pp i": "", "iver": "",
 					"cia": "", "nM": "", "s": "", "ala": "", "pp": "",
-					"States. The Appalachian Mountains are in the eastern                                   tains":                                          "States. The Appalachian Mountains are in the eastern",
-					"United States, and the Rocky Mountains are in the                               ck":                                                    "United States, and the Rocky Mountains are in the",
+					"States. The Appalachian Mountains are in the eastern                                   tains":                                                                      "States. The Appalachian Mountains are in the eastern",
+					"United States, and the Rocky Mountains are in the                               ck":                                                                                "United States, and the Rocky Mountains are in the",
 					"There are also many rivers in the United States. The                                                                                                         tain": "There are also many rivers in the United States. The",
-					"two longest rivers in the U.S. are the Mississippi                                                           A":                                                "two longest rivers in the U.S. are the Mississippi",
+					"two longest rivers in the U.S. are the Mississippi                                                           A":                                                    "two longest rivers in the U.S. are the Mississippi",
 				},
 				45: {
 					// Chapter 7's page 45 "Atlantic Ocean" map label also follows a curve.
-					"Plymouth                      At":                     "Plymouth",
-					"Jamestown                          l      Portugal":   "Jamestown                          Portugal",
+					"Plymouth                      At":                   "Plymouth",
+					"Jamestown                          l      Portugal": "Jamestown                          Portugal",
 					"ean": "", "Oc": "", "an": "",
 					"tic                              Africa": "Africa",
 				},
+			}
+			// The opening-page title splash usually prints as one line (e.g.
+			// "THE JUDICIAL BRANCH"), but Chapter 8's prints across two ("THE
+			// AMERICAN REVOLUTIONARY WAR &" / "THE DECLARATION OF INDEPENDENCE").
+			// Scanning the span between the "CHAPTER N" banner and "In this
+			// chapter..." and matching its full concatenation against the title
+			// (rather than requiring a single matching line) handles both cases.
+			titleSplashLines := map[string]bool{}
+			var span []string
+			inSpan := false
+			for _, l := range strings.Split(pages[ch.SourceStart-1], "\n") {
+				t := strings.TrimSpace(l)
+				if banner.MatchString(t) {
+					inSpan = true
+					continue
+				}
+				if t == "In this chapter, you will learn about:" {
+					break
+				}
+				if inSpan && t != "" {
+					span = append(span, t)
+				}
+			}
+			if strings.Join(span, " ") == strings.ToUpper(ch.Title) {
+				for _, l := range span {
+					titleSplashLines[l] = true
+				}
 			}
 			for page := ch.SourceStart; page <= ch.SourceEnd; page++ {
 				var source []string
@@ -153,7 +180,7 @@ func TestChapterSourceCoverage(t *testing.T) {
 							line = clean
 						}
 					}
-					if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || banner.MatchString(line) || (page == ch.SourceStart && line == strings.ToUpper(ch.Title)) || line == "In this chapter, you will learn about:" {
+					if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || banner.MatchString(line) || (page == ch.SourceStart && titleSplashLines[line]) || line == "In this chapter, you will learn about:" {
 						continue
 					}
 					source = append(source, line)
@@ -233,8 +260,11 @@ func TestChapterReferences(t *testing.T) {
 	if !slices.Equal(c.Questions[63].Chapters, []string{"legislative", "rights"}) {
 		t.Fatal("Q64 should link to both chapters covering federal-office citizenship")
 	}
-	if !slices.Equal(c.Questions[80].Chapters, []string{"constitution", "geography", "early-history"}) {
-		t.Fatal("Q81 should link to all three chapters covering the 13 original states")
+	if !slices.Equal(c.Questions[80].Chapters, []string{"constitution", "geography", "early-history", "revolution"}) {
+		t.Fatal("Q81 should link to all four chapters covering the 13 original states")
+	}
+	if !slices.Equal(c.Questions[85].Chapters, []string{"geography", "revolution"}) {
+		t.Fatal("Q86 (George Washington) should link to both chapters that cover it")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")
