@@ -5,11 +5,12 @@
   "title": "Early American History",
   "objectives": ["Early American History.", "The Colonial Period (1607 – 1776).", "The people living in the North America before 1776."],
   "questions": [73,74,75,81],
-  "images": ["ch07-jamestown-street", "ch07-pilgrims"],
+  "images": ["ch07-jamestown-street", "ch07-pilgrims", "ext-mitchell-map-early-history"],
   "source_start": 43,
   "source_end": 46,
   "editorial_notes": [
     "This text edition preserves the prose, both extractable maps (the transatlantic-routes map on page 45 and the 13-colonies map on page 46), the sidebar on the 1707 union of England and Scotland, and the full colonies list. Of the four photographs/illustrations, two are reproduced: the Jamestown street scene (Courtesy of the National Park Service, newly reviewed and added to the credit allowlist for this chapter) and the 'Pilgrims Going to Church' painting (Courtesy of the Library of Congress, already allowlisted). The Pomeiock illustration is credited to the Jamestown Yorktown Foundation, a Virginia state institution rather than a federal one; like Chapter 5's Polling Place Photo Project credit, it is omitted pending a deliberate licensing review rather than folded into the federal-institution allowlist. The first-enslaved-people illustration has no printed credit at all and is likewise omitted. Both omitted captions are retained as reader text.",
+    "The National Archives' 1775 'Mitchell Map' (National Archives Identifier 2450020, Public Domain) is added on page 46 as a genuine illustration alongside the 13-colonies content, the same supplementary reference image used in Chapters 1 and 6. It is not from the Study Guide PDF; it is sourced and verified separately per an explicit decision to illustrate 13-colonies content with a real public-domain map.",
     "Page 45's 'Atlantic Ocean' map label follows the ocean's curve on the map, so the PDF's text layer extracts it as scrambled fragments (At/l/ean/Oc/tic/an) sharing lines with real place-name labels (Plymouth, Jamestown, Portugal, Africa). It is recorded as clean text in `data/raw/study-guide-visual-supplement.json`, the same mechanism used for Chapter 2's page 22 diagram and several of Chapter 6's map labels.",
     "The fourth chapter objective is printed exactly as 'The people living in the North America before 1776,' with 'the' before 'North America'; retained as printed, not corrected.",
     "This chapter covers a difficult period of the source material — Native American depopulation and the beginning of slavery in the colonies — factually, in the Study Guide's own words, without added commentary."
@@ -127,3 +128,5 @@ North Carolina
 South Carolina
 Georgia
 ```
+
+![Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.](ext-mitchell-map-early-history)

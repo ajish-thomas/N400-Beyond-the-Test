@@ -87,7 +87,7 @@ func (c *Catalog) validate(files fs.FS) error {
 		}
 		// Currently only the reviewed federal institutions are allowed. Expand
 		// this allowlist only with a source and licensing review.
-		if img.Credit != "Courtesy of the Library of Congress." && img.Credit != "Courtesy of the National Archives." && img.Credit != "Courtesy of the John F. Kennedy Presidential Library and Museum." && img.Credit != "Courtesy of the National Park Service." {
+		if img.Credit != "Courtesy of the Library of Congress." && img.Credit != "Courtesy of the National Archives." && img.Credit != "Courtesy of the John F. Kennedy Presidential Library and Museum." && img.Credit != "Courtesy of the National Park Service." && img.Credit != "Courtesy of the U.S. Geological Survey." {
 			return fmt.Errorf("image %s has unreviewed credit", img.ID)
 		}
 		for _, id := range img.Chapters {

@@ -10,12 +10,13 @@
     "Why the Constitution is the most important document in the United States government."
   ],
   "questions": [2,3,4,5,6,7,13,15,16,17,18,19,20,41,46,47,50,51,52,58,59,60,61,81,82],
-  "images": ["ch01-signing", "ch01-constitution", "ch01-treaty"],
+  "images": ["ch01-signing", "ch01-constitution", "ch01-treaty", "ext-mitchell-map-constitution"],
   "source_start": 8,
   "source_end": 17,
   "editorial_notes": [
     "This text edition preserves the chapter prose, sidebar, diagram labels, map labels, and captions. Diagrams are transcribed as text; map labels are listed without reproducing the geography. Three credited images are included. Uncredited illustrations are omitted, with their printed captions retained. Page 17 contains no chapter content.",
-    "Source wording is retained, including ‘Respresentatives’ in the page 10 diagram, ‘is a called a governor’ on page 14, and the page 13 wording ‘print the dollar bills and coins’. The source calls the Constitution’s articles ‘sections’. These are source details, not editorial corrections."
+    "Source wording is retained, including ‘Respresentatives’ in the page 10 diagram, ‘is a called a governor’ on page 14, and the page 13 wording ‘print the dollar bills and coins’. The source calls the Constitution’s articles ‘sections’. These are source details, not editorial corrections.",
+    "The National Archives' 1775 'Mitchell Map' (National Archives Identifier 2450020, Public Domain) is added here as a genuine illustration of the 13 original states/colonies, alongside the page 16 diagram above. Unlike this chapter's other three images, it is not from the Study Guide PDF: it is a supplementary reference image, sourced and verified separately, added per an explicit decision to illustrate geography content with real public-domain maps rather than text alone. It shows the colonies' approximate historical extent, not the 1788 ratification dates transcribed in the diagram above, which it does not replace."
   ]
 }
 ---
@@ -180,6 +181,8 @@ Atlantic Ocean
 South Carolina (May 23, 1788)
 Georgia (January 2, 1788)
 ```
+
+![Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.](ext-mitchell-map-constitution)
 
 ## AMENDMENTS TO THE CONSTITUTION
 

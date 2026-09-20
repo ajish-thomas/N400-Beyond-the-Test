@@ -5,11 +5,12 @@
   "title": "U.S. Geography",
   "objectives": ["U.S. states and territories.", "The U.S. borders.", "Mountains and rivers in the United States.", "The U.S. capital."],
   "questions": [62,81,86,119,122],
-  "images": [],
+  "images": ["ext-mitchell-map-geography", "ext-usgs-reference-map"],
   "source_start": 38,
   "source_end": 42,
   "editorial_notes": [
-    "This text edition preserves the prose and the map labels that are genuinely extractable PDF text: the 13-original-states and five-territories labels (page 38), the Washington/Alaska/Hawaii/territory inset labels on the national map (page 39), the border-states lists (page 40), and the territory-capital and state-capital labels (page 41). The five main map graphics (the national map on page 39, the borders map on page 40, the mountains/rivers map and state-capitals map on page 41) are not reproduced as images: none carry a printed credit, and their underlying geography is not reproduced, consistent with Chapter 1's map policy. Page 42 contains no chapter content.",
+    "This text edition preserves the prose and the map labels that are genuinely extractable PDF text: the 13-original-states and five-territories labels (page 38), the Washington/Alaska/Hawaii/territory inset labels on the national map (page 39), the border-states lists (page 40), and the territory-capital and state-capital labels (page 41). None of the Study Guide's five map graphics carry a printed credit, so none are reproduced from the PDF itself, and their underlying geography is not otherwise reproduced, consistent with Chapter 1's map policy. Page 42 contains no chapter content.",
+    "Two genuinely public-domain reference maps are added as supplementary illustrations, sourced and verified separately from the Study Guide: the National Archives' 1775 'Mitchell Map' (page 38, alongside the 13-original-states content) and the USGS National Atlas 'General Reference Map', 2003 (page 40, alongside the borders content; it also shows the Mississippi/Missouri rivers and the Rocky/Appalachian mountains relevant to page 41, but not the five territories, so those sections' text transcriptions are unchanged). This is a deliberate exception to sourcing everything from the four supplied PDFs, made because unlike this chapter's own map graphics, these two carry a verified public-domain credit from a named federal source.",
     "Three map labels follow a curved or diagonal path in the source (page 39's 'Washington, D.C.' marker, page 40's 'GULF OF AMERICA', and page 41's mountain-range/river names), so the PDF's text layer extracts each as scrambled letter fragments (e.g. 'tains/oun/M/so/yM' for the mountain labels) rather than legible words. All three are recorded as clean text in `data/raw/study-guide-visual-supplement.json`, the same mechanism used for Chapter 2's page 22 diagram, instead of being transcribed as illegible fragments.",
     "Page 41's PDF text layer independently duplicates 'Alaska', 'Hawaii', and all five territory names in an ALL-CAPS form layered behind the visible mixed-case labels; verified against the rendered page, only one instance of each is actually printed. The source-coverage test drops one duplicate of each on this page rather than this edition transcribing a second, non-existent label.",
     "The source itself prints 'GULF OF AMERICA' on the page 40 border map; reproduced exactly as printed, not corrected to a prior name.",
@@ -56,6 +57,8 @@ Northern Mariana Islands
 American Samoa
 ```
 
+![Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.](ext-mitchell-map-geography)
+
 <!-- page:39 -->
 ```text
 Washington, D.C.
@@ -89,6 +92,8 @@ Gulf of America
 ```
 
 > This map shows the 50 U.S. states and Washington, D.C., with Canada and Mexico.
+
+![General Reference Map, The National Atlas of the United States of America, 2003.](ext-usgs-reference-map)
 
 The states that border Canada are:
 

@@ -54,5 +54,37 @@
     "caption": "“Pilgrims Going to Church,” by George Henry Boughton.",
     "credit": "Courtesy of the Library of Congress.",
     "chapters": ["early-history"]
+  },
+  {
+    "id": "ext-mitchell-map-constitution",
+    "file": "ext-mitchell-map-constitution.jpg",
+    "page": 16,
+    "caption": "Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["constitution"]
+  },
+  {
+    "id": "ext-mitchell-map-geography",
+    "file": "ext-mitchell-map-geography.jpg",
+    "page": 38,
+    "caption": "Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["geography"]
+  },
+  {
+    "id": "ext-mitchell-map-early-history",
+    "file": "ext-mitchell-map-early-history.jpg",
+    "page": 46,
+    "caption": "Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["early-history"]
+  },
+  {
+    "id": "ext-usgs-reference-map",
+    "file": "ext-usgs-reference-map.jpg",
+    "page": 40,
+    "caption": "General Reference Map, The National Atlas of the United States of America, 2003.",
+    "credit": "Courtesy of the U.S. Geological Survey.",
+    "chapters": ["geography"]
   }
 ]

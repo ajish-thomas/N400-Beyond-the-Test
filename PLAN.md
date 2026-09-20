@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–7 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, and 4 question links respectively and seven credited images total (Chapters 4–6 have none). Chapters 8–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–7 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, and 4 question links respectively and eleven credited images total (four sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapters 8–12 remain. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -36,6 +36,18 @@ remain the target specification; they are not claims that every feature exists.
   uncredited illustrations are not reproduced. This does not yet satisfy the
   full visual-content scope of the release plan. Credited images retain source
   resolution; downscaling has not been implemented.
+- As of Chapters 1, 6, and 7, genuine geography is illustrated with real,
+  individually-verified public-domain maps sourced from outside the four
+  supplied PDFs (National Archives, USGS) — a deliberate, narrow exception to
+  "the PDFs are the source of truth," made only where the Study Guide's own
+  map graphic has no printed credit, an equivalent government map exists and
+  has been personally verified (not a generic "fair use" search result), and
+  the map is added alongside rather than replacing the exact-fact text
+  transcription (dates, territory names) it cannot itself convey. See
+  `internal/content/data/images/EXTERNAL-SOURCES.txt` for the exact source
+  URL, quoted license statement, and verification date for each. Custom
+  textbook diagrams (branch trees, flowcharts, the Cabinet-position and
+  naturalization-eligibility lists) have no such equivalent and remain text.
 - Runtime validation checks questions, chapter references, image captions and
   credits, approved image files, and bidirectional links. Full 128-question
   chapter coverage remains a release gate once all chapters are authored.
@@ -128,6 +140,21 @@ remain the target specification; they are not claims that every feature exists.
   fragments, handled via the visual-supplement mechanism like several of
   Chapter 6's labels. This chapter covers Native American depopulation and
   the start of slavery in the colonies factually, in the source's own words.
+- Following an explicit decision to source real geography images rather than
+  rely solely on text transcriptions, Chapters 1, 6, and 7 were retrofitted
+  with two verified public-domain reference maps (four manifest entries: the
+  same National Archives map is used at three different chapter pages, so it
+  is copied under three separate image IDs — catalog.go ties one manifest
+  image to exactly one page). Each candidate was found via search, then its
+  license statement was independently confirmed on the actual source page
+  before download; a "fair use" internet image search was explicitly
+  rejected as the sourcing method. Two categories (a territories-with-capitals
+  map; a historical map of both colonization and slave-trade Atlantic routes)
+  had no verifiable public-domain candidate and remain text. Library of
+  Congress item pages returned HTTP 403 to automated fetching throughout this
+  research, ruling out several otherwise-promising candidates. Both added
+  images are supplementary to, not replacements for, the exact facts (dates,
+  territory names) their chapters' text transcriptions already convey.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,

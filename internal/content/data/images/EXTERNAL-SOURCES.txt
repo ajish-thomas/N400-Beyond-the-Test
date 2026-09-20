@@ -1,0 +1,48 @@
+External image sources
+
+Every other image in this directory is extracted from the Study Guide PDF
+itself (see cmd/ingest/curated.go). The four files below are the sole
+exception: genuinely public-domain reference maps sourced from outside the
+four supplied PDFs, added because Chapters 1, 6, and 7's own map graphics
+carry no printed credit and so cannot be reproduced under this project's
+image policy. Each was individually verified against its source page before
+being downloaded; none came from a general "fair use" image search. Re-verify
+against the URL below if a file is ever regenerated or its credit questioned.
+
+ext-mitchell-map-constitution.jpg
+ext-mitchell-map-geography.jpg
+ext-mitchell-map-early-history.jpg
+  Same file, copied three times (one per manifest entry) because a single
+  manifest image can only be pinned to one chapter page; see catalog.go.
+  Title: "Annotated Map of the British Colonies in North America with the
+    Roads, Distances, Limits and Extent of the Settlements" (1775)
+  National Archives Identifier: 2450020
+  Source page: https://www.docsteach.org/documents/document/annotated-map-british-colonies
+  Direct image URL (as downloaded): https://i0.wp.com/docsteach.org/wp-content/uploads/documents/2450020/md_2450020_3296.jpg
+  Rights statement quoted from the source page: "Public Domain, Free of
+    Known Copyright Restrictions" (Creative Commons Public Domain Mark 1.0)
+  Credit used in manifest.json: "Courtesy of the National Archives."
+  Verified: 2026-09-20
+
+ext-usgs-reference-map.jpg
+  Title: "General Reference Printable Map", The National Atlas of the
+    United States of America (map itself is dated 2003, Reston, Virginia)
+  Source page: https://www.usgs.gov/media/images/general-reference-printable-map
+  Direct image URL (as downloaded): https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/printable2.png
+  Rights statement quoted from the source page: "Public Domain."
+  Credit used in manifest.json: "Courtesy of the U.S. Geological Survey."
+  Verified: 2026-09-20
+  Coverage note: shows all 50 states, D.C., Canada/Mexico borders, the
+    Pacific/Atlantic oceans and Gulf of Mexico, the Mississippi and Missouri
+    rivers, and the Rocky and Appalachian mountains (labeled on the map
+    itself). Does NOT show the five U.S. territories — Chapter 6's
+    territory-related text transcriptions are unaffected by this image.
+
+Two categories were researched and explicitly rejected for lack of a
+verifiable public-domain source, and remain text transcriptions:
+  - A map of the five U.S. territories with their capital cities marked.
+  - A historical map showing both the European colonization routes to
+    Jamestown/Plymouth and the transatlantic slave-trade routes (Chapter 7,
+    page 45). Library of Congress item pages, which held the most promising
+    candidates for this one, returned HTTP 403 (Cloudflare bot protection) to
+    both WebFetch and curl and could not be verified.

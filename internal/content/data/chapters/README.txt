@@ -44,28 +44,47 @@ section heading (Chapter 4's page 31), and that occurrence must still be
 counted.
 
 Only images with a printed institutional credit that has been reviewed for
-licensing are reproduced (seven so far, in Chapters 1–3 and 7; Chapters 4–6
-have none). The reviewed-federal-institution allowlist in `catalog.go` grew
-by one for Chapter 7: "Courtesy of the National Park Service." — the first
-addition since Chapter 2's JFK Presidential Library and Museum entry. A
-printed credit alone is not enough: Chapter 5's voting-booth photo and one of
+licensing are reproduced from the Study Guide itself (seven so far, in
+Chapters 1–3 and 7; Chapters 4–6 have none from the PDF). The
+reviewed-federal-institution allowlist in `catalog.go` grew by one for
+Chapter 7: "Courtesy of the National Park Service." — the first addition
+since Chapter 2's JFK Presidential Library and Museum entry. A printed
+credit alone is not enough: Chapter 5's voting-booth photo and one of
 Chapter 7's four photographs are each credited to a non-federal source ("the
 Polling Place Photo Project"; "the Jamestown Yorktown Foundation," a Virginia
 state institution) that has not been reviewed, so each is omitted like an
 uncredited image, with its full caption (credit line included) kept as
 reader text pending that review. Other photographs and header art with no
-printed credit at all are handled the same way, including all five of
-Chapter 6's map graphics (no credit, and their full geography is not
-reproduced). Diagram text is retained, including printed typos and
-inconsistencies (e.g. Chapter 1's Respresentatives, Chapter 3's uneven
-icon-caption punctuation, Chapter 5's "Civils Rights Act of 1964" and a
-dropped "and" in "raise their right hand say the Oath of Allegiance," Chapter
-6's "GULF OF AMERICA," Chapter 7's extra "the" in "the North America").
-Chapter 1's page 16 map labels are transcribed, including its two
-Massachusetts labels and Atlantic Ocean; the map's geography is not
-reproduced. These are text editions, not facsimiles. Chapter 7 covers Native
-American depopulation and the start of slavery in the colonies factually, in
-the source's own words, without added commentary.
+printed credit at all are handled the same way. Diagram text is retained,
+including printed typos and inconsistencies (e.g. Chapter 1's Respresentatives,
+Chapter 3's uneven icon-caption punctuation, Chapter 5's "Civils Rights Act of
+1964" and a dropped "and" in "raise their right hand say the Oath of
+Allegiance," Chapter 6's "GULF OF AMERICA," Chapter 7's extra "the" in "the
+North America"). Chapter 1's page 16 map labels are transcribed, including
+its two Massachusetts labels and Atlantic Ocean. These are text editions, not
+facsimiles. Chapter 7 covers Native American depopulation and the start of
+slavery in the colonies factually, in the source's own words, without added
+commentary.
+
+Chapters 1, 6, and 7 additionally each carry a genuinely public-domain
+reference map sourced from outside the four supplied PDFs — the only
+exception to "the PDFs are the source of truth" — added because the Study
+Guide's own map graphics in these three chapters carry no printed credit and
+so cannot themselves be reproduced. Each candidate was found via search, then
+its public-domain status was independently confirmed on the actual source
+page before download; this is explicitly not the same thing as a "fair use"
+image search, which was considered and rejected as too legally thin for this
+project. `catalog.go` ties one manifest image to exactly one chapter page, so
+the same National Archives 1775 colonies map is copied under three separate
+manifest IDs/files (one per chapter) rather than shared. See
+`internal/content/data/images/EXTERNAL-SOURCES.txt` for the exact source URL,
+quoted license statement, and verification date of each. These added images
+supplement rather than replace the exact facts (ratification dates, territory
+names) their chapters' text transcriptions already carry, since the sourced
+maps don't show that source-specific information. Two categories researched
+for this effort — a territories-with-capitals map, and a historical map
+showing both colonization and slave-trade Atlantic routes for Chapter 7 —
+had no verifiable public-domain candidate and remain text only.
 
 Question links are authored from topics actually covered, and a question whose
 content is genuinely repeated across chapters (e.g. Q18, Q41, Q13, Q50, Q64,
