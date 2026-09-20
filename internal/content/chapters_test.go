@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 5 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Images) != 5 {
+	if len(c.Chapters) != 6 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Images) != 5 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -99,18 +99,53 @@ func TestChapterSourceCoverage(t *testing.T) {
 			}
 			number := regexp.MustCompile(`^\d+$`)
 			// Running chapter-banner headers (e.g. "CHAPTER 4" or "CHAPTER 4: THE
-			// JUDICIAL BRANCH") are page furniture, not body content. A stray banner
-			// from an adjacent chapter can bleed onto a page (confirmed on page 29);
-			// this matches any chapter number, not just this chapter's own, so those
-			// artifacts are excluded too. The chapter title itself is only page
-			// furniture on the opening splash page: a later page can legitimately
-			// reuse the exact title text as a genuine section heading (chapter 4's
-			// page 31), which must still be counted.
-			banner := regexp.MustCompile(`^CHAPTER \d+(: .+)?$`)
+			// JUDICIAL BRANCH" or, per Chapter 6's inconsistent formatting, "CHAPTER
+			// 6 – U.S. GEOGRAPHY") are page furniture, not body content. A stray
+			// banner from an adjacent chapter can bleed onto a page (confirmed on
+			// page 29); this matches any chapter number and any title separator, not
+			// just this chapter's own colon-separated form, so those artifacts are
+			// excluded too. The chapter title itself is only page furniture on the
+			// opening splash page: a later page can legitimately reuse the exact
+			// title text as a genuine section heading (chapter 4's page 31), which
+			// must still be counted.
+			banner := regexp.MustCompile(`^CHAPTER \d+\b.*$`)
+			// Chapter 6's maps print several labels as curved or diagonal text
+			// (following a mountain range, a river, or a diagonal leader line to a
+			// small map marker). pdftotext extracts each as scrambled letter-run
+			// fragments, sometimes sharing a line with real prose (e.g. "...in the
+			// eastern                tains"). Each affected raw line is mapped here,
+			// per page, to its real-prose-only equivalent (dropped entirely if the
+			// line is pure fragment); the clean labels themselves are supplied via
+			// the visual supplement, same as Chapter 2's page 22 diagram.
+			mapLabelFixes := map[int]map[string]string{
+				39: {
+					// The page 39 map's "Washington, D.C." marker label is split
+					// across a diagonal leader line into two fragments.
+					"gton, D.C.": "", "Washin": "",
+				},
+				40: {
+					// The page 40 map's "GULF OF AMERICA" label follows a curve.
+					"ICA": "", "ME R": "", "GULF OF A": "",
+				},
+				41: {
+					"oun": "", "M": "", "so": "", "yM": "", "is": "", "ur": "", "ver": "",
+					"iR": "", "Ri": "", "Ro": "", "siss": "", "Mis i pp i": "", "iver": "",
+					"cia": "", "nM": "", "s": "", "ala": "", "pp": "",
+					"States. The Appalachian Mountains are in the eastern                                   tains":                                          "States. The Appalachian Mountains are in the eastern",
+					"United States, and the Rocky Mountains are in the                               ck":                                                    "United States, and the Rocky Mountains are in the",
+					"There are also many rivers in the United States. The                                                                                                         tain": "There are also many rivers in the United States. The",
+					"two longest rivers in the U.S. are the Mississippi                                                           A":                                                "two longest rivers in the U.S. are the Mississippi",
+				},
+			}
 			for page := ch.SourceStart; page <= ch.SourceEnd; page++ {
 				var source []string
 				for _, line := range strings.Split(pages[page-1], "\n") {
 					line = strings.TrimSpace(line)
+					if fixes, ok := mapLabelFixes[page]; ok {
+						if clean, ok := fixes[line]; ok {
+							line = clean
+						}
+					}
 					if number.MatchString(line) || strings.Contains(line, "ONE NATION, ONE PEOPLE: THE USCIS CIVICS TEST TEXTBOOK") || banner.MatchString(line) || (page == ch.SourceStart && line == strings.ToUpper(ch.Title)) || line == "In this chapter, you will learn about:" {
 						continue
 					}
@@ -119,6 +154,16 @@ func TestChapterSourceCoverage(t *testing.T) {
 				sourceText := strings.Join(source, " ")
 				if page == 18 {
 					sourceText = strings.ReplaceAll(sourceText, "representa- tives", "representatives")
+				}
+				if page == 41 {
+					// Chapter 6's page 41 independently duplicates several map labels
+					// in an ALL-CAPS form layered behind the visible mixed-case
+					// labels (verified against the rendered page: only one instance
+					// of each is actually printed). One duplicate of each is dropped
+					// before comparison rather than transcribed twice.
+					for _, dup := range []string{"ALASKA", "HAWAII", "NORTHERN", "MARIANAS", "AMERICAN", "SAMOA", "VIRGIN", "GUAM", "PUERTO", "RICO", "ISLANDS", "ISLANDS"} {
+						sourceText = strings.Replace(sourceText, dup, "", 1)
+					}
 				}
 				want, got := inventory(sourceText+" "+supplement[page]), inventory(authored[page])
 				var differences []string
@@ -180,6 +225,9 @@ func TestChapterReferences(t *testing.T) {
 	}
 	if !slices.Equal(c.Questions[63].Chapters, []string{"legislative", "rights"}) {
 		t.Fatal("Q64 should link to both chapters covering federal-office citizenship")
+	}
+	if !slices.Equal(c.Questions[80].Chapters, []string{"constitution", "geography"}) {
+		t.Fatal("Q81 should link to both chapters covering the 13 original states")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")

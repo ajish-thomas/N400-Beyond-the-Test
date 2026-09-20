@@ -1,0 +1,453 @@
+{
+  "Chapter": {
+    "id": "geography",
+    "number": 6,
+    "title": "U.S. Geography",
+    "objectives": [
+      "U.S. states and territories.",
+      "The U.S. borders.",
+      "Mountains and rivers in the United States.",
+      "The U.S. capital."
+    ],
+    "questions": [
+      62,
+      81,
+      86,
+      119,
+      122
+    ],
+    "images": [],
+    "source_start": 38,
+    "source_end": 42,
+    "editorial_notes": [
+      "This text edition preserves the prose and the map labels that are genuinely extractable PDF text: the 13-original-states and five-territories labels (page 38), the Washington/Alaska/Hawaii/territory inset labels on the national map (page 39), the border-states lists (page 40), and the territory-capital and state-capital labels (page 41). The five main map graphics (the national map on page 39, the borders map on page 40, the mountains/rivers map and state-capitals map on page 41) are not reproduced as images: none carry a printed credit, and their underlying geography is not reproduced, consistent with Chapter 1's map policy. Page 42 contains no chapter content.",
+      "Three map labels follow a curved or diagonal path in the source (page 39's 'Washington, D.C.' marker, page 40's 'GULF OF AMERICA', and page 41's mountain-range/river names), so the PDF's text layer extracts each as scrambled letter fragments (e.g. 'tains/oun/M/so/yM' for the mountain labels) rather than legible words. All three are recorded as clean text in `data/raw/study-guide-visual-supplement.json`, the same mechanism used for Chapter 2's page 22 diagram, instead of being transcribed as illegible fragments.",
+      "Page 41's PDF text layer independently duplicates 'Alaska', 'Hawaii', and all five territory names in an ALL-CAPS form layered behind the visible mixed-case labels; verified against the rendered page, only one instance of each is actually printed. The source-coverage test drops one duplicate of each on this page rather than this edition transcribing a second, non-existent label.",
+      "The source itself prints 'GULF OF AMERICA' on the page 40 border map; reproduced exactly as printed, not corrected to a prior name.",
+      "This chapter's running header uses an en dash ('CHAPTER 6 – U.S. GEOGRAPHY') rather than the colon Chapters 1–5 used; the coverage test's banner filter was broadened to accept any separator rather than special-cased for this chapter."
+    ]
+  },
+  "Blocks": [
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 38,
+      "Anchor": "page-38",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "STATES AND TERRITORIES",
+      "Page": 38,
+      "Anchor": "section-1",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "When the U.S. first became a country in 1776 there were 13 original states. All of the 13 original states are located on the East Coast of the United States.",
+      "Page": 38,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Today, the U.S. has 50 states. This is why the American flag has 50 stars. There is one star for each state.",
+      "Page": 38,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "On August 21, 1959, Hawaii became the 50th state to join the United States.",
+      "Page": 38,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The U.S. also has five territories. A U.S. territory is an area that is part of the United States, but a territory is not a state.",
+      "Page": 38,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "The 13 original states are:\nMassachusetts\nNew York\nNew Hampshire\nMassachusetts\nPennsylvania\nRhode Island\nConnecticut\nNew Jersey\nDelaware\nMaryland\nVirginia\nNorth Carolina\nAtlantic Ocean\nSouth Carolina\nGeorgia",
+      "Page": 38,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "The five U.S. territories are:\nGuam\nVirgin Islands\nPuerto Rico\nNorthern Mariana Islands\nAmerican Samoa",
+      "Page": 38,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 39,
+      "Anchor": "page-39",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Washington, D.C.\nAlaska\nHawaii\nGuam\nVirgin Islands\nPuerto Rico\nNorthern Mariana Islands\nAmerican Samoa",
+      "Page": 39,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "This map shows the 50 U.S. states, Washington, D.C., and the 5 U.S. territories, with Canada and Mexico",
+      "Page": 39,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "There are 50 stars in the American flag for the 50 U.S. states",
+      "Page": 39,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 40,
+      "Anchor": "page-40",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "U.S. BORDERS",
+      "Page": 40,
+      "Anchor": "section-13",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The United States is located in North America, and it is bordered by an ocean on the East Coast and the West Coast.",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The U.S. is also bordered by one country to the north and another country to the south. The country that borders the U.S. to the north is called Canada. There are 13 states in the U.S. that border Canada.",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The ocean on the West Coast of the United States is called the Pacific Ocean.",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The ocean on the East Coast of the United States is called the Atlantic Ocean.",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Alaska\nGulf of America",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "This map shows the 50 U.S. states and Washington, D.C., with Canada and Mexico.",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The states that border Canada are:",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 40,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "Maine",
+          "Children": null
+        },
+        {
+          "Text": "New Hampshire",
+          "Children": null
+        },
+        {
+          "Text": "Vermont",
+          "Children": null
+        },
+        {
+          "Text": "New York",
+          "Children": null
+        },
+        {
+          "Text": "Pennsylvania",
+          "Children": null
+        },
+        {
+          "Text": "Ohio",
+          "Children": null
+        },
+        {
+          "Text": "Michigan",
+          "Children": null
+        },
+        {
+          "Text": "Minnesota",
+          "Children": null
+        },
+        {
+          "Text": "North Dakota",
+          "Children": null
+        },
+        {
+          "Text": "Montana",
+          "Children": null
+        },
+        {
+          "Text": "Idaho",
+          "Children": null
+        },
+        {
+          "Text": "Washington",
+          "Children": null
+        },
+        {
+          "Text": "Alaska",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The country that borders the U.S. to the south is called Mexico. There are four states in the U.S. that border Mexico.",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The states that border Mexico are:",
+      "Page": 40,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "list",
+      "Text": "",
+      "Page": 40,
+      "Anchor": "",
+      "Items": [
+        {
+          "Text": "California",
+          "Children": null
+        },
+        {
+          "Text": "Arizona",
+          "Children": null
+        },
+        {
+          "Text": "New Mexico",
+          "Children": null
+        },
+        {
+          "Text": "Texas",
+          "Children": null
+        }
+      ],
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 41,
+      "Anchor": "page-41",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "MOUNTAINS AND RIVERS",
+      "Page": 41,
+      "Anchor": "section-26",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are two large mountain ranges in the United States. The Appalachian Mountains are in the eastern United States, and the Rocky Mountains are in the western United States.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "There are also many rivers in the United States. The two longest rivers in the U.S. are the Mississippi River and the Missouri River. The Mississippi River runs north to south, and it is located in the middle of the country. The Missouri River connects to the Mississippi River, and it runs across several states in the West.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Rocky Mountains\nMissouri River\nMississippi River\nAppalachian Mountains",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "This map shows the two longest rivers, the Mississippi River and the Missouri River.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "WASHINGTON D.C.",
+      "Page": 41,
+      "Anchor": "section-31",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The capital of the United States is called Washington, D.C.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Washington, D.C., is named after George Washington. George Washington was the first President of the United States. He is also known as the “Father of Our Country”.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "The name of the capital has the letters “D.C.” These letters mean “District of Columbia.” Washington, D.C., is not part of a state. Washington, D.C., is located between the states of Maryland and Virginia, and it is controlled by the federal government.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Each state in the United States also has a state capital. Use the map below to find the capital of your state.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "The five U.S. territories are:\nVirgin Islands\nCharlotte Amalie\nGuam\nHagåtña\nPuerto Rico\nSan Juan\nNorthern Mariana Islands\nSaipan\nAmerican Samoa\nFagatogo",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "diagram",
+      "Text": "Alaska\nJuneau\nHawaii\nHonolulu",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "This map shows the 50 U.S. states and Washington, D.C.",
+      "Page": 41,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    }
+  ]
+}

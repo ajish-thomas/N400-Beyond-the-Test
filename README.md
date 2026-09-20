@@ -1,7 +1,7 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first five chapters' content milestones are implemented;
+PDFs. Phase 1 and the first six chapters' content milestones are implemented;
 this is not a release of the full plan.
 
 ## Run
@@ -36,19 +36,19 @@ for amd64 and arm64 with cgo disabled.
   “I got this right” self-check. Self-checks are not persisted yet.
 - Development extraction of all four PDFs to checked-in raw text.
 - `/learn`, `/learn/constitution`, `/learn/legislative`, `/learn/executive`,
-  `/learn/judicial`, and `/learn/rights`: Chapters 1–5's source-verified text
-  editions, learning objectives, source-page markers, contents navigation,
-  sidebar, diagram/map text, and 25, 20, 12, 8, and 14 bidirectional question
-  links (Q18 links to two chapters, Q41 to three, Q13 to three, Q50 and Q64
-  each to two).
+  `/learn/judicial`, `/learn/rights`, and `/learn/geography`: Chapters 1–6's
+  source-verified text editions, learning objectives, source-page markers,
+  contents navigation, sidebar, diagram/map text, and 25, 20, 12, 8, 14, and 5
+  bidirectional question links (Q18 links to two chapters, Q41 to three, Q13
+  to three, Q50, Q64, and Q81 each to two).
 - Five reviewed Study Guide images with their printed captions and credits.
-  Chapters 4–5 have none: none of their photographs carry a reviewed printed
+  Chapters 4–6 have none: none of their photographs carry a reviewed printed
   credit (one of Chapter 5's five has a printed credit from a non-federal
   source, deferred pending a licensing review). Source coverage by page,
   parsed chapter goldens, reader HTML goldens, and manifest/file/reference
   checks run without PDFs or poppler.
 
-Not implemented: Chapters 6–12, library transcription, remaining image curation, official/state
+Not implemented: Chapters 7–12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -173,11 +173,32 @@ any credit. Two more source wording issues are kept exactly as printed:
 "Civils Rights Act of 1964" (a typo for "Civil") and "will raise their right
 hand say the Oath of Allegiance" (missing "and").
 
-Next: author Chapter 6 and continue through the remaining chapters and their
+Chapter 6 (U.S. Geography) was visually reviewed against PDF pages 38–42 the
+same way and turned up the most PDF-extraction quirks of any chapter so far —
+all resolved by cross-checking the rendered page against the raw text, not
+guessed. Three map labels follow a curved or diagonal path (page 39's
+"Washington, D.C." marker, page 40's "GULF OF AMERICA," page 41's
+mountain-range and river names) and extract as scrambled letter fragments
+rather than legible words; each is handled through the same visual-supplement
+mechanism as Chapter 2's page 22 diagram. Separately, page 41's PDF text layer
+turned out to hide a full duplicate ALL-CAPS copy of "Alaska," "Hawaii," and
+all five territory names behind the visible mixed-case labels — confirmed
+against the rendered page to have only one printed instance of each — so the
+coverage test drops one duplicate of each rather than this edition
+transcribing labels that aren't actually there. This chapter's own running
+header also breaks form, using an en dash ("CHAPTER 6 – U.S. GEOGRAPHY")
+where Chapters 1–5 used a colon; the coverage test's banner filter was
+broadened to accept either, re-confirmed against Chapters 1–5's existing
+goldens. None of Chapter 6's five map graphics are reproduced as images:
+none carry a printed credit, and full state/territory geography is not
+reproduced, matching Chapter 1's map policy.
+
+Next: author Chapter 7 and continue through the remaining chapters and their
 question mappings, then the reference library. Full 128-question chapter coverage
-remains a release gate; the first five chapters cover 25, 20, 12, 8, and 14
+remains a release gate; the first six chapters cover 25, 20, 12, 8, 14, and 5
 questions (Q18 links to Chapters 1–2, Q41 to Chapters 1–3, Q13 to Chapters
-1, 3, and 5, Q50 to Chapters 1 and 4, Q64 to Chapters 2 and 5).
+1, 3, and 5, Q50 to Chapters 1 and 4, Q64 to Chapters 2 and 5, Q81 to
+Chapters 1 and 6).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -187,7 +208,7 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
-The Chapter 2–5 milestones passed the same race/vet/build checks and goldens;
+The Chapter 2–6 milestones passed the same race/vet/build checks and goldens;
 their content was verified by direct visual PDF review above rather than a
 separate Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's
