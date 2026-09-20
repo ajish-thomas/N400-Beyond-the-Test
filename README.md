@@ -1,7 +1,7 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first six chapters' content milestones are implemented;
+PDFs. Phase 1 and the first seven chapters' content milestones are implemented;
 this is not a release of the full plan.
 
 ## Run
@@ -36,19 +36,22 @@ for amd64 and arm64 with cgo disabled.
   “I got this right” self-check. Self-checks are not persisted yet.
 - Development extraction of all four PDFs to checked-in raw text.
 - `/learn`, `/learn/constitution`, `/learn/legislative`, `/learn/executive`,
-  `/learn/judicial`, `/learn/rights`, and `/learn/geography`: Chapters 1–6's
-  source-verified text editions, learning objectives, source-page markers,
-  contents navigation, sidebar, diagram/map text, and 25, 20, 12, 8, 14, and 5
-  bidirectional question links (Q18 links to two chapters, Q41 to three, Q13
-  to three, Q50, Q64, and Q81 each to two).
-- Five reviewed Study Guide images with their printed captions and credits.
-  Chapters 4–6 have none: none of their photographs carry a reviewed printed
-  credit (one of Chapter 5's five has a printed credit from a non-federal
-  source, deferred pending a licensing review). Source coverage by page,
-  parsed chapter goldens, reader HTML goldens, and manifest/file/reference
-  checks run without PDFs or poppler.
+  `/learn/judicial`, `/learn/rights`, `/learn/geography`, and
+  `/learn/early-history`: Chapters 1–7's source-verified text editions,
+  learning objectives, source-page markers, contents navigation, sidebar,
+  diagram/map text, and 25, 20, 12, 8, 14, 5, and 4 bidirectional question
+  links (Q18 links to two chapters, Q41 to three, Q13 to three, Q81 to three,
+  Q50 and Q64 each to two).
+- Seven reviewed Study Guide images with their printed captions and credits,
+  including a National Park Service photo in Chapter 7 — the first credit
+  allowlist addition since Chapter 2's JFK Library entry. Chapters 4–6 have
+  none: none of their photographs carry a reviewed printed credit (one of
+  Chapter 5's five, and one of Chapter 7's four, have printed credits from
+  non-federal sources, both deferred pending a licensing review). Source
+  coverage by page, parsed chapter goldens, reader HTML goldens, and
+  manifest/file/reference checks run without PDFs or poppler.
 
-Not implemented: Chapters 7–12, library transcription, remaining image curation, official/state
+Not implemented: Chapters 8–12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -77,8 +80,8 @@ For local image curation, `go run ./cmd/ingest --images` also requires `pdfimage
 It extracts **only the Study Guide** into ignored `data/images/_extracted/`.
 This unreviewed directory may contain AP material: do not publish or embed it.
 Almanac images are never extracted. `go run ./cmd/ingest --curated-images`
-re-extracts only the five reviewed Chapter 1–3 images using an explicit allowlist.
-They are retained at their source resolution (about 4.5 MB total). If a source PDF
+re-extracts only the seven reviewed Chapter 1–3 and 7 images using an explicit
+allowlist. They are retained at their source resolution (about 5.1 MB total). If a source PDF
 changes, recheck the image identity, printed caption, credit, and licensing before
 accepting new output; extraction indices alone are not provenance.
 
@@ -193,12 +196,28 @@ goldens. None of Chapter 6's five map graphics are reproduced as images:
 none carry a printed credit, and full state/territory geography is not
 reproduced, matching Chapter 1's map policy.
 
-Next: author Chapter 7 and continue through the remaining chapters and their
+Chapter 7 (Early American History) was visually reviewed against PDF pages
+43–46 the same way: prose, both extractable maps (the transatlantic-routes
+map and the 13-colonies map), and the sidebar on the 1707 union of England
+and Scotland all match the source. Two of its four photographs are
+reproduced: a Jamestown street scene credited to the National Park Service —
+a federal agency, added to the credit allowlist, the first addition since
+Chapter 2's JFK Library entry — and a painting already covered by the
+existing Library of Congress credit. The other two are omitted: one credited
+to the Jamestown Yorktown Foundation, a Virginia state institution (deferred
+pending review, same as Chapter 5's Polling Place Photo Project credit), and
+one with no printed credit at all. Page 45's "Atlantic Ocean" map label
+follows the ocean's curve and extracts as scrambled fragments, handled via
+the same visual-supplement mechanism as several of Chapter 6's labels. This
+chapter covers Native American depopulation and the start of slavery in the
+colonies factually, in the source's own words, without added commentary.
+
+Next: author Chapter 8 and continue through the remaining chapters and their
 question mappings, then the reference library. Full 128-question chapter coverage
-remains a release gate; the first six chapters cover 25, 20, 12, 8, 14, and 5
-questions (Q18 links to Chapters 1–2, Q41 to Chapters 1–3, Q13 to Chapters
-1, 3, and 5, Q50 to Chapters 1 and 4, Q64 to Chapters 2 and 5, Q81 to
-Chapters 1 and 6).
+remains a release gate; the first seven chapters cover 25, 20, 12, 8, 14, 5,
+and 4 questions (Q18 links to Chapters 1–2, Q41 to Chapters 1–3, Q13 to
+Chapters 1, 3, and 5, Q81 to Chapters 1, 6, and 7, Q50 to Chapters 1 and 4,
+Q64 to Chapters 2 and 5).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -208,7 +227,7 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
-The Chapter 2–6 milestones passed the same race/vet/build checks and goldens;
+The Chapter 2–7 milestones passed the same race/vet/build checks and goldens;
 their content was verified by direct visual PDF review above rather than a
 separate Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's

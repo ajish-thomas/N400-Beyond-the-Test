@@ -54,12 +54,13 @@ func TestRoutes(t *testing.T) {
 		{"/questions/128", 200, "Veterans Day"},
 		{"/static/app.css", 200, "prefers-color-scheme"},
 		{"/static/theme.js", 200, "n400-theme"},
-		{"/learn", 200, "6 of 12 chapters"},
+		{"/learn", 200, "7 of 12 chapters"},
 		{"/learn/legislative", 200, "How Congress Makes a Federal Law"},
 		{"/learn/executive", 200, "Commander in Chief"},
 		{"/learn/judicial", 200, "Statue of Lady Justice"},
 		{"/learn/rights", 200, "Federalist Papers"},
 		{"/learn/geography", 200, "Rocky Mountains"},
+		{"/learn/early-history", 200, "Jamestown"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
@@ -91,7 +92,7 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"constitution", "legislative", "executive", "judicial", "rights", "geography"} {
+	for _, id := range []string{"constitution", "legislative", "executive", "judicial", "rights", "geography", "early-history"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/"+id, nil))
 		file := "testdata/" + id + ".golden.html"
@@ -118,7 +119,7 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 			t.Errorf("reader missing %q", s)
 		}
 	}
-	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}, {"ch02-oval-office.png", "image/png"}, {"ch03-voting.png", "image/png"}} {
+	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}, {"ch02-oval-office.png", "image/png"}, {"ch03-voting.png", "image/png"}, {"ch07-jamestown-street.jpg", "image/jpeg"}, {"ch07-pilgrims.png", "image/png"}} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/images/"+tc.file, nil))
 		if w.Code != 200 || w.Header().Get("Content-Type") != tc.kind || w.Body.Len() == 0 {
@@ -207,8 +208,18 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 		t.Fatal("geography reader must flag its one changing question")
 	}
 	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/early-history", nil))
+	for _, s := range []string{"Courtesy of the National Park Service.", "Courtesy of the Library of Congress.", "enslaved", "1619", "4 questions"} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("early-history reader missing %q", s)
+		}
+	}
+	if strings.Contains(w.Body.String(), `href="https://www.uscis.gov/citizenship/testupdates"`) {
+		t.Fatal("early-history reader should flag no changing questions")
+	}
+	w = httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/81", nil))
-	for _, path := range []string{"/learn/constitution", "/learn/geography"} {
+	for _, path := range []string{"/learn/constitution", "/learn/geography", "/learn/early-history"} {
 		if !strings.Contains(w.Body.String(), `href="`+path+`"`) {
 			t.Errorf("Q81 missing chapter backlink to %s", path)
 		}

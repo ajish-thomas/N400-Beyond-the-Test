@@ -38,5 +38,21 @@
     "caption": "A young woman cast her ballot in the 1964 presidential election.",
     "credit": "Courtesy of the Library of Congress.",
     "chapters": ["executive"]
+  },
+  {
+    "id": "ch07-jamestown-street",
+    "file": "ch07-jamestown-street.jpg",
+    "page": 44,
+    "caption": "A scene of a busy street in Jamestown around 1650.",
+    "credit": "Courtesy of the National Park Service.",
+    "chapters": ["early-history"]
+  },
+  {
+    "id": "ch07-pilgrims",
+    "file": "ch07-pilgrims.png",
+    "page": 46,
+    "caption": "“Pilgrims Going to Church,” by George Henry Boughton.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["early-history"]
   }
 ]

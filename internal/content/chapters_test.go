@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 6 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Images) != 5 {
+	if len(c.Chapters) != 7 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Images) != 7 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -135,6 +135,13 @@ func TestChapterSourceCoverage(t *testing.T) {
 					"United States, and the Rocky Mountains are in the                               ck":                                                    "United States, and the Rocky Mountains are in the",
 					"There are also many rivers in the United States. The                                                                                                         tain": "There are also many rivers in the United States. The",
 					"two longest rivers in the U.S. are the Mississippi                                                           A":                                                "two longest rivers in the U.S. are the Mississippi",
+				},
+				45: {
+					// Chapter 7's page 45 "Atlantic Ocean" map label also follows a curve.
+					"Plymouth                      At":                     "Plymouth",
+					"Jamestown                          l      Portugal":   "Jamestown                          Portugal",
+					"ean": "", "Oc": "", "an": "",
+					"tic                              Africa": "Africa",
 				},
 			}
 			for page := ch.SourceStart; page <= ch.SourceEnd; page++ {
@@ -226,8 +233,8 @@ func TestChapterReferences(t *testing.T) {
 	if !slices.Equal(c.Questions[63].Chapters, []string{"legislative", "rights"}) {
 		t.Fatal("Q64 should link to both chapters covering federal-office citizenship")
 	}
-	if !slices.Equal(c.Questions[80].Chapters, []string{"constitution", "geography"}) {
-		t.Fatal("Q81 should link to both chapters covering the 13 original states")
+	if !slices.Equal(c.Questions[80].Chapters, []string{"constitution", "geography", "early-history"}) {
+		t.Fatal("Q81 should link to all three chapters covering the 13 original states")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")

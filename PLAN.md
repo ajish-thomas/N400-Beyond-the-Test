@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–6 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, and 5 question links respectively and five credited images total (Chapters 4–6 have none). Chapters 7–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–7 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, and 4 question links respectively and seven credited images total (Chapters 4–6 have none). Chapters 8–12 remain. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -42,13 +42,13 @@ remain the target specification; they are not claims that every feature exists.
 
 ### Verification and known limits
 
-- Passing at the Chapter 1–6 milestone: `go test -race ./...`, `go vet ./...`, native
+- Passing at the Chapter 1–7 milestone: `go test -race ./...`, `go vet ./...`, native
   build, source word coverage by page, chapter/reader goldens, and route/image
   tests. The initial implementation also passed all six cross-platform builds.
 - Chromium checks passed for theme switching/persistence, system appearance,
   chapter contents anchors, four images, question backlinks, and no horizontal
   overflow at 380px. Automatic browser launch has not been manually checked.
-  Chapters 3–6's content was verified by direct visual PDF review instead
+  Chapters 3–7's content was verified by direct visual PDF review instead
   (below).
 - `make lint` is **not fully verified**: the available Staticcheck revision cannot
   read this machine's Go 1.27 export format. Vet passes; Staticcheck needs a
@@ -112,6 +112,22 @@ remain the target specification; they are not claims that every feature exists.
   graphics are reproduced as images: none carry a printed credit, and the
   full state/territory geography is not reproduced, consistent with Chapter
   1's map policy.
+- Chapter 7 (Early American History, pages 43–46) was visually reviewed the
+  same way: prose, both extractable maps (the transatlantic-routes map and
+  the 13-colonies map), and the sidebar on the 1707 union of England and
+  Scotland all match the source. Two of its four photographs are reproduced:
+  a Jamestown street scene credited to the National Park Service — a federal
+  agency, reviewed and added to the credit allowlist, the first addition since
+  the JFK Library in Chapter 2 — and a painting already covered by the
+  existing Library of Congress credit. The other two (an illustration credited
+  to the Jamestown Yorktown Foundation, a Virginia state institution, and an
+  uncredited illustration of the first enslaved people arriving in Jamestown)
+  are omitted, the former pending the same kind of deliberate licensing review
+  as Chapter 5's Polling Place Photo Project credit. Page 45's "Atlantic
+  Ocean" map label follows the ocean's curve and extracts as scrambled
+  fragments, handled via the visual-supplement mechanism like several of
+  Chapter 6's labels. This chapter covers Native American depopulation and
+  the start of slavery in the colonies factually, in the source's own words.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -127,10 +143,11 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapters 7–12 with question mappings and licensed image review. Verify
+1. Author Chapters 8–12 with question mappings and licensed image review. Verify
    complete 128-question coverage when finished. Separately, decide whether to
-   pursue a licensing review for the Polling Place Photo Project credit on
-   Chapter 5's voting-booth photo (deferred, not blocking).
+   pursue a licensing review for the non-federal photo credits deferred so
+   far: the Polling Place Photo Project (Chapter 5) and the Jamestown
+   Yorktown Foundation (Chapter 7); neither is blocking.
 2. Author the reference library and its source-checked links.
 3. Add officials/state snapshots and Census district data, then the tested engines
    and remaining UI workflows described below.
