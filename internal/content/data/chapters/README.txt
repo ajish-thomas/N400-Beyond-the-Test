@@ -14,8 +14,9 @@ about transcription choices belong in editorial_notes, not in the book's prose.
 Each published chapter is reviewed visually against its supplied PDF pages
 (Chapter 1: 8–17; Chapter 2: 18–23; Chapter 3: 24–28; Chapter 4: 29–32;
 Chapter 5: 33–37; Chapter 6: 38–42; Chapter 7: 43–46; Chapter 8: 47–51;
-Chapter 9: 52–57; Chapter 10: 58–61). Source word coverage is checked per
-page against checked-in raw text, with a full parsed golden in testdata.
+Chapter 9: 52–57; Chapter 10: 58–61; Chapter 11: 62–68). Source word coverage
+is checked per page against checked-in raw text, with a full parsed golden in
+testdata.
 This is not a substitute for visual source
 review: counts alone cannot validate reading order or diagram edges, though
 it does catch dropped/added words immediately — an early Chapter 5 draft
@@ -23,10 +24,16 @@ that dropped "in federal elections" from one sentence failed this test right
 away. A diagram or map label with no *legible* extractable PDF text layer
 (Chapter 2's page 22 lawmaking flowchart; Chapter 6's page 39 "Washington,
 D.C." marker, page 40 "GULF OF AMERICA," and page 41 mountain/river names;
-Chapter 7's page 45 "Atlantic Ocean" label, all rendered as scrambled
-fragments by curved or diagonal source text) has its clean transcription
-recorded separately in `data/raw/study-guide-visual-supplement.json` and
-checked by the same coverage test. A sentence that itself splits across a
+Chapter 7's page 45 "Atlantic Ocean" label; Chapter 11's page 65 Cold War map
+"Atlantic Ocean" label, all rendered as scrambled fragments by curved or
+diagonal source text) has its clean transcription recorded separately in
+`data/raw/study-guide-visual-supplement.json` and checked by the same
+coverage test. Normalizing a printed credit to its allowlisted phrase can
+also introduce words absent from the source (Chapter 11's page 67 Pentagon
+flag photo, printed as "White House photo by Paul Morse" with no "Courtesy
+of..." phrase at all); the invented words ("Courtesy", "of", "the") are
+likewise recorded in the visual supplement rather than silently unaccounted
+for. A sentence that itself splits across a
 page boundary in the source (Chapter 5's Federalist Papers sentence, pages
 33/34; Chapter 8's causes-of-the-war sentence, pages 47/48) is authored as a
 matching split across two blocks, not smoothed into one. A page whose PDF
@@ -52,13 +59,16 @@ requiring one single matching line, so both one-line and multi-line splashes
 are handled the same way.
 
 Only images with a printed institutional credit that has been reviewed for
-licensing are reproduced from the Study Guide itself (eighteen so far, in
-Chapters 1–3 and 7–10; Chapters 4–6 have none from the PDF). The
+licensing are reproduced from the Study Guide itself (twenty-eight so far, in
+Chapters 1–3 and 7–11; Chapters 4–6 have none from the PDF). The
 reviewed-federal-institution allowlist in `catalog.go` grew by one for
 Chapter 7 ("Courtesy of the National Park Service.") and again for Chapter 8
 ("Courtesy of the U.S. Senate.", reviewed as a federal legislative body's own
-art collection) — the first additions since Chapter 2's JFK Presidential
-Library and Museum entry. A printed credit alone is not enough: Chapter 5's
+art collection), then twice more for Chapter 11 ("Courtesy of NASA." for the
+Apollo 11 Moon-landing photo; "Courtesy of the White House." for the
+Pentagon flag photo, the Executive Office of the President) — the first
+additions since Chapter 2's JFK Presidential Library and Museum entry. A
+printed credit alone is not enough: Chapter 5's
 voting-booth photo and one of Chapter 7's four photographs are each credited
 to a non-federal source ("the Polling Place Photo Project"; "the Jamestown
 Yorktown Foundation," a Virginia state institution) that has not been
@@ -73,11 +83,17 @@ four of its eight (keeping cotton picking, Susan B. Anthony, Frederick
 Douglass, and the Nast "Emancipation" print — the latter's own credit line
 is missing the trailing period Chapter 10's other Library of Congress
 credits use; the manifest field holds the standard normalized string, and
-the punctuation gap is noted rather than silently carried through). Unlike
-every image chapter since Chapter 1, none of Chapters 9 or 10's map/photo
-graphics that lack a credit have any extractable text layer beyond their
-captions — no state names or other labels — so no visual-supplement entry
-was needed for either chapter. A credit can also carry an item number
+the punctuation gap is noted rather than silently carried through), and
+Chapter 11 omits five of its fifteen (the Cold War map, Dr. Martin Luther
+King Jr., Dolores Huerta, the March on Washington, and the September 11
+rescue-workers photo). Unlike every image chapter since Chapter 1, none of
+Chapters 9 or 10's map/photo graphics that lack a credit have any
+extractable text layer beyond their captions — no state names or other
+labels — so no visual-supplement entry was needed for either chapter;
+Chapter 11's uncredited Cold War map is the exception, since its "United
+States" and "Soviet Union" labels are cleanly extractable and transcribed as
+a diagram even though the map's caption itself is omitted for lack of a
+credit. A credit can also carry an item number
 beyond the standard allowlisted phrase (Chapter 8's Currier & Ives print:
 "...Courtesy of the National Archives, 532915."); the number is moved into
 the caption so the credit field holds the exact allowlisted string, losing
@@ -119,14 +135,19 @@ had no verifiable public-domain candidate and remain text only.
 
 Question links are authored from topics actually covered, and a question whose
 content is genuinely repeated across chapters (e.g. Q18, Q41, Q13, Q50, Q64,
-Q81, Q86, Q14, Q82) links to all of them — Chapter 9 alone adds three new
+Q81, Q86, Q14, Q82, Q58) links to all of them — Chapter 9 alone adds three new
 triple/dual links (Q86 now spans Chapters 6, 8, and 9; Q14 spans Chapters 5
 and 9; Q82 spans Chapters 1 and 9) by restating the Constitutional
 Convention, Federalist Papers, and George Washington content already
 covered elsewhere, in more depth. Chapter 10 introduces no new multi-chapter
 links: its Civil War/Lincoln/Emancipation/Juneteenth/women's-rights-movement
 content is new ground each of its seven linked questions covers only there.
-Questions without a published chapter do not get speculative links.
-Chapters 1–10 cover 25, 20, 12, 8, 14, 5, 4, 11, 8, and 7 questions
-respectively. The all-128 chapter-coverage requirement is a release gate for
-the full 12-chapter corpus, not satisfied yet.
+Chapter 11 adds one new dual link (Q58, the federal government's exclusive
+power to declare war: Chapter 1 states this generally, Chapter 11 narrates
+Congress actually exercising it in 1941); its Korean War and Vietnam War
+mentions are listed without "why" reasoning, so the corresponding questions
+are deliberately not linked here. Questions without a published chapter do
+not get speculative links. Chapters 1–11 cover 25, 20, 12, 8, 14, 5, 4, 11,
+8, 7, and 15 questions respectively. The all-128 chapter-coverage
+requirement is a release gate for the full 12-chapter corpus, not satisfied
+yet.

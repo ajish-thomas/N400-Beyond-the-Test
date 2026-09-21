@@ -1,0 +1,143 @@
+---
+{
+  "id": "modern-history",
+  "number": 11,
+  "title": "American History: 1900-2001",
+  "objectives": ["The wars the U.S. fought in the 1900s.", "The Great Depression.", "The Cold War.", "The Civil Rights Movement.", "September 11, 2001."],
+  "questions": [37,58,100,103,105,106,107,108,109,112,113,115,118,126,128],
+  "images": ["ch11-rubber-factories", "ch11-wwi-trench", "ch11-great-war-ends", "ch11-depression-breadline", "ch11-migrant-mother", "ch11-fdr-declaration", "ch11-pearl-harbor", "ch11-eisenhower", "ch11-moon-landing", "ch11-pentagon-flag"],
+  "source_start": 62,
+  "source_end": 68,
+  "editorial_notes": [
+    "This text edition preserves the prose in full, both bulleted answer-choice boxes (other 1900s wars on page 63, other Eisenhower answer choices are not printed here but the wars box is), and the page 68 'TEST YOUR KNOWLEDGE...' heading, which has no further extractable content. Ten of this chapter's fifteen illustrations carry a printed credit and are reproduced. The other five (the Cold War map, Dr. Martin Luther King Jr., Dolores Huerta, the March on Washington, and the September 11 rescue-workers photo) have no printed credit and are omitted, captions retained as reader text.",
+    "Two credit sources are new to this project: 'Courtesy of NASA.' (the Apollo 11 Moon-landing photo, a federal agency, same tier as the existing USGS/National Park Service entries) and 'Courtesy of the White House.' (the Pentagon flag photo, the Executive Office of the President). Both were reviewed and added to the credit allowlist here.",
+    "The Pentagon flag photo's printed credit reads 'White House photo by Paul Morse,' not the 'Courtesy of...' phrasing this project's allowlist otherwise uses. Unlike Chapter 8's Currier & Ives item number, this phrase does not already contain 'Courtesy of' anywhere in the source, so normalizing it to the allowlisted 'Courtesy of the White House.' introduces three words ('Courtesy', 'of', 'the') that are not literally printed; those three words are recorded in `data/raw/study-guide-visual-supplement.json` for page 67 rather than silently invented into the word-coverage check unaccounted for. 'Photo by Paul Morse' itself is retained in the caption, word for word.",
+    "The Cold War map's 'United States' and 'Soviet Union' labels are cleanly extractable and are transcribed as a diagram; its 'Atlantic Ocean' label follows the ocean's curve and extracts as scrambled fragments, handled via the same visual-supplement mechanism as several of Chapter 6's, 7's, and 9's labels.",
+    "This chapter restates two facts already covered elsewhere with new specifics that justify new links: the federal government's exclusive power to declare war (Chapter 1 states this generally; this chapter narrates Congress actually exercising it in 1941) and the 22nd Amendment's two-term limit (naming the amendment directly, unlike Chapter 3's mention of the two-term rule without naming its source). Martin Luther King, Jr. Day and Veterans Day are both explicitly introduced as national holidays here, alongside Chapter 10's introduction of Juneteenth.",
+    "Some 1900s conflicts this chapter names (the Korean War, the Vietnam War) are listed but not explained; the Study Guide gives no 'why' reasoning for those specific wars in this chapter, so the corresponding 'why did the United States enter' questions are not linked here, consistent with this project's practice of linking only what the text actually states."
+  ]
+}
+---
+<!-- page:62 -->
+By the 1900s, more people in the United States were moving to cities to work in factories, and immigrants from all over the world were moving to the U.S. The United States’ economy was starting to grow, and soon the U.S. would begin to increase the size of its military.
+
+![Rubber-making factories on a river in 1897.](ch11-rubber-factories)
+
+<!-- page:63 -->
+## WORLD WAR I
+
+In 1914, a war started in Europe. When the war started, it was called The Great War. Today, the Great War is called World War I. There were many countries fighting on each side of the war during World War I.
+
+World War I is one war fought by the United States in the 1900s. World War I was fought by countries from around the world from 1914 – 1918, but the U.S. did not join the war until 1917. The U.S. fought in World War I from 1917 – 1918.
+
+World War I ended on November 11, 1918. Today, we celebrate Veterans’ Day every November 11 in honor of the men and women (alive and deceased) who have served in the military. Veterans’ Day is a national U.S. Holiday.
+
+Woodrow Wilson was President during World War I. Woodrow Wilson was the 28th President of the United States, and he was President from 1913 – 1921.
+
+![American soldiers in a trench in France during World War I.](ch11-wwi-trench)
+
+![Two sailors read a newspaper with the headline “Great War Ends.”](ch11-great-war-ends)
+
+Other wars that the United States fought in the 1900s include:
+
+- World War II
+- Korean War
+- Vietnam War
+- (Persian) Gulf War
+
+## THE GREAT DEPRESSION
+
+When President Roosevelt was elected in 1933, the U.S. was in the Great Depression. The Great Depression was the worst time for the U.S. economy in American history.
+
+The economic system in the United States is called a “capitalist economy”. It is also sometimes called a “market economy”. In a market economy, the government does not control the economy. Also, people are free to start a business and make money.
+
+The Great Depression had terrible effects on the American economy. During the Great Depression, banks and businesses around the country closed, and many people could not a get a job. A lot of people in the U.S. lost their homes and their money.
+
+![Statue of a Depression breadline at the Franklin Delano Roosevelt Memorial, Washington, D.C.](ch11-depression-breadline)
+
+![A migrant agricultural worker’s family during the Great Depression. Photograph by Dorothea Lange.](ch11-migrant-mother)
+
+<!-- page:64 -->
+## FRANKLIN ROOSEVELT
+
+In 1933, Franklin Roosevelt was elected the 32nd President of the United States. Franklin Roosevelt was the longest-serving President in U.S. history, and he was elected President four times. He was President from 1933 – 1945, and he died while serving as President in 1945. In 1951, the 22nd amendment was added to the Constitution. An amendment is a change to the Constitution. The 22nd Amendment says a person can only be elected President two times.
+
+Franklin Roosevelt was President during two important periods in American history. He was President during the Great Depression and World War II.
+
+## WORLD WAR II
+
+In 1939, World War II started when Germany attacked Poland. Germany then began to attack other European countries. Japan and Italy agreed to fight on the same side as Germany.
+
+World War II was one war that the U.S. fought in the 1900s. The U.S. fought in World War II from 1941 – 1945.
+
+On December 7, 1941, Japan attacked the United States at a U.S. naval base in Hawaii called Pearl Harbor. On December 8, President Roosevelt announced that the U.S. would enter World War II. Later that day, Congress voted to declare war. The power to declare war is one power that belongs to the federal government under the Constitution.
+
+During World War II, the U.S. fought Japan, Germany, and Italy.
+
+The U.S. did not fight these countries alone. The United Kingdom, France, Russia, and other countries fought against Japan, Germany, and Italy. World War II ended in 1945 when Germany and Japan surrendered.
+
+![President Franklin D. Roosevelt signing the Declaration of War against Japan on December 8, 1941.](ch11-fdr-declaration)
+
+![Bombing of USS West Virginia, Pearl Harbor, Hawaii.](ch11-pearl-harbor)
+
+<!-- page:65 -->
+## THE COLD WAR
+
+When the United States fought in World War II, the U.S. and Russia fought on the same side. Russia controlled many nearby countries. Russia, and the countries it controlled, were called the Soviet Union. The U.S. and the Soviet Union did not trust each other. After World War II, the United States and the Soviet Union became involved in the Cold War.
+
+During the Cold War, the main concern of the United States was the spread of communism. Communism is a type of government in which the government plans the economy and controls most of the resources. Also, in most communist countries, the government is controlled by one political party. Russia and all the countries in the Soviet Union were communist. Other countries like China and North Korea were also becoming communist. The U.S. wanted to stop other countries around the world from becoming communist.
+
+The Cold War did not have soldiers from the U.S. and the Soviet Union fighting each other in battles. Instead, the U.S. and the Soviet Union had diplomats and spies who used information and threats against each other.
+
+In 1953, Dwight Eisenhower became the 34th President of the United States. He served from 1953 – 1961. Before he was President, Eisenhower was a general in World War II. While he was President, the U.S. and the Soviet Union were building large armies in case they went to war. The U.S. and the Soviet Union also began trying to send rockets into space. In 1957, the Soviet Union became the first country to send a satellite into space. In 1969, the U.S. became the first country to land a person on the moon.
+
+The Cold War ended in 1991 when the Soviet Union collapsed.
+
+![General Dwight D. Eisenhower, 1945.](ch11-eisenhower)
+
+```text
+United States
+Soviet Union
+Atlantic Ocean
+```
+
+> This map shows the United States and the Soviet Union during the Cold War.
+
+![Astronaut Edwin E. Aldrin Jr., on the Moon.](ch11-moon-landing)
+
+<!-- page:66 -->
+## THE CIVIL RIGHTS MOVEMENT
+
+During the 1900s, many states had laws that discriminated against people based on their race. Some of these laws said that people of different races had to go to separate schools, eat in separate restaurants, and live in separate neighborhoods. Other laws made it difficult for people to vote based on their race. Many of the states that had these laws wanted to separate Black Americans from White Americans. Some states had laws that discriminated against Latino Americans and Asian Americans.
+
+Soon after World War II ended, many people in the United States began a movement to end racial discrimination. The movement to end racial discrimination in the United States is called the Civil Rights Movement.
+
+> Dr. Martin Luther King, Jr., civil rights leader.
+
+During the Civil Rights Movement, many people worked to end the laws that separated people based on their race or made it difficult for people to vote based on their race. For example, Martin Luther King, Jr., fought for civil rights. He was a leader in the Civil Rights Movement who organized peaceful protests against racial discrimination and laws that separated people by race. A lot of his work focused on fighting for civil rights for Black Americans, but he wanted all people in the United States to have civil rights.
+
+There were also many Latino Americans, Asian Americans, and people from other communities that helped lead the fight for civil rights. For example, Cesar Chavez and Dolores Huerta were civil rights leaders from the Latino American community.
+
+> Dolores Huerta, civil rights leader.
+
+The Civil Rights Movement led to many changes in the United States. Martin Luther King, Jr., and other civil rights leaders were able to convince Congress to pass two laws that protect civil rights and voting rights. In 1964, Congress passed a law called the Civil Rights Act. This law says it is illegal to discriminate against someone based on their race, religion, sex, or national origin. In 1965, Congress passed another law called the Voting Rights Act. This law says that states cannot deny people the right to vote based on their race.
+
+Today, Martin Luther King, Jr. Day is a national holiday. We celebrate Martin Luther King, Jr. Day on the third Monday in January.
+
+> The March on Washington in 1963.
+
+<!-- page:67 -->
+## SEPTEMBER 11, 2001
+
+On September 11, 2001, terrorists attacked the United States.
+
+Terrorists hijacked four airplanes. Two airplanes crashed into the World Trade Center in New York City. One plane crashed into the Pentagon in Arlington, Virginia, near Washington, D.C. The passengers on the fourth plane fought the terrorists and the plane crashed in Shanksville, Pennsylvania.
+
+Almost 3,000 people died in the September 11th terrorist attacks. The September 11, 2001, terrorist attacks were the worst attacks on the United States’ homeland since Japan attacked Pearl Harbor in 1941.
+
+![Firefighters unfurl a large American flag over the scarred stone of the Pentagon on September 12, 2001. Photo by Paul Morse.](ch11-pentagon-flag)
+
+> Rescue workers amid debris following September 11th terrorist attack on World Trade Center, New York City.
+
+<!-- page:68 -->
+TEST YOUR KNOWLEDGE…

@@ -182,5 +182,85 @@
     "caption": "“Emancipation,” by Thomas Nast.",
     "credit": "Courtesy of the Library of Congress.",
     "chapters": ["civil-war"]
+  },
+  {
+    "id": "ch11-rubber-factories",
+    "file": "ch11-rubber-factories.jpg",
+    "page": 62,
+    "caption": "Rubber-making factories on a river in 1897.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-wwi-trench",
+    "file": "ch11-wwi-trench.jpg",
+    "page": 63,
+    "caption": "American soldiers in a trench in France during World War I.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-great-war-ends",
+    "file": "ch11-great-war-ends.jpg",
+    "page": 63,
+    "caption": "Two sailors read a newspaper with the headline “Great War Ends.”",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-depression-breadline",
+    "file": "ch11-depression-breadline.jpg",
+    "page": 63,
+    "caption": "Statue of a Depression breadline at the Franklin Delano Roosevelt Memorial, Washington, D.C.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-migrant-mother",
+    "file": "ch11-migrant-mother.png",
+    "page": 63,
+    "caption": "A migrant agricultural worker’s family during the Great Depression. Photograph by Dorothea Lange.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-fdr-declaration",
+    "file": "ch11-fdr-declaration.png",
+    "page": 64,
+    "caption": "President Franklin D. Roosevelt signing the Declaration of War against Japan on December 8, 1941.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-pearl-harbor",
+    "file": "ch11-pearl-harbor.png",
+    "page": 64,
+    "caption": "Bombing of USS West Virginia, Pearl Harbor, Hawaii.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-eisenhower",
+    "file": "ch11-eisenhower.png",
+    "page": 65,
+    "caption": "General Dwight D. Eisenhower, 1945.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-moon-landing",
+    "file": "ch11-moon-landing.jpg",
+    "page": 65,
+    "caption": "Astronaut Edwin E. Aldrin Jr., on the Moon.",
+    "credit": "Courtesy of NASA.",
+    "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch11-pentagon-flag",
+    "file": "ch11-pentagon-flag.jpg",
+    "page": 67,
+    "caption": "Firefighters unfurl a large American flag over the scarred stone of the Pentagon on September 12, 2001. Photo by Paul Morse.",
+    "credit": "Courtesy of the White House.",
+    "chapters": ["modern-history"]
   }
 ]

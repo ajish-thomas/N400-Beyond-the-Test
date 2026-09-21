@@ -15,7 +15,7 @@ func extractCurated(source, out string) error {
 		return err
 	}
 	defer os.RemoveAll(tmp)
-	for _, page := range []int{9, 13, 22, 26, 44, 46, 48, 49, 50, 53, 58, 59, 60} {
+	for _, page := range []int{9, 13, 22, 26, 44, 46, 48, 49, 50, 53, 58, 59, 60, 62, 63, 64, 65, 67} {
 		n := strconv.Itoa(page)
 		if err := command("pdfimages", "-f", n, "-l", n, "-j", "-png", filepath.Join(source, "USCIS-2025-Civics-Test-Study-Guide.pdf"), filepath.Join(tmp, "p"+n)); err != nil {
 			return err
@@ -40,6 +40,16 @@ func extractCurated(source, out string) error {
 		{"p59-000.png", "ch10-douglass.png"},
 		{"p59-001.png", "ch10-anthony.png"},
 		{"p60-002.jpg", "ch10-emancipation.jpg"},
+		{"p62-001.jpg", "ch11-rubber-factories.jpg"},
+		{"p63-000.jpg", "ch11-wwi-trench.jpg"},
+		{"p63-001.jpg", "ch11-great-war-ends.jpg"},
+		{"p63-002.jpg", "ch11-depression-breadline.jpg"},
+		{"p63-003.png", "ch11-migrant-mother.png"},
+		{"p64-000.png", "ch11-fdr-declaration.png"},
+		{"p64-001.png", "ch11-pearl-harbor.png"},
+		{"p65-000.png", "ch11-eisenhower.png"},
+		{"p65-001.jpg", "ch11-moon-landing.jpg"},
+		{"p67-000.jpg", "ch11-pentagon-flag.jpg"},
 	}
 	dir := filepath.Join(out, "images")
 	if err := os.MkdirAll(dir, 0755); err != nil {

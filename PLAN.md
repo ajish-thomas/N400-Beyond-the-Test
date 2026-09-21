@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–10 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, and 7 question links respectively and twenty-three credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapters 11–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–11 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, and 15 question links respectively and thirty-three credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapter 12 remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -199,6 +199,26 @@ remain the target specification; they are not claims that every feature exists.
   extractable text layer beyond their captions. Frederick Douglass has no
   dedicated question in the official 128 and is covered anyway, per this
   project's second goal of teaching the material, not only the test answers.
+- Chapter 11 (American History: 1900-2001, pages 62–68) was visually
+  reviewed the same way. Ten of its fifteen illustrations carry a printed
+  credit and are reproduced; the other five (the Cold War map, Dr. Martin
+  Luther King Jr., Dolores Huerta, the March on Washington, and the
+  September 11 rescue-workers photo) have none and are omitted. Two credit
+  sources are new: "Courtesy of NASA." (the Apollo 11 Moon-landing photo)
+  and "Courtesy of the White House." (the Pentagon flag photo). The Pentagon
+  flag photo's printed credit reads "White House photo by Paul Morse," with
+  no "Courtesy of..." phrasing in the source at all; normalizing it to the
+  allowlisted string introduces three words not literally printed, recorded
+  in the visual supplement for page 67. The Cold War map's "United States"
+  and "Soviet Union" labels are cleanly extractable and transcribed as a
+  diagram; its "Atlantic Ocean" label follows the ocean's curve and extracts
+  as scrambled fragments, handled the same way as several earlier chapters'
+  map labels. This chapter restates two facts already covered elsewhere with
+  new specifics that justify new links: the federal government's exclusive
+  power to declare war (Chapter 1 states it generally; this chapter narrates
+  Congress exercising it in 1941) and the 22nd Amendment's two-term limit
+  (naming the amendment directly, unlike Chapter 3's mention of the rule
+  without naming its source).
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -214,7 +234,7 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapters 11–12 with question mappings and licensed image review. Verify
+1. Author Chapter 12 with question mappings and licensed image review. Verify
    complete 128-question coverage when finished. Separately, decide whether to
    pursue a licensing review for the non-federal photo credits deferred so
    far: the Polling Place Photo Project (Chapter 5) and the Jamestown

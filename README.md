@@ -1,7 +1,7 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first ten chapters' content milestones are implemented;
+PDFs. Phase 1 and the first eleven chapters' content milestones are implemented;
 this is not a release of the full plan.
 
 ## Run
@@ -37,21 +37,23 @@ for amd64 and arm64 with cgo disabled.
 - Development extraction of all four PDFs to checked-in raw text.
 - `/learn`, `/learn/constitution`, `/learn/legislative`, `/learn/executive`,
   `/learn/judicial`, `/learn/rights`, `/learn/geography`, `/learn/early-history`,
-  `/learn/revolution`, `/learn/new-government`, and `/learn/civil-war`:
-  Chapters 1–10's source-verified text editions, learning objectives,
+  `/learn/revolution`, `/learn/new-government`, `/learn/civil-war`, and
+  `/learn/modern-history`:
+  Chapters 1–11's source-verified text editions, learning objectives,
   source-page markers, contents navigation, sidebar, diagram/map text, and
-  25, 20, 12, 8, 14, 5, 4, 11, 8, and 7 bidirectional question links (Q81
+  25, 20, 12, 8, 14, 5, 4, 11, 8, 7, and 15 bidirectional question links (Q81
   links to four chapters, Q41, Q13, and Q86 each to three, Q14, Q18, Q50,
-  Q64, and Q82 each to two).
-- Eighteen reviewed Study Guide images with their printed captions and
-  credits, including a National Park Service photo in Chapter 7 and a U.S.
-  Senate photo in Chapter 8 — new credit-allowlist additions since Chapter
-  2's JFK Library entry. Chapters 4–6 have none from the Study Guide itself:
-  none of their photographs carry a reviewed printed credit (one of Chapter
-  5's five, and one of Chapter 7's four, have printed credits from
-  non-federal sources, both deferred pending a licensing review; one of
-  Chapter 8's seven, five of Chapter 9's six, and four of Chapter 10's
-  eight, have no credit at all). Source coverage by page, parsed chapter
+  Q58, Q64, and Q82 each to two).
+- Twenty-eight reviewed Study Guide images with their printed captions and
+  credits, including a National Park Service photo in Chapter 7, a U.S.
+  Senate photo in Chapter 8, and NASA and White House photos in Chapter 11 —
+  new credit-allowlist additions since Chapter 2's JFK Library entry.
+  Chapters 4–6 have none from the Study Guide itself: none of their
+  photographs carry a reviewed printed credit (one of Chapter 5's five, and
+  one of Chapter 7's four, have printed credits from non-federal sources,
+  both deferred pending a licensing review; one of Chapter 8's seven, five
+  of Chapter 9's six, four of Chapter 10's eight, and five of Chapter 11's
+  fifteen, have no credit at all). Source coverage by page, parsed chapter
   goldens, reader HTML goldens, and manifest/file/reference checks run
   without PDFs or poppler.
 - Five additional images — two verified public-domain reference maps (a
@@ -62,7 +64,7 @@ for amd64 and arm64 with cgo disabled.
   not from a "fair use" image search; see
   `internal/content/data/images/EXTERNAL-SOURCES.txt`.
 
-Not implemented: Chapters 11–12, library transcription, remaining image curation, official/state
+Not implemented: Chapter 12, library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -91,9 +93,9 @@ For local image curation, `go run ./cmd/ingest --images` also requires `pdfimage
 It extracts **only the Study Guide** into ignored `data/images/_extracted/`.
 This unreviewed directory may contain AP material: do not publish or embed it.
 Almanac images are never extracted. `go run ./cmd/ingest --curated-images`
-re-extracts only the eighteen reviewed Chapter 1–3 and 7–10 images from the
-PDFs using an explicit allowlist. They are retained at their source
-resolution (about 12 MB total). If a source PDF changes, recheck the image
+re-extracts only the twenty-eight reviewed Chapter 1–3 and 7–11 images from
+the PDFs using an explicit allowlist. They are retained at their source
+resolution (about 16 MB total). If a source PDF changes, recheck the image
 identity, printed caption, credit, and licensing before accepting new
 output; extraction indices alone are not provenance. The five additional
 externally sourced maps (Chapters 1, 6, 7, 8) are outside this pipeline
@@ -293,11 +295,32 @@ captions. Frederick Douglass has no dedicated question in the official 128
 and is covered anyway, per this project's second goal of teaching the
 material, not only the test answers.
 
-Next: author Chapter 11 and continue through the remaining chapters and their
-question mappings, then the reference library. Full 128-question chapter
-coverage remains a release gate; the first ten chapters cover 25, 20, 12, 8,
-14, 5, 4, 11, 8, and 7 questions (Q81 links to Chapters 1, 6, 7, and 8; Q41,
-Q13, and Q86 each to three; Q14, Q18, Q50, Q64, and Q82 each to two).
+Chapter 11 (American History: 1900-2001) was visually reviewed against PDF
+pages 62–68 the same way. Ten of its fifteen illustrations carry a printed
+credit and are reproduced; the other five (the Cold War map, Dr. Martin
+Luther King Jr., Dolores Huerta, the March on Washington, and the September
+11 rescue-workers photo) have none and are omitted. Two credit sources are
+new to the allowlist: "Courtesy of NASA." (the Apollo 11 Moon-landing photo)
+and "Courtesy of the White House." (the Pentagon flag photo). The Pentagon
+flag photo's printed credit reads "White House photo by Paul Morse," with no
+"Courtesy of..." phrasing in the source at all; normalizing it to the
+allowlisted string introduces three words not literally printed, recorded in
+the visual supplement for page 67. The Cold War map's "United States" and
+"Soviet Union" labels are cleanly extractable and transcribed as a diagram;
+its "Atlantic Ocean" label follows the ocean's curve and extracts as
+scrambled fragments, handled the same way as several earlier chapters' map
+labels. This chapter restates two facts already covered elsewhere with new
+specifics that justify new links: the federal government's exclusive power
+to declare war (Chapter 1 states it generally; this chapter narrates
+Congress exercising it in 1941, dual-linking Q58) and the 22nd Amendment's
+two-term limit (naming the amendment directly, unlike Chapter 3's mention of
+the rule without naming its source).
+
+Next: author Chapter 12 and its question mappings, then the reference
+library. Full 128-question chapter coverage remains a release gate; the
+first eleven chapters cover 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, and 15
+questions (Q81 links to Chapters 1, 6, 7, and 8; Q41, Q13, and Q86 each to
+three; Q14, Q18, Q50, Q58, Q64, and Q82 each to two).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -307,7 +330,7 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
-The Chapter 2–10 milestones passed the same race/vet/build checks and goldens;
+The Chapter 2–11 milestones passed the same race/vet/build checks and goldens;
 their content was verified by direct visual PDF review above rather than a
 separate Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's

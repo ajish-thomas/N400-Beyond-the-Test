@@ -54,7 +54,7 @@ func TestRoutes(t *testing.T) {
 		{"/questions/128", 200, "Veterans Day"},
 		{"/static/app.css", 200, "prefers-color-scheme"},
 		{"/static/theme.js", 200, "n400-theme"},
-		{"/learn", 200, "10 of 12 chapters"},
+		{"/learn", 200, "11 of 12 chapters"},
 		{"/learn/legislative", 200, "How Congress Makes a Federal Law"},
 		{"/learn/executive", 200, "Commander in Chief"},
 		{"/learn/judicial", 200, "Statue of Lady Justice"},
@@ -64,6 +64,7 @@ func TestRoutes(t *testing.T) {
 		{"/learn/revolution", 200, "Thomas Jefferson"},
 		{"/learn/new-government", 200, "Louisiana Territory"},
 		{"/learn/civil-war", 200, "Emancipation Proclamation"},
+		{"/learn/modern-history", 200, "Pearl Harbor"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
@@ -95,7 +96,7 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"constitution", "legislative", "executive", "judicial", "rights", "geography", "early-history", "revolution", "new-government", "civil-war"} {
+	for _, id := range []string{"constitution", "legislative", "executive", "judicial", "rights", "geography", "early-history", "revolution", "new-government", "civil-war", "modern-history"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/"+id, nil))
 		file := "testdata/" + id + ".golden.html"
@@ -122,7 +123,7 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 			t.Errorf("reader missing %q", s)
 		}
 	}
-	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}, {"ch02-oval-office.png", "image/png"}, {"ch03-voting.png", "image/png"}, {"ch07-jamestown-street.jpg", "image/jpeg"}, {"ch07-pilgrims.png", "image/png"}, {"ch08-washington-command.jpg", "image/jpeg"}, {"ch08-washington-princeton.jpg", "image/jpeg"}, {"ch08-declaration.jpg", "image/jpeg"}, {"ch08-trumbull.png", "image/png"}, {"ch08-independence-hall.jpg", "image/jpeg"}, {"ch08-yorktown.jpg", "image/jpeg"}, {"ext-mitchell-map-revolution.jpg", "image/jpeg"}, {"ch09-constitution.jpg", "image/jpeg"}, {"ch10-cotton.jpg", "image/jpeg"}, {"ch10-douglass.png", "image/png"}, {"ch10-anthony.png", "image/png"}, {"ch10-emancipation.jpg", "image/jpeg"}} {
+	for _, tc := range []struct{ file, kind string }{{"ch01-signing.jpg", "image/jpeg"}, {"ch01-constitution.jpg", "image/jpeg"}, {"ch01-treaty.png", "image/png"}, {"ch02-oval-office.png", "image/png"}, {"ch03-voting.png", "image/png"}, {"ch07-jamestown-street.jpg", "image/jpeg"}, {"ch07-pilgrims.png", "image/png"}, {"ch08-washington-command.jpg", "image/jpeg"}, {"ch08-washington-princeton.jpg", "image/jpeg"}, {"ch08-declaration.jpg", "image/jpeg"}, {"ch08-trumbull.png", "image/png"}, {"ch08-independence-hall.jpg", "image/jpeg"}, {"ch08-yorktown.jpg", "image/jpeg"}, {"ext-mitchell-map-revolution.jpg", "image/jpeg"}, {"ch09-constitution.jpg", "image/jpeg"}, {"ch10-cotton.jpg", "image/jpeg"}, {"ch10-douglass.png", "image/png"}, {"ch10-anthony.png", "image/png"}, {"ch10-emancipation.jpg", "image/jpeg"}, {"ch11-rubber-factories.jpg", "image/jpeg"}, {"ch11-wwi-trench.jpg", "image/jpeg"}, {"ch11-great-war-ends.jpg", "image/jpeg"}, {"ch11-depression-breadline.jpg", "image/jpeg"}, {"ch11-migrant-mother.png", "image/png"}, {"ch11-fdr-declaration.png", "image/png"}, {"ch11-pearl-harbor.png", "image/png"}, {"ch11-eisenhower.png", "image/png"}, {"ch11-moon-landing.jpg", "image/jpeg"}, {"ch11-pentagon-flag.jpg", "image/jpeg"}} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/images/"+tc.file, nil))
 		if w.Code != 200 || w.Header().Get("Content-Type") != tc.kind || w.Body.Len() == 0 {
@@ -263,6 +264,23 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	}
 	if strings.Contains(w.Body.String(), `href="https://www.uscis.gov/citizenship/testupdates"`) {
 		t.Fatal("civil-war reader should flag no changing questions")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/learn/modern-history", nil))
+	for _, s := range []string{"Courtesy of NASA.", "Courtesy of the White House.", "Courtesy of the National Archives.", "Courtesy of the Library of Congress.", "Pearl Harbor", "communism", "Martin Luther King", "September 11", "15 questions"} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("modern-history reader missing %q", s)
+		}
+	}
+	if strings.Contains(w.Body.String(), `href="https://www.uscis.gov/citizenship/testupdates"`) {
+		t.Fatal("modern-history reader should flag no changing questions")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/58", nil))
+	for _, path := range []string{"/learn/constitution", "/learn/modern-history"} {
+		if !strings.Contains(w.Body.String(), `href="`+path+`"`) {
+			t.Errorf("Q58 missing chapter backlink to %s", path)
+		}
 	}
 }
 

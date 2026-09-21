@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 10 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Chapters[7].Questions) != 11 || len(c.Chapters[8].Questions) != 8 || len(c.Chapters[9].Questions) != 7 || len(c.Images) != 23 {
+	if len(c.Chapters) != 11 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Chapters[7].Questions) != 11 || len(c.Chapters[8].Questions) != 8 || len(c.Chapters[9].Questions) != 7 || len(c.Chapters[10].Questions) != 15 || len(c.Images) != 33 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -142,6 +142,12 @@ func TestChapterSourceCoverage(t *testing.T) {
 					"Jamestown                          l      Portugal": "Jamestown                          Portugal",
 					"ean": "", "Oc": "", "an": "",
 					"tic                              Africa": "Africa",
+				},
+				65: {
+					// Chapter 11's page 65 Cold War map has its own curved "Atlantic
+					// Ocean" label; "Soviet Union" and "United States" are unaffected.
+					"an": "", "Atl": "", "ant": "", "ic": "", "e": "",
+					"United States              Oc": "United States",
 				},
 			}
 			// The opening-page title splash usually prints as one line (e.g.
@@ -271,6 +277,9 @@ func TestChapterReferences(t *testing.T) {
 	}
 	if !slices.Equal(c.Questions[81].Chapters, []string{"constitution", "new-government"}) {
 		t.Fatal("Q82 (Constitution written in 1787) should link to both chapters that state it")
+	}
+	if !slices.Equal(c.Questions[57].Chapters, []string{"constitution", "modern-history"}) {
+		t.Fatal("Q58 (federal power to declare war) should link to both chapters that state it")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")
