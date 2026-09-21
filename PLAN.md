@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–9 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, and 8 question links respectively and nineteen credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapters 10–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–10 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, and 7 question links respectively and twenty-three credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapters 11–12 remain. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -54,13 +54,13 @@ remain the target specification; they are not claims that every feature exists.
 
 ### Verification and known limits
 
-- Passing at the Chapter 1–9 milestone: `go test -race ./...`, `go vet ./...`, native
+- Passing at the Chapter 1–10 milestone: `go test -race ./...`, `go vet ./...`, native
   build, source word coverage by page, chapter/reader goldens, and route/image
   tests. The initial implementation also passed all six cross-platform builds.
 - Chromium checks passed for theme switching/persistence, system appearance,
   chapter contents anchors, four images, question backlinks, and no horizontal
   overflow at 380px. Automatic browser launch has not been manually checked.
-  Chapters 3–9's content was verified by direct visual PDF review instead
+  Chapters 3–10's content was verified by direct visual PDF review instead
   (below).
 - `make lint` is **not fully verified**: the available Staticcheck revision cannot
   read this machine's Go 1.27 export format. Vet passes; Staticcheck needs a
@@ -186,6 +186,19 @@ remain the target specification; they are not claims that every feature exists.
   Country" epithet) with new specifics (exact presidential dates); genuinely
   repeated facts are linked to every chapter that states them, consistent
   with this project's established practice.
+- Chapter 10 (The Civil War, pages 58–61) was visually reviewed the same way.
+  Four of its eight illustrations carry a printed credit and are reproduced
+  (cotton picking and Susan B. Anthony from the Library of Congress,
+  Frederick Douglass from the National Park Service, the Nast "Emancipation"
+  print from the Library of Congress); the other four have none and are
+  omitted. The "Emancipation" print's own credit line is missing the
+  trailing period this chapter's other two Library of Congress credits use;
+  the manifest's credit field holds the standard normalized string, and the
+  punctuation difference is noted rather than silently carried through. As
+  with Chapter 9, none of this chapter's uncredited illustrations have any
+  extractable text layer beyond their captions. Frederick Douglass has no
+  dedicated question in the official 128 and is covered anyway, per this
+  project's second goal of teaching the material, not only the test answers.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -201,7 +214,7 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapters 10–12 with question mappings and licensed image review. Verify
+1. Author Chapters 11–12 with question mappings and licensed image review. Verify
    complete 128-question coverage when finished. Separately, decide whether to
    pursue a licensing review for the non-federal photo credits deferred so
    far: the Polling Place Photo Project (Chapter 5) and the Jamestown

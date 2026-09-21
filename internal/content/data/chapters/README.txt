@@ -14,8 +14,9 @@ about transcription choices belong in editorial_notes, not in the book's prose.
 Each published chapter is reviewed visually against its supplied PDF pages
 (Chapter 1: 8–17; Chapter 2: 18–23; Chapter 3: 24–28; Chapter 4: 29–32;
 Chapter 5: 33–37; Chapter 6: 38–42; Chapter 7: 43–46; Chapter 8: 47–51;
-Chapter 9: 52–57). Source word coverage is checked per page against checked-in raw text, with a
-full parsed golden in testdata. This is not a substitute for visual source
+Chapter 9: 52–57; Chapter 10: 58–61). Source word coverage is checked per
+page against checked-in raw text, with a full parsed golden in testdata.
+This is not a substitute for visual source
 review: counts alone cannot validate reading order or diagram edges, though
 it does catch dropped/added words immediately — an early Chapter 5 draft
 that dropped "in federal elections" from one sentence failed this test right
@@ -51,8 +52,8 @@ requiring one single matching line, so both one-line and multi-line splashes
 are handled the same way.
 
 Only images with a printed institutional credit that has been reviewed for
-licensing are reproduced from the Study Guide itself (fourteen so far, in
-Chapters 1–3 and 7–9; Chapters 4–6 have none from the PDF). The
+licensing are reproduced from the Study Guide itself (eighteen so far, in
+Chapters 1–3 and 7–10; Chapters 4–6 have none from the PDF). The
 reviewed-federal-institution allowlist in `catalog.go` grew by one for
 Chapter 7 ("Courtesy of the National Park Service.") and again for Chapter 8
 ("Courtesy of the U.S. Senate.", reviewed as a federal legislative body's own
@@ -66,26 +67,35 @@ reviewed, so each is omitted like an uncredited image, with its full caption
 photographs and header art with no printed credit at all are handled the
 same way — Chapter 8's Benjamin Franklin portrait is the only one of its
 seven photographs/paintings omitted for this reason (the other six are all
-reproduced), and Chapter 9 omits five of its six for the same reason,
-keeping only its Constitution document (already allowlisted). Unlike every
-image chapter since Chapter 1, none of Chapter 9's three map graphics have
-any extractable text layer beyond their captions — no state names or other
-labels — so no visual-supplement entry was needed there. A credit can also
-carry an item number beyond the standard allowlisted phrase (Chapter 8's
-Currier & Ives print: "...Courtesy of the National Archives, 532915.");
-the number is moved into the caption so the credit field holds the exact
-allowlisted string, losing no text. Diagram text is retained, including
-printed typos and inconsistencies (e.g. Chapter 1's Respresentatives,
-Chapter 3's uneven icon-caption punctuation, Chapter 5's "Civils Rights Act
-of 1964" and a dropped "and" in "raise their right hand say the Oath of
-Allegiance," Chapter 6's "GULF OF AMERICA," Chapter 7's extra "the" in "the
-North America", Chapter 9's tribes list including "Arawak" and "Inuit"
-which aren't in the official 128 answer pool). Chapter 1's page 16 map
-labels are transcribed, including its two Massachusetts labels and Atlantic
-Ocean. These are text editions, not facsimiles. Chapters 7 and 8 cover
+reproduced), Chapter 9 omits five of its six for the same reason (keeping
+only its Constitution document, already allowlisted), and Chapter 10 omits
+four of its eight (keeping cotton picking, Susan B. Anthony, Frederick
+Douglass, and the Nast "Emancipation" print — the latter's own credit line
+is missing the trailing period Chapter 10's other Library of Congress
+credits use; the manifest field holds the standard normalized string, and
+the punctuation gap is noted rather than silently carried through). Unlike
+every image chapter since Chapter 1, none of Chapters 9 or 10's map/photo
+graphics that lack a credit have any extractable text layer beyond their
+captions — no state names or other labels — so no visual-supplement entry
+was needed for either chapter. A credit can also carry an item number
+beyond the standard allowlisted phrase (Chapter 8's Currier & Ives print:
+"...Courtesy of the National Archives, 532915."); the number is moved into
+the caption so the credit field holds the exact allowlisted string, losing
+no text. Diagram text is retained, including printed typos and
+inconsistencies (e.g. Chapter 1's Respresentatives, Chapter 3's uneven
+icon-caption punctuation, Chapter 5's "Civils Rights Act of 1964" and a
+dropped "and" in "raise their right hand say the Oath of Allegiance,"
+Chapter 6's "GULF OF AMERICA," Chapter 7's extra "the" in "the North
+America", Chapter 9's tribes list including "Arawak" and "Inuit" which
+aren't in the official 128 answer pool). Chapter 1's page 16 map labels are
+transcribed, including its two Massachusetts labels and Atlantic Ocean.
+These are text editions, not facsimiles. Chapters 7, 8, and 10 cover
 difficult periods of the source material — Native American depopulation,
-the start of slavery, and colonial-era warfare — factually, in the source's
-own words, without added commentary.
+the start of slavery, colonial-era warfare, and the Civil War — factually,
+in the source's own words, without added commentary. Chapter 10's Frederick
+Douglass has no dedicated question in the official 128 and is covered
+anyway, per this project's second goal of teaching the material, not only
+the test answers.
 
 Chapters 1, 6, 7, and 8 additionally each carry a genuinely public-domain
 reference map sourced from outside the four supplied PDFs — the only
@@ -113,7 +123,10 @@ Q81, Q86, Q14, Q82) links to all of them — Chapter 9 alone adds three new
 triple/dual links (Q86 now spans Chapters 6, 8, and 9; Q14 spans Chapters 5
 and 9; Q82 spans Chapters 1 and 9) by restating the Constitutional
 Convention, Federalist Papers, and George Washington content already
-covered elsewhere, in more depth. Questions without a published chapter do
-not get speculative links. Chapters 1–9 cover 25, 20, 12, 8, 14, 5, 4, 11,
-and 8 questions respectively. The all-128 chapter-coverage requirement is a
-release gate for the full 12-chapter corpus, not satisfied yet.
+covered elsewhere, in more depth. Chapter 10 introduces no new multi-chapter
+links: its Civil War/Lincoln/Emancipation/Juneteenth/women's-rights-movement
+content is new ground each of its seven linked questions covers only there.
+Questions without a published chapter do not get speculative links.
+Chapters 1–10 cover 25, 20, 12, 8, 14, 5, 4, 11, 8, and 7 questions
+respectively. The all-128 chapter-coverage requirement is a release gate for
+the full 12-chapter corpus, not satisfied yet.

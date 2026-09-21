@@ -150,5 +150,37 @@
     "caption": "The Constitution of the United States.",
     "credit": "Courtesy of the National Archives.",
     "chapters": ["new-government"]
+  },
+  {
+    "id": "ch10-cotton",
+    "file": "ch10-cotton.jpg",
+    "page": 58,
+    "caption": "Picking cotton on a Georgia plantation.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["civil-war"]
+  },
+  {
+    "id": "ch10-douglass",
+    "file": "ch10-douglass.png",
+    "page": 59,
+    "caption": "Frederick Douglass.",
+    "credit": "Courtesy of the National Park Service.",
+    "chapters": ["civil-war"]
+  },
+  {
+    "id": "ch10-anthony",
+    "file": "ch10-anthony.png",
+    "page": 59,
+    "caption": "Susan B. Anthony.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["civil-war"]
+  },
+  {
+    "id": "ch10-emancipation",
+    "file": "ch10-emancipation.jpg",
+    "page": 60,
+    "caption": "“Emancipation,” by Thomas Nast.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["civil-war"]
   }
 ]
