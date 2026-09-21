@@ -47,6 +47,7 @@ type page struct {
 	Settings        bool
 	States          []officials.State
 	StateCode       string
+	Representative  string
 	Flashcards      bool
 	Flashcard       *flashcardView
 }
@@ -233,7 +234,7 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		if err != nil {
 			stored = store.Empty()
 		}
-		render(w, page{Title: "Settings", Settings: true, States: snapshot.States, StateCode: stored.Profile.State})
+		render(w, page{Title: "Settings", Settings: true, States: snapshot.States, StateCode: stored.Profile.State, Representative: stored.Profile.Overrides[29]})
 	})
 	mux.HandleFunc("POST /settings/state", func(w http.ResponseWriter, r *http.Request) {
 		if progress == nil {
@@ -253,6 +254,22 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 			return
 		}
 		if err := progress.Update(func(data *store.Data) { data.Profile.State = code }); err != nil {
+			http.Error(w, "Unable to save settings", http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/settings", http.StatusSeeOther)
+	})
+	mux.HandleFunc("POST /settings/representative", func(w http.ResponseWriter, r *http.Request) {
+		if progress == nil {
+			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
+			return
+		}
+		name := strings.TrimSpace(r.FormValue("representative"))
+		if name == "" {
+			http.Error(w, "Enter your representative's name", http.StatusBadRequest)
+			return
+		}
+		if err := progress.Update(func(data *store.Data) { data.Profile.Overrides[29] = name }); err != nil {
 			http.Error(w, "Unable to save settings", http.StatusInternalServerError)
 			return
 		}
@@ -314,12 +331,14 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		}
 		question := state.session.Questions[state.session.Answered]
 		stateCode := ""
+		activeResolver := resolver
 		if progress != nil {
 			if data, err := progress.Load(); err == nil {
 				stateCode = data.Profile.State
+				activeResolver.Manual = data.Profile.Overrides
 			}
 		}
-		resolved := resolver.ResolveAll(question.ID, stateCode)
+		resolved := activeResolver.ResolveAll(question.ID, stateCode)
 		values := make([]string, 0, len(resolved))
 		for _, answer := range resolved {
 			values = append(values, answer.Text)
@@ -375,12 +394,14 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		p := page{Title: fmt.Sprintf("Question %d", id), Question: &q}
 		if q.Changing() {
 			stateCode := ""
+			activeResolver := resolver
 			if progress != nil {
 				if data, err := progress.Load(); err == nil {
 					stateCode = data.Profile.State
+					activeResolver.Manual = data.Profile.Overrides
 				}
 			}
-			p.ResolvedAnswers = resolver.ResolveAll(q.ID, stateCode)
+			p.ResolvedAnswers = activeResolver.ResolveAll(q.ID, stateCode)
 		}
 		for _, chapterID := range q.Chapters {
 			for _, chapter := range catalog.Chapters {

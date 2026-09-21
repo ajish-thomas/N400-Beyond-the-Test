@@ -186,6 +186,18 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Alex Padilla") || !strings.Contains(w.Body.String(), "https://www.senate.gov/senators/index.htm?State=") {
 		t.Fatalf("senator answer: %d %s", w.Code, w.Body.String())
 	}
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", "/settings/representative", strings.NewReader("representative=Example+Representative"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save representative: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/29", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Example Representative") {
+		t.Fatalf("representative answer: %d %s", w.Code, w.Body.String())
+	}
 }
 
 func TestPracticeSavesAnswerHistory(t *testing.T) {

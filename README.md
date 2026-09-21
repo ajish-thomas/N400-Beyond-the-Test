@@ -34,8 +34,9 @@ for amd64 and arm64 with cgo disabled.
   President, Vice President, Speaker of the House, and Chief Justice with an
   official-source link; it must still be verified with USCIS. Settings stores a
   local state selection and resolves that state's capital and either current
-  U.S. senator offline. Governors, representatives, and ZIP/district selection
-  are still pending.
+  U.S. senator offline. Settings also accepts a manually verified U.S.
+  representative through the official House lookup; governors and automatic
+  ZIP/district selection are still pending.
 - A field-guide-inspired interface with paper light and charcoal dark themes,
   a Light / Dark / Auto selector saved locally in the browser, keyboard-accessible answer reveals and an
   “I got this right” self-check. Self-checks are not persisted yet.

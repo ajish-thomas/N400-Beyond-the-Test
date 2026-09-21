@@ -36,7 +36,9 @@ remain the target specification; they are not claims that every feature exists.
   one of whom grades as correct for Q23. The resolver already enforces manual
   override, local sidecar, then bundled-data precedence; governor,
   representative, and district data remain unavailable until their sources are
-  added.
+  added. Until ZIP/district selection is ready, Settings provides a local
+  manual representative entry paired with the official House lookup; it never
+  guesses a district from a state or ZIP.
 - Chapter content uses strictly decoded JSON front matter (a YAML subset) and a
   documented, limited Markdown syntax, rendered through escaped Go templates.
   Chapter links are authored once and reverse links are derived at startup.
