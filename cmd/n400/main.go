@@ -11,10 +11,13 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"path/filepath"
 	"runtime"
 	"syscall"
 	"time"
 
+	"n400/internal/flashcard"
+	"n400/internal/store"
 	"n400/internal/web"
 )
 
@@ -32,7 +35,12 @@ func run(port int, noBrowser, offline bool) error {
 	if port < 1 || port > 65535 {
 		return fmt.Errorf("port must be between 1 and 65535")
 	}
-	handler, err := web.New()
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		return fmt.Errorf("finding user config directory: %w", err)
+	}
+	progress := store.NewFile(filepath.Join(configDir, "n400", "progress.json"))
+	handler, err := web.NewWithStore(progress, flashcard.SystemClock{})
 	if err != nil {
 		return err
 	}

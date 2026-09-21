@@ -30,10 +30,25 @@ for amd64 and arm64 with cgo disabled.
 - Authored required counts, separate optional text and reader guidance, startup
   validation, and a full-parse golden comparison against `data/questions.json`.
 - Permanent USCIS verification links on all eight changing questions. These
-  currently show the PDF's instructions, **not current officeholder names**.
+  show the PDF's instructions. A dated bundled snapshot also shows the
+  President, Vice President, Speaker of the House, and Chief Justice with an
+  official-source link; it must still be verified with USCIS. Settings stores a
+  local state selection and resolves that state's capital and either current
+  U.S. senator offline. Governors, representatives, and ZIP/district selection
+  are still pending.
 - A field-guide-inspired interface with paper light and charcoal dark themes,
   a Light / Dark / Auto selector saved locally in the browser, keyboard-accessible answer reveals and an
   “I got this right” self-check. Self-checks are not persisted yet.
+- Advisory free-text practice tests in official (20-question) and 65/20 modes:
+  automatic recognition accepts official wording and reviewed source-based
+  equivalents, but every answer can be marked right by the learner. If a fixed
+  answer is not recognized, its acceptable official answers are shown
+  immediately. Practice-answer history is stored locally with flashcard
+  progress.
+- `/flashcards`: a local five-box Leitner review deck. A correct response moves
+  a card to the next interval (2, 4, 8, then 16 days); a missed card returns
+  tomorrow. Flashcard progress is saved atomically under the platform config
+  directory as `n400/progress.json`; it contains no street address.
 - Development extraction of all four PDFs to checked-in raw text.
 - `/learn`, `/learn/constitution`, `/learn/legislative`, `/learn/executive`,
   `/learn/judicial`, `/learn/rights`, `/learn/geography`, `/learn/early-history`,
@@ -69,8 +84,9 @@ for amd64 and arm64 with cgo disabled.
   maps can't supply as images. Sourced and license-verified individually,
   not from a "fair use" image search; see
   `internal/content/data/images/EXTERNAL-SOURCES.txt`.
-- `/library`, `/library/declaration`, and `/library/us-constitution`: the
-  reference library's first two documents, sharing their Markdown/JSON
+- `/library`, `/library/declaration`, `/library/us-constitution`, and
+  `/library/amendments`: three source-verified founding documents, sharing a
+  Markdown/JSON
   authoring format with Learn chapters (`internal/content/library.go` factors
   the shared parser out of `chapters.go`). The Declaration of Independence is
   transcribed in full from `DOI-Constitution-M-654.pdf` pages 7–13, including
@@ -90,12 +106,15 @@ for amd64 and arm64 with cgo disabled.
   questions (Cabinet, veto, "for life") are deliberately not linked because
   the 1787 text never uses those words. Source coverage by page and a parsed
   golden run the same way as chapters, against `data/raw/constitution.txt`.
+  The Amendments document transcribes Amendments I–XXVII from pages 39–53,
+  including the source's ratification notes and its bracketed, repealed
+  Eighteenth Amendment. It links 13 questions where the amendment text states
+  an accepted answer, including presidential succession, voting rights, and
+  the abolition of slavery.
 
-Not implemented: the rest of the reference library (the Constitution's 27
-Amendments, and the Citizen's Almanac's speeches, symbols and anthems, and
-landmark Supreme Court cases), remaining image curation, official/state
-snapshots and lookups, onboarding, automated grading, practice tests, Leitner
-scheduling, and progress storage. No network client exists; `--offline` is
+Not implemented: the rest of the reference library (the Citizen's Almanac's
+speeches, symbols and anthems, and landmark Supreme Court cases), remaining image curation, official/state
+snapshots and lookups, and onboarding. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
 HTMX/Alpine will be vendored when interactive workflows need them; this initial
 reader uses native HTML with a small, embedded script for theme selection and
@@ -416,8 +435,14 @@ deliberately not linked because the 1787 text never uses those words, and
 none is linked for a fact whose current authority is a superseded, bracketed
 clause pending the Amendments document.
 
-Next: the Constitution's 27 Amendments, then the Citizen's Almanac's
-speeches, symbols/anthems, and landmark cases.
+The Amendments are the third document (`amendments.md`, pages 39–53), covering
+Amendments I–XXVII. Its source headings have numbered footnote references;
+the reader omits those markers while retaining the footnotes' ratification
+text on each printed page. The page-level inventory strips only those exact
+markers from the raw source before comparing the transcribed text. It links
+13 questions whose accepted answers appear directly in the amendments.
+
+Next: the Citizen's Almanac's speeches, symbols/anthems, and landmark cases.
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the

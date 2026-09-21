@@ -1,0 +1,15 @@
+{
+  "as_of": "2026-09-21",
+  "federal": {
+    "president": "Donald J. Trump",
+    "vice_president": "JD Vance",
+    "speaker": "Mike Johnson",
+    "chief_justice": "John G. Roberts, Jr."
+  },
+  "sources": {
+    "president": "https://www.whitehouse.gov/administration/",
+    "vice_president": "https://www.whitehouse.gov/administration/",
+    "speaker": "https://www.house.gov/leadership",
+    "chief_justice": "https://www.supremecourt.gov/about/biographies.aspx"
+  }
+}

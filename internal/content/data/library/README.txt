@@ -95,8 +95,13 @@ those specific words, and none is linked for a fact whose current legal
 authority is one of the superseded, bracketed clauses (e.g. presidential
 succession) pending the still-unauthored Amendments document.
 
-Remaining: the Constitution's Amendments I-XXVII, from the same PDF —
-their own ratification-date footnotes will need the same inlining
-treatment as `us-constitution.md`'s — then the Citizen's Almanac's seven
+The Constitution's Amendments I-XXVII (`amendments.md`, pages 39-53) are the
+third document. The source prints numbered footnote-reference digits directly
+on the amendment headings; those markers are omitted from the reader headings,
+while the source's ratification notes remain on their original pages. The
+Eighteenth Amendment remains bracketed exactly as printed, with its repeal
+note. It links 13 questions whose accepted answers are stated directly.
+
+Remaining: the Citizen's Almanac's seven
 speeches, symbols/anthems, and four landmark Supreme Court cases, each
 carrying the required citation.

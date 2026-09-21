@@ -10,9 +10,9 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Two documents are authored and source-verified: the Declaration of Independence (5 linked questions) and the Constitution's Preamble and Articles I-VII (10 linked questions), the latter including its signers list and the two procedural pages the source prints alongside it. The 27 Amendments and the Almanac's speeches, symbols/anthems, and landmark cases remain. Dated officials/state snapshots and the Census crosswalk also remain; raw source text is available for all of it. |
-| Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
-| Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index, and library document reader. Welcome, Flashcards, Practice, and Settings remain. |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot now covers four federal offices, state capitals, and both senators in every state; governors, representatives, and the Census crosswalk remain. |
+| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. Remaining: officials overlays/network clients. |
+| Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
 
 ### Current behavior and settled implementation choices
@@ -22,12 +22,21 @@ remain the target specification; they are not claims that every feature exists.
   This supersedes the original navy palette described in Phase 4.
 - The interface is native HTML/CSS with one embedded theme script. No third-party
   JavaScript is required yet; HTMX/Alpine have not been vendored.
-- Every question offers “I got this right” as an **unsaved self-check**. There is
-  no automated grading or persistent progress yet.
+- Question browsing keeps its unsaved “I got this right” self-check. Practice
+  tests have advisory automatic grading and save answer history locally, as do
+  Flashcard reviews.
 - All eight changing questions display the permanent USCIS verification link and
   the original source instructions. No current officeholder names are bundled or
   resolved yet. There are no outbound lookup clients; `--offline` is accepted in
   preparation for them, not evidence that future network paths have been tested.
+- A dated 2026-09-21 bundled snapshot resolves President, Vice President,
+  Speaker of the House, and Chief Justice, with its official source URL shown
+  alongside the permanent USCIS verification banner. A local state selection
+  resolves the state-capital question and displays both current senators, any
+  one of whom grades as correct for Q23. The resolver already enforces manual
+  override, local sidecar, then bundled-data precedence; governor,
+  representative, and district data remain unavailable until their sources are
+  added.
 - Chapter content uses strictly decoded JSON front matter (a YAML subset) and a
   documented, limited Markdown syntax, rendered through escaped Go templates.
   Chapter links are authored once and reverse links are derived at startup.
@@ -240,10 +249,12 @@ remain the target specification; they are not claims that every feature exists.
   stated directly by this chapter's Independence Day section. Q8 is
   deliberately not linked here despite similar phrasing, for consistency
   with Chapter 8's existing scope.
-- The grading test contract needs resolution before Phase 3: every official
-  bullet must self-match **as an item**, but one item cannot pass a question that
-  requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
-  not factual answers to grade. No contradictory grading behavior is implemented.
+- Grading now takes precedence over the remaining library. Its test contract is:
+  every fixed official bullet must match **as an item**, while a question only
+  passes when its required distinct-item count is met. “Answers will vary” and
+  “Visit…” are instructions rather than factual answers, so the first grading
+  engine reports the eight changing questions as unavailable until the officials
+  overlay supplies a resolved value; the user’s self-check remains authoritative.
 
 ### Source corrections to the planning notes
 
@@ -264,9 +275,10 @@ and flagged in chapter notes, not silently corrected.
    for the non-federal photo credits deferred so far: the Polling Place
    Photo Project (Chapter 5) and the Jamestown Yorktown Foundation
    (Chapter 7); neither is blocking.
-2. Author the reference library and its source-checked links.
-3. Add officials/state snapshots and Census district data, then the tested engines
-   and remaining UI workflows described below.
+2. Add officials/state snapshots and Census district data before the settings
+   and onboarding workflows that use them.
+3. Return to the deferred Citizen's Almanac library documents after the study
+   workflows are complete.
 
 ---
 
@@ -786,8 +798,8 @@ chapters' exact Markdown grammar and JSON front matter via a shared parser
 (`founding-document` | `speech` | `symbol` | `case`), `source`
 (`declaration-constitution` | `citizens-almanac`), and, for Almanac-sourced
 documents, the exact required `citation` string — validated by
-`ParseLibraryDoc`, not just documented. Two documents are authored so far,
-both from `DOI-Constitution-M-654.pdf`, single-column and comparatively easy
+`ParseLibraryDoc`, not just documented. Three documents are authored so far,
+all from `DOI-Constitution-M-654.pdf`, single-column and comparatively easy
 to verify against the PDF unlike the Study Guide's two-column chapters:
 `declaration.md` (pages 7–13, including its signature block and signers list
 as their own short blocks/lists rather than run into prose) and
@@ -807,12 +819,13 @@ footnote/superscript UI; `TestLibrarySourceCoverage` strips the bare
 reference digit from the raw side via a small, exact-match `footnoteRefs`
 map (the same targeted-substitution technique chapters' `mapLabelFixes` uses
 for PDF-extraction artifacts) so the word inventory still balances exactly.
-Remaining: the 27 Amendments as a further `library/*.md` document (their own
-ratification-date footnotes will need the same inlining treatment), then the
+`amendments.md` (pages 39–53) completes Amendments I–XXVII. The source's
+heading footnote markers are stripped by the same exact-match coverage logic,
+while every printed ratification note remains on its source page; the bracketed
+Eighteenth Amendment and its repeal note are retained. It links 13 questions
+whose accepted answers appear directly in the amendment text. Remaining: the
 Almanac's speeches, symbols/anthems, and landmark cases, each carrying the
 required citation.
-- Cross-links: Q6 "What does the Bill of Rights protect?" -> Amendments I–X
-  (not yet authored).
 
 -> *verify:* `TestLibrarySourceCoverage` (a per-page word inventory against
 `data/raw/constitution.txt`/`almanac.txt`, the same technique
@@ -873,6 +886,24 @@ exceptions are the wording-lies cases: Q15, Q16, Q19, Q28, Q37 and friends.
 **3.1 Grading** (`internal/quiz/grade.go`). The real test is **oral**, judged by
 an officer, so grading is advisory and generous, never punitive.
 
+Implemented: `Grade` recognizes fixed answers, returns the accepted items and
+how many distinct items are still needed, and marks changing-answer prompts as
+unavailable until officials resolution exists. Its hermetic tests require every
+fixed official bullet to self-match as an item, enforce every enumeration's
+cardinality and distinctness, and cover optional text, digit/word equivalence,
+U.S. spelling variants, diacritics, guidance exclusion, the judicial/judiciary
+term variant, and a bounded one-typo or transposition tolerance for substantial
+words. Semantic rules are deliberately explicit and source-reviewed rather
+than model-guessed: the first recognizes the Study Guide's stated roles of the
+three branches (making, enforcing, and reviewing federal laws) for Q16. A
+separate constrained rule applies only to single-answer prompts: it can accept
+an oral response with one omitted meaningful term when at least two remain
+(for example, Q110/Q111 “stop communism” for “stop the spread of communism”);
+multi-answer menus retain strict distinct-item matching. The reviewed rule
+catalog also covers the Study Guide's alternate wording for Q3, Q8, Q18, Q20,
+Q47, Q84, Q95, Q106, and Q112; every rule carries its source passage and a
+test that pins its target accepted answer.
+
 *Normalization* (applied to both user input and every acceptable answer):
 lowercase; strip punctuation and diacritics; collapse whitespace; drop leading
 articles; normalize digits <-> words ("27" == "twenty-seven", "2" == "two");
@@ -911,6 +942,11 @@ valve for any normalization gap.
   asserted expected verdict, so grading changes are visible in the diff.
 
 **3.2 Quiz engine** (`internal/quiz/engine.go`):
+
+Implemented: `NewSession` draws deterministic, no-repeat official and 65/20
+sets from an injected RNG; `Record` stops a session when passing or failing is
+mathematically certain. The web question flow is implemented; custom drills
+remain.
 - **Official mock:** 20 drawn from all 128, pass at 12. Stops early once pass or
   fail is mathematically determined, mirroring the real interview.
 - **65/20 mode:** 10 drawn from the 20 starred, pass at 6.
@@ -928,12 +964,17 @@ equal a correct answer; MC mode never selects an enumeration question.
 (5 boxes, intervals 1/2/4/8/16 days). Correct -> promote; wrong -> box 1. Clock
 injected as an interface so tests are deterministic. Enumeration cards show the
 full menu on the reverse with the required count stated ("name any 3 of these 11").
+Implemented with an all-questions, 65/20, and missed-more-often deck picker.
 -> *verify:* promotion/demotion transitions; due-date computation across day
 boundaries; a card answered correctly 5 times stops appearing daily; deck filters
 (section, chapter, 65/20, starred, missed) return the right sets.
 
 **3.4 Store** (`internal/store`) — attempt history, per-card box state, starred
 questions, state profile.
+Implemented as a local JSON file with atomic temp-file replacement, recovery
+from missing/corrupt data, and mutex-protected updates. Flashcard progress is
+stored at the platform config location (`n400/progress.json`); no street
+address is ever stored.
 -> *verify:* round-trip; atomic write leaves no partial file on simulated
 failure; corrupt or missing file recovers to empty state rather than crashing;
 concurrent access clean under `-race`.
@@ -966,9 +1007,9 @@ stack plus one self-hosted serif for chapter prose.
 | `GET /welcome` · `POST /welcome` | First-run wizard: state + ZIP -> district (with candidate picker if the ZIP spans several), optional address disambiguation, optional initial refresh. Skippable. |
 | `GET /` | Dashboard: progress, due flashcards, next chapter, "take a test" |
 | `GET /learn` · `/learn/{chapter}` | Chapter list; reader with objectives, prose, images+credits, linked questions |
-| `GET /library` · `/library/{doc}` | Reference browser: document list; reader with prose, linked questions. Deep links into a specific Article/Section/Amendment use in-page anchors on the Constitution document, the same way chapter sections do, rather than a separate nested route. **Implemented** for the Declaration; more documents pending. |
+| `GET /library` · `/library/{doc}` | Reference browser: document list; reader with prose, linked questions. Deep links into a specific Article/Section/Amendment use in-page anchors on the Constitution document, the same way chapter sections do, rather than a separate nested route. **Implemented** for the Declaration, Constitution, and Amendments; Almanac documents remain. |
 | `GET /flashcards` · `POST /flashcards/{id}/answer` | Deck picker; card flip (Alpine) + HTMX answer posting |
-| `GET /practice` · `POST /practice/start` · `/practice/{session}/answer` | Mode picker, question flow, results with review links into Learn |
+| `GET /practice` · `POST /practice/start` · `/practice/{session}` | Implemented local-only mode picker, free-text question flow, advisory grading, self-check override, early pass/fail result, and official/65-20 modes. Attempts are intentionally not persisted yet; review links and custom drills remain. |
 | `GET /questions` · `/questions/{id}` | Browse all 128; single question with all acceptable answers, required count, chapter links, ⚠ banner if changeable |
 | `GET /settings` · `POST /settings/refresh` | State/ZIP/district profile, manual answer overrides, **Refresh current officials**, reset to bundled, content `as_of` dates |
 

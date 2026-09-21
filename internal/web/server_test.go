@@ -4,12 +4,22 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"html/template"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"strings"
 	"testing"
+	"time"
+
+	"n400/internal/content"
+	"n400/internal/quiz"
+	"n400/internal/store"
 )
+
+type testClock struct{ now time.Time }
+
+func (c testClock) Now() time.Time { return c.now }
 
 func TestEmbeddedAssetsFromEmptyDirectory(t *testing.T) {
 	previous, err := os.Getwd()
@@ -68,7 +78,8 @@ func TestRoutes(t *testing.T) {
 		{"/learn/symbols-holidays", 200, "Statue of Liberty"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
-		{"/library", 200, "2 documents"},
+		{"/library", 200, "3 documents"},
+		{"/library/amendments", 200, "Amendment XXVII"},
 		{"/library/declaration", 200, "Button Gwinnett"},
 		{"/library/us-constitution", 200, "Alexander Hamilton"},
 		{"/library/missing", 404, "404"},
@@ -91,6 +102,177 @@ func TestRoutes(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("POST", "/questions", nil))
 	if w.Code != http.StatusMethodNotAllowed {
 		t.Fatalf("POST status %d", w.Code)
+	}
+}
+
+func TestPracticeFlow(t *testing.T) {
+	h, err := New()
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/practice", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Official mock") || !strings.Contains(w.Body.String(), "65/20 study set") {
+		t.Fatalf("practice picker: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/practice/start", strings.NewReader("mode=6520"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	location := w.Header().Get("Location")
+	if w.Code != http.StatusSeeOther || location == "" {
+		t.Fatalf("start practice: %d %q", w.Code, location)
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", location, nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Question 1 of 10") || !strings.Contains(w.Body.String(), "6 needed to pass") {
+		t.Fatalf("practice question: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", location, strings.NewReader("answer=not-an-answer"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusOK || (!strings.Contains(w.Body.String(), "I did not recognize that wording") && !strings.Contains(w.Body.String(), "This changing answer needs")) || !strings.Contains(w.Body.String(), "Question 2 of 10") {
+		t.Fatalf("practice unrecognized answer: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", location, strings.NewReader("override=right"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Marked right by you.") || !strings.Contains(w.Body.String(), "Question 3 of 10") {
+		t.Fatalf("practice override: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestBundledFederalAnswerAppearsWithUSCISVerification(t *testing.T) {
+	h, err := New()
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/38", nil))
+	for _, text := range []string{"Bundled answer as of 2026-09-21", "Donald J. Trump", "https://www.whitehouse.gov/administration/", "https://www.uscis.gov/citizenship/testupdates"} {
+		if !strings.Contains(w.Body.String(), text) {
+			t.Errorf("federal answer page missing %q", text)
+		}
+	}
+}
+
+func TestStateSettingResolvesCapital(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/settings", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "State or District of Columbia") {
+		t.Fatalf("settings page: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/settings/state", strings.NewReader("state=CA"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save state: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/62", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Sacramento") || !strings.Contains(w.Body.String(), "Bundled answer as of") {
+		t.Fatalf("state capital answer: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/23", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Alex Padilla") || !strings.Contains(w.Body.String(), "https://www.senate.gov/senators/index.htm?State=") {
+		t.Fatalf("senator answer: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestPracticeSavesAnswerHistory(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/practice/start", strings.NewReader("mode=6520"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("start practice: %d", w.Code)
+	}
+	location := w.Header().Get("Location")
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", location, strings.NewReader("answer=not-an-answer"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Fatalf("answer practice: %d", w.Code)
+	}
+	data, err := progress.Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(data.Questions) != 1 {
+		t.Fatalf("saved question records = %#v", data.Questions)
+	}
+	for _, record := range data.Questions {
+		if record.Incorrect != 1 || record.Correct != 0 {
+			t.Fatalf("saved practice record = %#v", record)
+		}
+	}
+}
+
+func TestPracticeFeedbackShowsAnswersAfterTerminalMiss(t *testing.T) {
+	templates, err := template.ParseFS(assets, "templates/*.gohtml")
+	if err != nil {
+		t.Fatal(err)
+	}
+	question := content.Question{ID: 42, Prompt: "Test prompt", Answers: []content.Answer{{Text: "First answer"}, {Text: "Second answer"}}, RequiredCount: 1}
+	view := &practiceView{
+		Session:  quiz.Session{Questions: []content.Question{question}, Answered: 1, Complete: true},
+		Feedback: &quiz.Result{Message: "I did not recognize that wording."},
+		Reviewed: &question,
+	}
+	var body bytes.Buffer
+	if err := templates.ExecuteTemplate(&body, "page", page{Title: "Practice test", Practice: true, PracticeSession: view}); err != nil {
+		t.Fatal(err)
+	}
+	for _, text := range []string{"Correct answers for Question 42", "First answer", "Second answer"} {
+		if !strings.Contains(body.String(), text) {
+			t.Errorf("terminal feedback missing %q", text)
+		}
+	}
+}
+
+func TestFlashcardFlowPersistsReview(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}
+	h, err := NewWithStore(progress, clock)
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/flashcards?deck=6520", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "20 due today") || !strings.Contains(w.Body.String(), "Flashcards / Spaced review") {
+		t.Fatalf("flashcard deck: %d %s", w.Code, w.Body.String())
+	}
+	req := httptest.NewRequest("POST", "/flashcards/1", strings.NewReader("result=right"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther || w.Header().Get("Location") != "/flashcards" {
+		t.Fatalf("flashcard review: %d %q", w.Code, w.Header().Get("Location"))
+	}
+	data, err := progress.Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if data.Cards[1].Box != 2 || data.Questions[1].Correct != 1 || !data.Questions[1].LastAnswered.Equal(clock.now) {
+		t.Fatalf("stored review = %#v %#v", data.Cards[1], data.Questions[1])
+	}
+	if _, err := NewWithStore(progress, nil); err == nil {
+		t.Fatal("nil clock should be rejected")
 	}
 }
 
@@ -340,7 +522,7 @@ func TestLibraryReaderGolden(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"declaration", "us-constitution"} {
+	for _, id := range []string{"amendments", "declaration", "us-constitution"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/library/"+id, nil))
 		file := "testdata/" + id + ".library.golden.html"
@@ -361,6 +543,26 @@ func TestLibraryReaderGolden(t *testing.T) {
 		}
 	}
 	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/library/amendments", nil))
+	for _, s := range []string{
+		"AMENDMENTS",
+		"Congress shall make no law respecting an establishment of religion",
+		"The Senate of the United States shall be composed of two Senators from each State",
+		"the Vice President shall become President",
+		"eighteen years of age or older",
+		"No law, varying the compensation",
+		"13 questions",
+	} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("amendments reader missing %q", s)
+		}
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/40", nil))
+	if !strings.Contains(w.Body.String(), `href="/library/amendments"`) {
+		t.Fatal("Q40 missing library backlink to /library/amendments")
+	}
+	w = httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/library/declaration", nil))
 	for _, s := range []string{
 		"WE hold these Truths to be self-evident",

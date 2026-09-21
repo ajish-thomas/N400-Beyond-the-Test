@@ -49,7 +49,7 @@ func TestLibraryGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Library) != 2 || c.Library[0].ID != "declaration" || len(c.Library[0].Questions) != 5 || c.Library[1].ID != "us-constitution" || len(c.Library[1].Questions) != 10 {
+	if len(c.Library) != 3 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "us-constitution" || len(c.Library[2].Questions) != 10 {
 		t.Fatal("unexpected published library inventory")
 	}
 }
@@ -97,6 +97,19 @@ func TestLibrarySourceCoverage(t *testing.T) {
 		29: {"State;—]8 betw": "State;—] betw", "ns or Subjects.]9": "ns or Subjects.]"},
 		30: {"our may be due.]10": "our may be due.]"},
 		37: {"HE United States11": "HE United States"},
+		39: {"AMENDMENTS12": "AMENDMENTS"},
+		41: {"Amendment XI.13": "Amendment XI.", "Amendment XII.14": "Amendment XII."},
+		42: {"President—]15": "President—]"},
+		43: {"Amendment XIII.16": "Amendment XIII.", "Amendment XIV.17": "Amendment XIV."},
+		45: {"Amendment XV.18": "Amendment XV.", "Amendment XVI.19": "Amendment XVI.", "Amendment XVII.20": "Amendment XVII."},
+		46: {"Amendment XVIII.21": "Amendment XVIII."},
+		47: {"Amendment XIX.22": "Amendment XIX.", "Amendment XX.23": "Amendment XX."},
+		48: {"Amendment XXI.24": "Amendment XXI."},
+		49: {"Amendment XXII.25": "Amendment XXII."},
+		50: {"Amendment XXIII.26": "Amendment XXIII.", "Amendment XXIV.27": "Amendment XXIV."},
+		51: {"Amendment XXV.28": "Amendment XXV."},
+		52: {"Amendment XXVI.29": "Amendment XXVI."},
+		53: {"Amendment XXVII.30": "Amendment XXVII."},
 	}
 	for _, doc := range c.Library {
 		t.Run(doc.ID, func(t *testing.T) {
@@ -214,6 +227,12 @@ func TestLibraryReferences(t *testing.T) {
 	}
 	if len(c.Questions[54].Library) != 0 {
 		t.Fatal("Q55 (Supreme Court justices serve for life) should not be linked; the text says 'good Behaviour', not 'for life'")
+	}
+	if !slices.Equal(c.Questions[39].Library, []string{"amendments"}) {
+		t.Fatal("Q40 (presidential succession) should link to the Twenty-Fifth Amendment")
+	}
+	if !slices.Equal(c.Questions[98].Library, []string{"amendments"}) {
+		t.Fatal("Q99 (the abolition of slavery) should link to the Thirteenth Amendment")
 	}
 }
 

@@ -1,0 +1,22 @@
+{{define "practice"}}
+{{if not .PracticeSession}}
+<p class="eyebrow">Practice / Official format</p>
+<h1>Take a practice test.</h1>
+<p class="intro">Recall your answer aloud or type it in. The grader recognizes official wording, harmless variations, and close spelling; it cannot reliably judge every paraphrase. Your self-check is always accepted.</p>
+<div class="practice-modes"><form method="post" action="/practice/start"><input type="hidden" name="mode" value="official"><span class="practice-count">20</span><h2>Official mock</h2><p>Drawn from all 128 questions. Pass at 12. The test ends as soon as passing or failing is certain.</p><button class="button">Start official mock <span aria-hidden="true">↗</span></button></form><form method="post" action="/practice/start"><input type="hidden" name="mode" value="6520"><span class="practice-count">10</span><h2>65/20 study set</h2><p>Drawn from the 20 asterisk-marked questions. Pass at 6.</p><button class="button">Start 65/20 test <span aria-hidden="true">↗</span></button></form></div>
+<p class="muted">{{if .ProgressEnabled}}Your answer history is saved only on this device.{{else}}Practice attempts stay only in this browser session.{{end}}</p>
+{{else}}{{with .PracticeSession}}
+<p class="eyebrow">Practice / Question {{.Position}} of {{len .Session.Questions}}</p>
+{{if .Session.Complete}}
+<section class="practice-result"><p class="eyebrow">Test complete</p><h1>{{if .Session.Passed}}You passed.{{else}}Keep studying.{{end}}</h1><p class="intro">You answered {{.Session.Correct}} of {{.Session.Answered}} correctly. This practice result is advisory.{{if $.ProgressEnabled}} Your answer history is saved only on this device.{{else}} This session is not saved.{{end}}</p>{{template "practice-feedback" $}}<a class="button" href="/practice">Take another test <span aria-hidden="true">↗</span></a></section>
+{{else}}{{with .Question}}
+<div class="practice-progress"><span>{{$.PracticeSession.Session.Correct}} correct</span><span>{{$.PracticeSession.Session.PassAt}} needed to pass</span></div>
+<h1 class="prompt">{{.Prompt}}</h1>
+{{template "practice-feedback" $}}
+{{if .Changing}}<aside class="warning"><strong>This answer may change.</strong><p>Verify at <a href="https://www.uscis.gov/citizenship/testupdates" rel="noreferrer">uscis.gov/citizenship/testupdates</a>. You can use the self-check below.</p></aside>{{end}}
+<form class="practice-answer" method="post" action="/practice/{{$.PracticeSession.ID}}"><label for="answer">Your answer</label><textarea id="answer" name="answer" rows="4" autofocus></textarea><label class="self-check"><input type="checkbox" name="override" value="right"> I got this right</label><button class="button">Check and continue <span aria-hidden="true">→</span></button></form>
+{{end}}{{end}}{{end}}{{end}}{{end}}
+
+{{define "practice-feedback"}}
+{{with .PracticeSession}}{{if .Feedback}}<aside class="practice-feedback {{if .Feedback.Correct}}practice-correct{{end}}"><strong>{{.Feedback.Message}}</strong>{{if .Feedback.Matched}}<p>Recognized: {{range $i, $answer := .Feedback.Matched}}{{if $i}}, {{end}}{{$answer}}{{end}}</p>{{end}}{{with .Reviewed}}{{if $.PracticeSession.Feedback.Unavailable}}<p>Use the source instructions for this changing answer and verify it with USCIS before your interview.</p>{{else if not $.PracticeSession.Feedback.Correct}}<h2>Correct answers for Question {{.ID}}</h2><ul>{{range .Answers}}<li>{{.Text}}</li>{{end}}</ul>{{else}}<details><summary>Official answers for the last question</summary><ul>{{range .Answers}}<li>{{.Text}}</li>{{end}}</ul></details>{{end}}{{end}}</aside>{{end}}{{end}}
+{{end}}
