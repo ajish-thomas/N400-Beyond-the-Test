@@ -142,5 +142,13 @@
     "caption": "Annotated Map of the British Colonies in North America with the Roads, Distances, Limits and Extent of the Settlements, 1775.",
     "credit": "Courtesy of the National Archives.",
     "chapters": ["revolution"]
+  },
+  {
+    "id": "ch09-constitution",
+    "file": "ch09-constitution.jpg",
+    "page": 53,
+    "caption": "The Constitution of the United States.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": ["new-government"]
   }
 ]

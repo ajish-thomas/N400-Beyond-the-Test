@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–8 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, and 11 question links respectively and eighteen credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapters 9–12 remain. |
+| Phase 2: chapters | In progress | Chapters 1–9 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, and 8 question links respectively and nineteen credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapters 10–12 remain. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -54,13 +54,13 @@ remain the target specification; they are not claims that every feature exists.
 
 ### Verification and known limits
 
-- Passing at the Chapter 1–8 milestone: `go test -race ./...`, `go vet ./...`, native
+- Passing at the Chapter 1–9 milestone: `go test -race ./...`, `go vet ./...`, native
   build, source word coverage by page, chapter/reader goldens, and route/image
   tests. The initial implementation also passed all six cross-platform builds.
 - Chromium checks passed for theme switching/persistence, system appearance,
   chapter contents anchors, four images, question backlinks, and no horizontal
   overflow at 380px. Automatic browser launch has not been manually checked.
-  Chapters 3–8's content was verified by direct visual PDF review instead
+  Chapters 3–9's content was verified by direct visual PDF review instead
   (below).
 - `make lint` is **not fully verified**: the available Staticcheck revision cannot
   read this machine's Go 1.27 export format. Vet passes; Staticcheck needs a
@@ -174,6 +174,18 @@ remain the target specification; they are not claims that every feature exists.
   1–7's existing goldens. The National Archives' 1775 Mitchell Map is reused
   here too (a fourth manifest copy), alongside this chapter's own 13-states
   content.
+- Chapter 9 (A New Government and an Expanding Nation, pages 52–57) was
+  visually reviewed the same way. Only one of its six illustrations carries
+  a printed credit (the Constitution document, already allowlisted); the
+  other five have none and are omitted, captions retained as text. Unlike
+  every image chapter since Chapter 1, none of its three map graphics have
+  any extractable text layer beyond their captions, so no visual-supplement
+  entry was needed for this chapter. This chapter substantially repeats
+  content already covered in Chapters 1, 5, 6, and 8 (the Constitutional
+  Convention, the Federalist Papers, George Washington's "Father of Our
+  Country" epithet) with new specifics (exact presidential dates); genuinely
+  repeated facts are linked to every chapter that states them, consistent
+  with this project's established practice.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -189,7 +201,7 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapters 9–12 with question mappings and licensed image review. Verify
+1. Author Chapters 10–12 with question mappings and licensed image review. Verify
    complete 128-question coverage when finished. Separately, decide whether to
    pursue a licensing review for the non-federal photo credits deferred so
    far: the Polling Place Photo Project (Chapter 5) and the Jamestown
