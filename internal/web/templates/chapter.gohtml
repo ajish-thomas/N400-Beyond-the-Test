@@ -1,13 +1,5 @@
-{{define "chapter"}}
-{{with .Chapter}}
-<p class="eyebrow"><a href="/learn">Learn</a> / Chapter {{.Number}} / Text edition</p>
-<h1>{{.Title}}</h1>
-<p class="chapter-source">USCIS · <cite>One Nation, One People: The USCIS Civics Test Textbook</cite> · Pages {{.SourceStart}}–{{.SourceEnd}}</p>
-<div class="reader-layout">
-<nav class="chapter-toc" aria-label="Chapter contents"><span class="eyebrow">In this chapter</span><a href="#objectives">Learning objectives</a>{{range .Blocks}}{{if eq .Kind "heading"}}<a href="#{{.Anchor}}">{{.Text}}</a>{{end}}{{end}}<a href="#chapter-questions">Questions covered</a><a href="#source-notes">Source notes</a></nav>
-<article class="chapter-reader" aria-label="Chapter text">
-<section class="objectives" id="objectives"><h2>In this chapter, you will learn about:</h2><ul>{{range .Objectives}}<li>{{.}}</li>{{end}}</ul></section>
-{{range .Blocks}}
+{{define "blocks"}}
+{{range .}}
 {{if eq .Kind "page"}}<div class="source-page" id="{{.Anchor}}">Source page {{.Page}}</div>
 {{else if eq .Kind "heading"}}<h2 id="{{.Anchor}}">{{.Text}}</h2>
 {{else if eq .Kind "subheading"}}<h3 id="{{.Anchor}}">{{.Text}}</h3>
@@ -19,6 +11,17 @@
 {{else if eq .Kind "image"}}{{with .Image}}<figure class="source-image"><img src="/images/{{.File}}" alt="{{.Caption}}" width="{{.Width}}" height="{{.Height}}" loading="lazy"><figcaption>{{.Caption}} <span class="image-credit">{{.Credit}}</span></figcaption></figure>{{end}}
 {{end}}
 {{end}}
+{{end}}
+{{define "chapter"}}
+{{with .Chapter}}
+<p class="eyebrow"><a href="/learn">Learn</a> / Chapter {{.Number}} / Text edition</p>
+<h1>{{.Title}}</h1>
+<p class="chapter-source">USCIS · <cite>One Nation, One People: The USCIS Civics Test Textbook</cite> · Pages {{.SourceStart}}–{{.SourceEnd}}</p>
+<div class="reader-layout">
+<nav class="chapter-toc" aria-label="Chapter contents"><span class="eyebrow">In this chapter</span><a href="#objectives">Learning objectives</a>{{range .Blocks}}{{if eq .Kind "heading"}}<a href="#{{.Anchor}}">{{.Text}}</a>{{end}}{{end}}<a href="#chapter-questions">Questions covered</a><a href="#source-notes">Source notes</a></nav>
+<article class="chapter-reader" aria-label="Chapter text">
+<section class="objectives" id="objectives"><h2>In this chapter, you will learn about:</h2><ul>{{range .Objectives}}<li>{{.}}</li>{{end}}</ul></section>
+{{template "blocks" .Blocks}}
 <section class="source-notes" id="source-notes"><h2>Source notes</h2>{{range .EditorialNotes}}<p>{{.}}</p>{{end}}</section>
 </article></div>
 {{end}}

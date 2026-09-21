@@ -68,6 +68,9 @@ func TestRoutes(t *testing.T) {
 		{"/learn/symbols-holidays", 200, "Statue of Liberty"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
+		{"/library", 200, "1 document"},
+		{"/library/declaration", 200, "Button Gwinnett"},
+		{"/library/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
 		{"/images/manifest.json", 404, "404"},
 		{"/missing", 404, "404"}, {"/questions/0", 404, "404"}, {"/questions/129", 404, "404"}, {"/questions/nope", 404, "404"}, {"/static/missing", 404, "404"},
@@ -328,6 +331,55 @@ func TestChapterReaderGoldenAndImages(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/125", nil))
 	if !strings.Contains(w.Body.String(), `href="/learn/symbols-holidays"`) {
 		t.Fatal("Q125 missing chapter backlink to /learn/symbols-holidays")
+	}
+}
+
+func TestLibraryReaderGolden(t *testing.T) {
+	h, err := New()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, id := range []string{"declaration"} {
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, httptest.NewRequest("GET", "/library/"+id, nil))
+		file := "testdata/" + id + ".library.golden.html"
+		if *updateReaderGolden {
+			if err := os.MkdirAll("testdata", 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(file, w.Body.Bytes(), 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		want, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(w.Body.Bytes(), want) {
+			t.Fatal("library reader differs from reviewed golden")
+		}
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/library/declaration", nil))
+	for _, s := range []string{
+		"WE hold these Truths to be self-evident",
+		"Life, Liberty, and the pursuit of Happiness",
+		"Georgia", "Connecticut", "JOHN HANCOCK, President",
+		"5 questions",
+	} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("declaration reader missing %q", s)
+		}
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/8", nil))
+	if !strings.Contains(w.Body.String(), `href="/library/declaration"`) {
+		t.Fatal("Q8 missing library backlink to /library/declaration")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/78", nil))
+	if strings.Contains(w.Body.String(), `href="/library/declaration"`) {
+		t.Fatal("Q78 should not backlink to the Declaration; authorship is not stated there")
 	}
 }
 

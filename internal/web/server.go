@@ -29,6 +29,10 @@ type page struct {
 	Chapters        []content.Chapter
 	Chapter         *content.Chapter
 	RelatedChapters []content.Chapter
+	Library         bool
+	LibraryDocs     []content.LibraryDoc
+	LibraryDoc      *content.LibraryDoc
+	RelatedLibrary  []content.LibraryDoc
 }
 
 func New() (http.Handler, error) {
@@ -82,6 +86,23 @@ func New() (http.Handler, error) {
 		}
 		http.NotFound(w, r)
 	})
+	mux.HandleFunc("GET /library", func(w http.ResponseWriter, r *http.Request) {
+		render(w, page{Title: "The founding documents and more", Library: true, LibraryDocs: catalog.Library})
+	})
+	mux.HandleFunc("GET /library/{doc}", func(w http.ResponseWriter, r *http.Request) {
+		for _, doc := range catalog.Library {
+			if doc.ID != r.PathValue("doc") {
+				continue
+			}
+			p := page{Title: doc.Title, LibraryDoc: &doc}
+			for _, id := range doc.Questions {
+				p.Questions = append(p.Questions, questions[id-1])
+			}
+			render(w, p)
+			return
+		}
+		http.NotFound(w, r)
+	})
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
 		render(w, page{Title: "Your civics study desk", Home: true})
 	})
@@ -106,6 +127,13 @@ func New() (http.Handler, error) {
 			for _, chapter := range catalog.Chapters {
 				if chapter.ID == chapterID {
 					p.RelatedChapters = append(p.RelatedChapters, chapter)
+				}
+			}
+		}
+		for _, docID := range q.Library {
+			for _, doc := range catalog.Library {
+				if doc.ID == docID {
+					p.RelatedLibrary = append(p.RelatedLibrary, doc)
 				}
 			}
 		}

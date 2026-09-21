@@ -69,8 +69,20 @@ for amd64 and arm64 with cgo disabled.
   maps can't supply as images. Sourced and license-verified individually,
   not from a "fair use" image search; see
   `internal/content/data/images/EXTERNAL-SOURCES.txt`.
+- `/library` and `/library/declaration`: the reference library's first
+  document, sharing its Markdown/JSON authoring format with Learn chapters
+  (`internal/content/library.go` factors the shared parser out of
+  `chapters.go`). The Declaration of Independence is transcribed in full from
+  `DOI-Constitution-M-654.pdf` pages 7–13, including its signature block and
+  its 13-state signers list, and links 5 questions (Q8, Q9, Q10, Q11, Q79).
+  Q78 ("Who wrote the Declaration of Independence?") is deliberately not
+  linked: the document names Thomas Jefferson only as a Virginia signer and
+  never states that he drafted it. Source coverage by page and a parsed
+  golden run the same way as chapters, against `data/raw/constitution.txt`.
 
-Not implemented: the reference library transcription, remaining image curation, official/state
+Not implemented: the rest of the reference library (the Constitution's
+Articles and Amendments, and the Citizen's Almanac's speeches, symbols and
+anthems, and landmark Supreme Court cases), remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -346,8 +358,7 @@ which this chapter's own "U.S. Holidays" list is the definitive source. Q125
 chapter's own Independence Day section; Q8 is deliberately not linked here
 despite similar phrasing, for consistency with Chapter 8's existing scope.
 
-Next: author the reference library and its source-checked links. Full
-128-question chapter coverage was never expected to follow automatically
+Full 128-question chapter coverage was never expected to follow automatically
 from finishing all 12 chapters and remains open: 107 of 128 questions are
 linked to a chapter whose own prose states an accepted answer; the other 21
 questions aren't stated verbatim anywhere in the 12 chapters and are
@@ -355,6 +366,24 @@ deliberately left unlinked. All 12 chapters cover 25, 20, 12, 8, 14, 5, 4,
 11, 8, 7, 15, and 11 questions respectively (Q81 links to Chapters 1, 6, 7,
 and 8; Q41, Q13, and Q86 each to three or four; Q14, Q18, Q50, Q58, Q64,
 Q82, Q91, Q122, and Q128 each to two; Q126 to three).
+
+The reference library is underway. `internal/content/chapters.go` was split
+to expose a shared Markdown/JSON-front-matter parser (`splitDocument`,
+`parseBlocks`), so `internal/content/library.go` reuses it for library
+documents instead of a second parser; library documents carry `kind` and
+`source` metadata instead of a chapter number, objectives, and images, and
+an Almanac-sourced document must carry the exact required citation string
+or it fails to parse. The Declaration of Independence is the first document,
+transcribed from `DOI-Constitution-M-654.pdf` pages 7–13 and linking 5
+questions (Q8–Q11, Q79); Q78 is deliberately not linked since the document
+never states who wrote it. Its text is single-column, unlike the Study
+Guide's two-column chapters, but three sentences still split across a page
+boundary in the source and are authored as matching split blocks. Source
+coverage by page (`TestLibrarySourceCoverage`, against
+`data/raw/constitution.txt`) and a parsed golden run the same way as for
+chapters. Next: the Constitution's Preamble, Articles I–VII, and Amendments
+I–XXVII, then the Citizen's Almanac's speeches, symbols/anthems, and
+landmark cases.
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the

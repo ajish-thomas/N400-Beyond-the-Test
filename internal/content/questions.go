@@ -32,6 +32,7 @@ type Question struct {
 	Is6520        bool
 	AnswerKind    Kind
 	Chapters      []string
+	Library       []string
 	Note          string
 }
 
@@ -39,7 +40,7 @@ func (q Question) Changing() bool { return q.AnswerKind != Fixed }
 
 // Only curated runtime data is embedded; raw source and unreviewed images are not.
 //
-//go:embed data/required_counts.json data/questions.json data/chapters/*.md data/images/manifest.json data/images/*.jpg data/images/*.png
+//go:embed data/required_counts.json data/questions.json data/chapters/*.md data/library/*.md data/images/manifest.json data/images/*.jpg data/images/*.png
 var data embed.FS
 
 func RequiredCounts() (map[int]int, error) {

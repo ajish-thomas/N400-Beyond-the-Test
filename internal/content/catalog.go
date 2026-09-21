@@ -27,6 +27,7 @@ type Image struct {
 type Catalog struct {
 	Questions []Question
 	Chapters  []Chapter
+	Library   []LibraryDoc
 	Images    []Image
 }
 
@@ -41,6 +42,10 @@ func LoadCatalog() (*Catalog, error) {
 	if err != nil {
 		return nil, err
 	}
+	library, err := loadLibrary()
+	if err != nil {
+		return nil, err
+	}
 	b, err := data.ReadFile("data/images/manifest.json")
 	if err != nil {
 		return nil, err
@@ -51,7 +56,7 @@ func LoadCatalog() (*Catalog, error) {
 	if err := decoder.Decode(&images); err != nil {
 		return nil, fmt.Errorf("decoding image manifest: %w", err)
 	}
-	catalog := &Catalog{Questions: questions, Chapters: chapters, Images: images}
+	catalog := &Catalog{Questions: questions, Chapters: chapters, Library: library, Images: images}
 	if err := catalog.validate(data); err != nil {
 		return nil, err
 	}
@@ -124,6 +129,30 @@ func (c *Catalog) validate(files fs.FS) error {
 	}
 	for i := range c.Questions {
 		c.Questions[i].Chapters = nil
+		c.Questions[i].Library = nil
+	}
+	libraryIDs := map[string]bool{}
+	for _, doc := range c.Library {
+		if libraryIDs[doc.ID] {
+			return fmt.Errorf("duplicate library document %s", doc.ID)
+		}
+		libraryIDs[doc.ID] = true
+	}
+	for i := range c.Library {
+		doc := &c.Library[i]
+		seen := map[int]bool{}
+		for _, id := range doc.Questions {
+			if id < 1 || id > len(c.Questions) || seen[id] {
+				return fmt.Errorf("library document %s: invalid/duplicate question %d", doc.ID, id)
+			}
+			seen[id] = true
+			c.Questions[id-1].Library = append(c.Questions[id-1].Library, doc.ID)
+		}
+		for j := range doc.Blocks {
+			if doc.Blocks[j].Kind == "image" {
+				return fmt.Errorf("library document %s: images are not supported", doc.ID)
+			}
+		}
 	}
 	usedImages := map[string]bool{}
 	for i := range c.Chapters {
