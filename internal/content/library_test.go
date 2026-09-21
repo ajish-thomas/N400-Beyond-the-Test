@@ -49,7 +49,7 @@ func TestLibraryGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Library) != 1 || c.Library[0].ID != "declaration" || len(c.Library[0].Questions) != 5 {
+	if len(c.Library) != 2 || c.Library[0].ID != "declaration" || len(c.Library[0].Questions) != 5 || c.Library[1].ID != "us-constitution" || len(c.Library[1].Questions) != 10 {
 		t.Fatal("unexpected published library inventory")
 	}
 }
@@ -79,6 +79,25 @@ func TestLibrarySourceCoverage(t *testing.T) {
 		return m
 	}
 	number := regexp.MustCompile(`^\d+$`)
+	// The Constitution's own footnote reference digits (e.g. "...Persons.]1",
+	// "...taken.5", "...States11") are inlined into this text edition as a
+	// parenthetical at the point of reference (see us-constitution.md's
+	// editorial notes) rather than kept as a bare digit; the digit itself is
+	// otherwise indistinguishable from a real number token to the word-count
+	// regex below (`]1` tokenizes as the word "1"), so each known reference is
+	// stripped from the raw source line here, the same targeted, exact-match
+	// treatment chapters' mapLabelFixes gives PDF-extraction artifacts.
+	footnoteRefs := map[int]map[string]string{
+		16: {" other Persons.]1 The": " other Persons.] The", "lature thereof,]2 for": "lature thereof,] for"},
+		17: {"such Vacancies.]3": "such Vacancies.]"},
+		18: {"ay in December,]4 unle": "ay in December,] unle"},
+		23: {"ted to be taken.5": "ted to be taken."},
+		25: {"Vice President.]6": "Vice President.]"},
+		26: {"all be elected.]7": "all be elected.]"},
+		29: {"State;—]8 betw": "State;—] betw", "ns or Subjects.]9": "ns or Subjects.]"},
+		30: {"our may be due.]10": "our may be due.]"},
+		37: {"HE United States11": "HE United States"},
+	}
 	for _, doc := range c.Library {
 		t.Run(doc.ID, func(t *testing.T) {
 			pages := raw[sourceFile[doc.Source]]
@@ -89,6 +108,34 @@ func TestLibrarySourceCoverage(t *testing.T) {
 					authored[b.Page] += " " + item.Text + " " + strings.Join(item.Children, " ")
 				}
 			}
+			// The document's own title, printed as a running head on its opening
+			// page, is page furniture already carried by the document's Title
+			// field, the same treatment TestChapterSourceCoverage gives a
+			// chapter's opening title splash. The splash can span more than one
+			// printed line (e.g. "THE CONSTITUTION" / "OF THE UNITED STATES OF
+			// AMERICA"); accumulate leading non-blank lines on the opening page
+			// until their concatenation matches the title, the same generalized
+			// handling chapters use for a multi-line splash.
+			splashLines := map[string]bool{}
+			var span []string
+			for _, l := range strings.Split(pages[doc.SourceStart-1], "\n") {
+				t := strings.TrimSpace(l)
+				if t == "" {
+					if len(span) == 0 {
+						continue
+					}
+					break
+				}
+				span = append(span, t)
+				if strings.Join(span, " ") == strings.ToUpper(doc.Title) {
+					break
+				}
+			}
+			if strings.Join(span, " ") == strings.ToUpper(doc.Title) {
+				for _, l := range span {
+					splashLines[l] = true
+				}
+			}
 			for page := doc.SourceStart; page <= doc.SourceEnd; page++ {
 				var source []string
 				for _, line := range strings.Split(pages[page-1], "\n") {
@@ -96,12 +143,11 @@ func TestLibrarySourceCoverage(t *testing.T) {
 					if number.MatchString(line) {
 						continue
 					}
-					// The document's own title, printed as a running head on its
-					// opening page, is page furniture already carried by the
-					// document's Title field, the same treatment TestChapterSourceCoverage
-					// gives a chapter's opening title splash.
-					if page == doc.SourceStart && line == strings.ToUpper(doc.Title) {
+					if page == doc.SourceStart && splashLines[line] {
 						continue
+					}
+					for old, clean := range footnoteRefs[page] {
+						line = strings.Replace(line, old, clean, 1)
 					}
 					source = append(source, line)
 				}
@@ -156,6 +202,18 @@ func TestLibraryReferences(t *testing.T) {
 	}
 	if len(c.Questions[77].Library) != 0 {
 		t.Fatal("Q78 (who wrote the Declaration) should not be linked; authorship is not stated on the document's own pages")
+	}
+	if !slices.Equal(c.Questions[1].Library, []string{"us-constitution"}) {
+		t.Fatal("Q2 (supreme law of the land) should link to the Constitution")
+	}
+	if !slices.Equal(c.Questions[41].Library, []string{"us-constitution"}) {
+		t.Fatal("Q42 (Commander in Chief) should link to the Constitution")
+	}
+	if len(c.Questions[43].Library) != 0 {
+		t.Fatal("Q44 (who vetoes bills) should not be linked; the Constitution's text never uses the word veto")
+	}
+	if len(c.Questions[54].Library) != 0 {
+		t.Fatal("Q55 (Supreme Court justices serve for life) should not be linked; the text says 'good Behaviour', not 'for life'")
 	}
 }
 

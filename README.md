@@ -69,20 +69,31 @@ for amd64 and arm64 with cgo disabled.
   maps can't supply as images. Sourced and license-verified individually,
   not from a "fair use" image search; see
   `internal/content/data/images/EXTERNAL-SOURCES.txt`.
-- `/library` and `/library/declaration`: the reference library's first
-  document, sharing its Markdown/JSON authoring format with Learn chapters
-  (`internal/content/library.go` factors the shared parser out of
-  `chapters.go`). The Declaration of Independence is transcribed in full from
-  `DOI-Constitution-M-654.pdf` pages 7–13, including its signature block and
-  its 13-state signers list, and links 5 questions (Q8, Q9, Q10, Q11, Q79).
-  Q78 ("Who wrote the Declaration of Independence?") is deliberately not
-  linked: the document names Thomas Jefferson only as a Virginia signer and
-  never states that he drafted it. Source coverage by page and a parsed
+- `/library`, `/library/declaration`, and `/library/us-constitution`: the
+  reference library's first two documents, sharing their Markdown/JSON
+  authoring format with Learn chapters (`internal/content/library.go` factors
+  the shared parser out of `chapters.go`). The Declaration of Independence is
+  transcribed in full from `DOI-Constitution-M-654.pdf` pages 7–13, including
+  its signature block and its 13-state signers list, and links 5 questions
+  (Q8, Q9, Q10, Q11, Q79). Q78 ("Who wrote the Declaration of Independence?")
+  is deliberately not linked: the document names Thomas Jefferson only as a
+  Virginia signer and never states that he drafted it. The Constitution's
+  Preamble and Articles I–VII are transcribed from pages 15–38, including its
+  own signers list (12 states — Rhode Island sent no delegates) and, for
+  completeness, the ratifying convention's closing resolution and the first
+  Congress's resolution transmitting the Bill of Rights, both of which the
+  source prints immediately after the Articles and before the Amendments.
+  Its 11 numbered footnotes (each marking text later superseded by a specific
+  amendment) are inlined as a parenthetical at their point of reference
+  rather than built as a separate footnote UI. It links 10 questions
+  (Q2, Q5, Q16, Q17, Q19, Q20, Q25, Q36, Q42, Q50); several topically close
+  questions (Cabinet, veto, "for life") are deliberately not linked because
+  the 1787 text never uses those words. Source coverage by page and a parsed
   golden run the same way as chapters, against `data/raw/constitution.txt`.
 
-Not implemented: the rest of the reference library (the Constitution's
-Articles and Amendments, and the Citizen's Almanac's speeches, symbols and
-anthems, and landmark Supreme Court cases), remaining image curation, official/state
+Not implemented: the rest of the reference library (the Constitution's 27
+Amendments, and the Citizen's Almanac's speeches, symbols and anthems, and
+landmark Supreme Court cases), remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -378,12 +389,35 @@ transcribed from `DOI-Constitution-M-654.pdf` pages 7–13 and linking 5
 questions (Q8–Q11, Q79); Q78 is deliberately not linked since the document
 never states who wrote it. Its text is single-column, unlike the Study
 Guide's two-column chapters, but three sentences still split across a page
-boundary in the source and are authored as matching split blocks. Source
-coverage by page (`TestLibrarySourceCoverage`, against
-`data/raw/constitution.txt`) and a parsed golden run the same way as for
-chapters. Next: the Constitution's Preamble, Articles I–VII, and Amendments
-I–XXVII, then the Citizen's Almanac's speeches, symbols/anthems, and
-landmark cases.
+boundary in the source and are authored as matching split blocks.
+
+The Constitution's Preamble and Articles I–VII are the second document
+(`us-constitution.md`, pages 15–38), also single-column. It includes the
+Constitution's own signers list (12 states; Rhode Island sent no delegates
+to the Convention) and, for completeness, two procedural pages the source
+prints immediately after the Articles and before the Amendments: the
+ratifying convention's closing resolution and the first Congress's
+resolution transmitting the Bill of Rights. Eleven sentences split across a
+page boundary in the source (more than the Declaration's three, since these
+pages run longer and denser); each is authored as a matching split block.
+The source prints 11 numbered footnotes marking text later superseded by a
+specific amendment (e.g. the original method of electing Senators, changed
+by the Seventeenth Amendment); each is inlined as a parenthetical at its
+point of reference — "for six Years;" printed with a bare "2" marking
+footnote 2 becomes "for six Years;" followed by "(Changed by the Seventeenth
+Amendment.)" — rather than a separate footnote/superscript UI. Because the
+reference digit itself would otherwise still count as a word in the source's
+own text, `TestLibrarySourceCoverage` strips each of the 11 known reference
+digits from the raw side via a small, exact-match map, the same targeted
+technique chapters' `mapLabelFixes` uses for PDF-extraction artifacts. This
+document links 10 questions (Q2, Q5, Q16, Q17, Q19, Q20, Q25, Q36, Q42,
+Q50); several topically close questions (Cabinet, veto, "for life") are
+deliberately not linked because the 1787 text never uses those words, and
+none is linked for a fact whose current authority is a superseded, bracketed
+clause pending the Amendments document.
+
+Next: the Constitution's 27 Amendments, then the Citizen's Almanac's
+speeches, symbols/anthems, and landmark cases.
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the

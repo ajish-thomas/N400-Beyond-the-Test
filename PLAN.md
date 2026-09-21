@@ -10,7 +10,7 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core; the Declaration of Independence is the first document authored and source-verified (5 linked questions). The Constitution's Articles and Amendments, the Almanac's speeches, symbols/anthems, and landmark cases remain. Dated officials/state snapshots and the Census crosswalk also remain; raw source text is available for all of it. |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Two documents are authored and source-verified: the Declaration of Independence (5 linked questions) and the Constitution's Preamble and Articles I-VII (10 linked questions), the latter including its signers list and the two procedural pages the source prints alongside it. The 27 Amendments and the Almanac's speeches, symbols/anthems, and landmark cases remain. Dated officials/state snapshots and the Census crosswalk also remain; raw source text is available for all of it. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index, and library document reader. Welcome, Flashcards, Practice, and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
@@ -786,18 +786,31 @@ chapters' exact Markdown grammar and JSON front matter via a shared parser
 (`founding-document` | `speech` | `symbol` | `case`), `source`
 (`declaration-constitution` | `citizens-almanac`), and, for Almanac-sourced
 documents, the exact required `citation` string — validated by
-`ParseLibraryDoc`, not just documented. The Declaration of Independence is
-the first document (`declaration.md`, pages 7–13 of `DOI-Constitution-M-654.pdf`,
-single-column and comparatively easy to verify against the PDF, unlike the
-Study Guide's two-column chapters). Its signature block and signers list are
-transcribed as their own short blocks/lists rather than run into prose, and
-three sentences that split across a page boundary in the source are authored
-as matching split blocks, the same treatment chapters give a mid-sentence
-page break. Remaining: the Constitution's Preamble, Articles I–VII (with
-Sections) and Amendments I–XXVII as further `library/*.md` documents,
-footnoted superseded clauses and ratification dates inlined as plain text
-(no separate footnote UI), then the Almanac's speeches, symbols/anthems, and
-landmark cases, each carrying the required citation.
+`ParseLibraryDoc`, not just documented. Two documents are authored so far,
+both from `DOI-Constitution-M-654.pdf`, single-column and comparatively easy
+to verify against the PDF unlike the Study Guide's two-column chapters:
+`declaration.md` (pages 7–13, including its signature block and signers list
+as their own short blocks/lists rather than run into prose) and
+`us-constitution.md` (pages 15–38: the Preamble, Articles I–VII with
+Sections, the Constitution's own signers list, and — for completeness — the
+two procedural pages the source prints immediately after it and before the
+Amendments, the ratifying convention's closing resolution and the first
+Congress's resolution transmitting the Bill of Rights). Several sentences
+that split across a page boundary in the source are authored as matching
+split blocks in both documents, the same treatment chapters give a
+mid-sentence page break. `us-constitution.md` also inlines the source's 11
+numbered footnotes (each marking text later superseded by a specific
+amendment) as a parenthetical at their point of reference — e.g. "for six
+Years;" printed with "]2" in the source becomes "for six Years;" followed by
+"(Changed by the Seventeenth Amendment.)" — rather than a separate
+footnote/superscript UI; `TestLibrarySourceCoverage` strips the bare
+reference digit from the raw side via a small, exact-match `footnoteRefs`
+map (the same targeted-substitution technique chapters' `mapLabelFixes` uses
+for PDF-extraction artifacts) so the word inventory still balances exactly.
+Remaining: the 27 Amendments as a further `library/*.md` document (their own
+ratification-date footnotes will need the same inlining treatment), then the
+Almanac's speeches, symbols/anthems, and landmark cases, each carrying the
+required citation.
 - Cross-links: Q6 "What does the Bill of Rights protect?" -> Amendments I–X
   (not yet authored).
 

@@ -68,8 +68,9 @@ func TestRoutes(t *testing.T) {
 		{"/learn/symbols-holidays", 200, "Statue of Liberty"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
-		{"/library", 200, "1 document"},
+		{"/library", 200, "2 documents"},
 		{"/library/declaration", 200, "Button Gwinnett"},
+		{"/library/us-constitution", 200, "Alexander Hamilton"},
 		{"/library/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
 		{"/images/manifest.json", 404, "404"},
@@ -339,7 +340,7 @@ func TestLibraryReaderGolden(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"declaration"} {
+	for _, id := range []string{"declaration", "us-constitution"} {
 		w := httptest.NewRecorder()
 		h.ServeHTTP(w, httptest.NewRequest("GET", "/library/"+id, nil))
 		file := "testdata/" + id + ".library.golden.html"
@@ -380,6 +381,33 @@ func TestLibraryReaderGolden(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/78", nil))
 	if strings.Contains(w.Body.String(), `href="/library/declaration"`) {
 		t.Fatal("Q78 should not backlink to the Declaration; authorship is not stated there")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/library/us-constitution", nil))
+	for _, s := range []string{
+		"We the People of the United States",
+		"Article. I.",
+		"Article III.",
+		"Commander in Chief of the Army and Navy",
+		"supreme Law of the Land",
+		"(Changed by the Seventeenth Amendment.)",
+		"Signers of the Constitution",
+		"Alexander Hamilton",
+		"10 questions",
+	} {
+		if !strings.Contains(w.Body.String(), s) {
+			t.Errorf("us-constitution reader missing %q", s)
+		}
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/2", nil))
+	if !strings.Contains(w.Body.String(), `href="/library/us-constitution"`) {
+		t.Fatal("Q2 missing library backlink to /library/us-constitution")
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/44", nil))
+	if strings.Contains(w.Body.String(), `href="/library/us-constitution"`) {
+		t.Fatal("Q44 should not backlink to the Constitution; the word veto never appears in its text")
 	}
 }
 

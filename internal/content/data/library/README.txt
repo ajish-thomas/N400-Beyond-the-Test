@@ -31,9 +31,17 @@ Source word coverage is checked per page against checked-in raw text
 the same technique `TestChapterSourceCoverage` uses for the Study Guide,
 implemented as `TestLibrarySourceCoverage`. Page furniture here is simpler
 than the Study Guide's: bare page-number lines and, on a document's opening
-page only, a line matching the document's own title in full caps (the
-printed running head), the same treatment chapters give their opening title
-splash.
+page only, one or more lines whose concatenation matches the document's own
+title in full caps (the printed running head — a single line for the
+Declaration, two for "THE CONSTITUTION" / "OF THE UNITED STATES OF AMERICA"),
+the same generalized multi-line handling chapters give a title splash that
+spans more than one line. `us-constitution.md` needs one more furniture
+rule: the source's own footnote reference digits (see below) are stripped
+from the raw side via a small, exact-match `footnoteRefs` map keyed by page,
+the same targeted-substitution technique chapters' `mapLabelFixes` uses for
+PDF-extraction artifacts — without it, a bracket-attached digit like
+"...Persons.]1" tokenizes as the word "1", which the authored side no
+longer has once the reference is inlined as a parenthetical.
 
 The Declaration of Independence (`declaration.md`) is the first document.
 Its source pages (`DOI-Constitution-M-654.pdf`, pages 7-13) are single-column
@@ -57,12 +65,38 @@ Q78 ("Who wrote the Declaration of Independence?") is deliberately not
 linked: the document names Thomas Jefferson only as a Virginia signer, never
 stating that he drafted it.
 
-Remaining: the Constitution's Preamble, Articles I-VII (with Sections), and
-Amendments I-XXVII, all from the same PDF; footnoted superseded clauses
-(e.g. Article I Section 3's original method of electing senators, changed by
-the Seventeenth Amendment) and each amendment's ratification date are
-printed as page-bottom footnotes in the source and will be inlined as plain
-text at their point of reference rather than a separate footnote UI, since
-this is a text edition, not a facsimile. Then the Citizen's Almanac's seven
+The Constitution's Preamble and Articles I-VII (`us-constitution.md`,
+pages 15-38 of the same PDF) are the second document. It also includes,
+for completeness, the Constitution's own signers list (page 33 — 12 states,
+since Rhode Island sent no delegates to the Convention) and two further
+pages the source prints immediately after the Articles and before the
+Amendments: the ratifying convention's closing resolution ("In Convention
+Monday", pages 35-36) and the first Congress's resolution transmitting the
+proposed Bill of Rights (pages 37-38, under the heading "Congress OF THE
+United States"). Eleven sentences split across a page boundary in the raw
+extraction (more than the Declaration's three, since these pages run denser
+and longer); each is authored as a matching split block, the same treatment
+as the Declaration. The source prints 11 numbered footnotes within these
+pages, each marking text later changed or superseded by a specific
+amendment (e.g. the original method of electing Senators, changed by the
+Seventeenth Amendment) or, for footnote 5, pointing forward to the Sixteenth
+Amendment; each is inlined as a parenthetical immediately after the bracket
+or word it annotates (see `footnoteRefs` above) instead of a separate
+footnote/superscript UI. Footnote 11 is the one exception: printed on page
+37 attached to a heading rather than a body clause, and several sentences
+long, it is transcribed as its own paragraph immediately after that heading.
+Two printed inconsistencies are kept exactly as found: "Article III." (page
+28) is missing the period after "Article" every other Article heading has,
+and George Washington's signature is abbreviated two different ways in two
+different places. This document links 10 questions (Q2, Q5, Q16, Q17, Q19,
+Q20, Q25, Q36, Q42, Q50); several topically close questions (Cabinet, veto,
+"for life") are deliberately not linked because the 1787 text never uses
+those specific words, and none is linked for a fact whose current legal
+authority is one of the superseded, bracketed clauses (e.g. presidential
+succession) pending the still-unauthored Amendments document.
+
+Remaining: the Constitution's Amendments I-XXVII, from the same PDF —
+their own ratification-date footnotes will need the same inlining
+treatment as `us-constitution.md`'s — then the Citizen's Almanac's seven
 speeches, symbols/anthems, and four landmark Supreme Court cases, each
 carrying the required citation.
