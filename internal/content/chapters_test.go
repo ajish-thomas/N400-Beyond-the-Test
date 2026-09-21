@@ -52,7 +52,7 @@ func TestChapterGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Chapters) != 11 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Chapters[7].Questions) != 11 || len(c.Chapters[8].Questions) != 8 || len(c.Chapters[9].Questions) != 7 || len(c.Chapters[10].Questions) != 15 || len(c.Images) != 33 {
+	if len(c.Chapters) != 12 || len(c.Chapters[0].Objectives) != 4 || len(c.Chapters[0].Questions) != 25 || len(c.Chapters[1].Questions) != 20 || len(c.Chapters[2].Questions) != 12 || len(c.Chapters[3].Questions) != 8 || len(c.Chapters[4].Questions) != 14 || len(c.Chapters[5].Questions) != 5 || len(c.Chapters[6].Questions) != 4 || len(c.Chapters[7].Questions) != 11 || len(c.Chapters[8].Questions) != 8 || len(c.Chapters[9].Questions) != 7 || len(c.Chapters[10].Questions) != 15 || len(c.Chapters[11].Questions) != 11 || len(c.Images) != 36 {
 		t.Fatal("unexpected published chapter inventory")
 	}
 }
@@ -269,8 +269,8 @@ func TestChapterReferences(t *testing.T) {
 	if !slices.Equal(c.Questions[80].Chapters, []string{"constitution", "geography", "early-history", "revolution"}) {
 		t.Fatal("Q81 should link to all four chapters covering the 13 original states")
 	}
-	if !slices.Equal(c.Questions[85].Chapters, []string{"geography", "revolution", "new-government"}) {
-		t.Fatal("Q86 (George Washington) should link to all three chapters that cover it")
+	if !slices.Equal(c.Questions[85].Chapters, []string{"geography", "revolution", "new-government", "symbols-holidays"}) {
+		t.Fatal("Q86 (George Washington) should link to all four chapters that cover it")
 	}
 	if !slices.Equal(c.Questions[13].Chapters, []string{"rights", "new-government"}) {
 		t.Fatal("Q14 (documents influencing the Constitution) should link to every chapter that repeats it")
@@ -280,6 +280,18 @@ func TestChapterReferences(t *testing.T) {
 	}
 	if !slices.Equal(c.Questions[57].Chapters, []string{"constitution", "modern-history"}) {
 		t.Fatal("Q58 (federal power to declare war) should link to both chapters that state it")
+	}
+	if !slices.Equal(c.Questions[90].Chapters, []string{"new-government", "symbols-holidays"}) {
+		t.Fatal("Q91 (wars fought in the 1800s) should link to both chapters that state it")
+	}
+	if !slices.Equal(c.Questions[121].Chapters, []string{"geography", "symbols-holidays"}) {
+		t.Fatal("Q122 (50 stars, one per state) should link to both chapters that state it")
+	}
+	if !slices.Equal(c.Questions[125].Chapters, []string{"civil-war", "modern-history", "symbols-holidays"}) {
+		t.Fatal("Q126 (national holidays) should link to all three chapters that name one")
+	}
+	if !slices.Equal(c.Questions[127].Chapters, []string{"modern-history", "symbols-holidays"}) {
+		t.Fatal("Q128 (Veterans Day) should link to both chapters that state it")
 	}
 	if len(c.Questions[0].Chapters) != 0 {
 		t.Fatal("uncovered question given speculative chapter link")

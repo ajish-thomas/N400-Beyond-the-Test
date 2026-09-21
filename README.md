@@ -1,8 +1,8 @@
 # N400 Civics Study
 
 An offline, single-binary Go study app built from the supplied official USCIS
-PDFs. Phase 1 and the first eleven chapters' content milestones are implemented;
-this is not a release of the full plan.
+PDFs. Phase 1 and all 12 chapters' content milestones are implemented; this
+is not a release of the full plan.
 
 ## Run
 
@@ -37,25 +37,31 @@ for amd64 and arm64 with cgo disabled.
 - Development extraction of all four PDFs to checked-in raw text.
 - `/learn`, `/learn/constitution`, `/learn/legislative`, `/learn/executive`,
   `/learn/judicial`, `/learn/rights`, `/learn/geography`, `/learn/early-history`,
-  `/learn/revolution`, `/learn/new-government`, `/learn/civil-war`, and
-  `/learn/modern-history`:
-  Chapters 1–11's source-verified text editions, learning objectives,
+  `/learn/revolution`, `/learn/new-government`, `/learn/civil-war`,
+  `/learn/modern-history`, and `/learn/symbols-holidays`:
+  all 12 chapters' source-verified text editions, learning objectives,
   source-page markers, contents navigation, sidebar, diagram/map text, and
-  25, 20, 12, 8, 14, 5, 4, 11, 8, 7, and 15 bidirectional question links (Q81
-  links to four chapters, Q41, Q13, and Q86 each to three, Q14, Q18, Q50,
-  Q58, Q64, and Q82 each to two).
-- Twenty-eight reviewed Study Guide images with their printed captions and
+  25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 bidirectional question links
+  (Q81 links to four chapters, Q41, Q13, Q86 each to three or four, Q14,
+  Q18, Q50, Q58, Q64, Q82, Q91, Q122, and Q128 each to two, Q126 to three).
+  107 of 128 official questions are linked to a chapter that literally
+  states an accepted answer; the other 21 aren't stated verbatim by any
+  chapter and are deliberately left unlinked rather than forced.
+- Thirty-one reviewed Study Guide images with their printed captions and
   credits, including a National Park Service photo in Chapter 7, a U.S.
-  Senate photo in Chapter 8, and NASA and White House photos in Chapter 11 —
-  new credit-allowlist additions since Chapter 2's JFK Library entry.
-  Chapters 4–6 have none from the Study Guide itself: none of their
-  photographs carry a reviewed printed credit (one of Chapter 5's five, and
-  one of Chapter 7's four, have printed credits from non-federal sources,
-  both deferred pending a licensing review; one of Chapter 8's seven, five
-  of Chapter 9's six, four of Chapter 10's eight, and five of Chapter 11's
-  fifteen, have no credit at all). Source coverage by page, parsed chapter
-  goldens, reader HTML goldens, and manifest/file/reference checks run
-  without PDFs or poppler.
+  Senate photo in Chapter 8, NASA and White House photos in Chapter 11, and
+  a second U.S. Senate photo in Chapter 12 — new credit-allowlist additions
+  since Chapter 2's JFK Library entry. Chapters 4–6 have none from the
+  Study Guide itself: none of their photographs carry a reviewed printed
+  credit (one of Chapter 5's five, and one of Chapter 7's four, have
+  printed credits from non-federal sources, both deferred pending a
+  licensing review; one of Chapter 8's seven, five of Chapter 9's six, four
+  of Chapter 10's eight, five of Chapter 11's fifteen, and eleven of
+  Chapter 12's fifteen, have no credit at all; one of Chapter 12's fifteen
+  is credited to the Associated Press, the first case this project's
+  standing wire-service rejection rule has actually excluded). Source
+  coverage by page, parsed chapter goldens, reader HTML goldens, and
+  manifest/file/reference checks run without PDFs or poppler.
 - Five additional images — two verified public-domain reference maps (a
   National Archives 1775 colonies map, a USGS national reference map), the
   colonies map reused across Chapters 1, 6, 7, and 8 as four manifest
@@ -64,7 +70,7 @@ for amd64 and arm64 with cgo disabled.
   not from a "fair use" image search; see
   `internal/content/data/images/EXTERNAL-SOURCES.txt`.
 
-Not implemented: Chapter 12, library transcription, remaining image curation, official/state
+Not implemented: the reference library transcription, remaining image curation, official/state
 snapshots and lookups, onboarding, automated grading, practice tests, Leitner
 scheduling, and progress storage. No network client exists; `--offline` is
 accepted now and must guard future clients. No personal information is collected.
@@ -93,7 +99,7 @@ For local image curation, `go run ./cmd/ingest --images` also requires `pdfimage
 It extracts **only the Study Guide** into ignored `data/images/_extracted/`.
 This unreviewed directory may contain AP material: do not publish or embed it.
 Almanac images are never extracted. `go run ./cmd/ingest --curated-images`
-re-extracts only the twenty-eight reviewed Chapter 1–3 and 7–11 images from
+re-extracts only the thirty-one reviewed Chapter 1–3 and 7–12 images from
 the PDFs using an explicit allowlist. They are retained at their source
 resolution (about 16 MB total). If a source PDF changes, recheck the image
 identity, printed caption, credit, and licensing before accepting new
@@ -316,11 +322,39 @@ Congress exercising it in 1941, dual-linking Q58) and the 22nd Amendment's
 two-term limit (naming the amendment directly, unlike Chapter 3's mention of
 the rule without naming its source).
 
-Next: author Chapter 12 and its question mappings, then the reference
-library. Full 128-question chapter coverage remains a release gate; the
-first eleven chapters cover 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, and 15
-questions (Q81 links to Chapters 1, 6, 7, and 8; Q41, Q13, and Q86 each to
-three; Q14, Q18, Q50, Q58, Q64, and Q82 each to two).
+Chapter 12 (American Symbols and Holidays) was visually reviewed against PDF
+pages 69–76 the same way, completing all 12 chapters. Three of its fifteen
+captioned illustrations carry a printed credit and are reproduced (the
+Statue of Liberty and Abraham Lincoln from the Library of Congress,
+"George Washington at Princeton" from the U.S. Senate); one more carries a
+printed credit that is explicitly excluded rather than reproduced:
+"Raising the Flag on Iwo Jima" is credited to "the Associated Press," which
+this project's credit allowlist has rejected since Chapter 1 as a
+commercial wire-service credit, not a federal institution's own collection
+— this is the first chapter where that standing rule actually excludes an
+image. The other eleven captioned illustrations have no printed credit at
+all and are omitted the same way. Two further graphics (the chapter-opening
+banner and the full flag illustration) have no caption at all and aren't
+counted as illustrations, the same treatment given every chapter's
+uncaptioned opening banner since Chapter 1. This chapter restates several
+facts already covered elsewhere with new specifics: George Washington's
+"Father of Our Country" epithet (Q86, now four chapters), the War of 1812
+and the Civil War as 1800s wars (Q91), the 50 stars (Q122), Veterans Day
+(Q128), and national holidays generally (Q126, now three chapters), for
+which this chapter's own "U.S. Holidays" list is the definitive source. Q125
+("What is Independence Day?") is a new link, stated directly by this
+chapter's own Independence Day section; Q8 is deliberately not linked here
+despite similar phrasing, for consistency with Chapter 8's existing scope.
+
+Next: author the reference library and its source-checked links. Full
+128-question chapter coverage was never expected to follow automatically
+from finishing all 12 chapters and remains open: 107 of 128 questions are
+linked to a chapter whose own prose states an accepted answer; the other 21
+questions aren't stated verbatim anywhere in the 12 chapters and are
+deliberately left unlinked. All 12 chapters cover 25, 20, 12, 8, 14, 5, 4,
+11, 8, 7, 15, and 11 questions respectively (Q81 links to Chapters 1, 6, 7,
+and 8; Q41, Q13, and Q86 each to three or four; Q14, Q18, Q50, Q58, Q64,
+Q82, Q91, Q122, and Q128 each to two; Q126 to three).
 
 Initial verification: race tests, `go vet`, the native build, and all six
 cross-platform builds passed. The binary was HTTP-smoke-tested from outside the
@@ -330,7 +364,7 @@ overflow at 380px on the home page, question list, and answer reader. Automatic
 browser launch has not been manually verified. The Chapter 1 milestone also passed
 race tests, vet, the native build, and Chromium checks at desktop and 380px widths
 for contents anchors, all three images, question links, and chapter backlinks.
-The Chapter 2–11 milestones passed the same race/vet/build checks and goldens;
+The Chapter 2–12 milestones passed the same race/vet/build checks and goldens;
 their content was verified by direct visual PDF review above rather than a
 separate Chromium pass.
 The locally cached Staticcheck revision could not analyze Go 1.27's

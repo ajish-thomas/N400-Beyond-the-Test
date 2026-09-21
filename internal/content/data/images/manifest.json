@@ -262,5 +262,29 @@
     "caption": "Firefighters unfurl a large American flag over the scarred stone of the Pentagon on September 12, 2001. Photo by Paul Morse.",
     "credit": "Courtesy of the White House.",
     "chapters": ["modern-history"]
+  },
+  {
+    "id": "ch12-statue-of-liberty",
+    "file": "ch12-statue-of-liberty.jpg",
+    "page": 69,
+    "caption": "Statue of Liberty.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["symbols-holidays"]
+  },
+  {
+    "id": "ch12-washington-princeton",
+    "file": "ch12-washington-princeton.jpg",
+    "page": 73,
+    "caption": "“George Washington at Princeton,” by Charles Willson Peale.",
+    "credit": "Courtesy of the U.S. Senate.",
+    "chapters": ["symbols-holidays"]
+  },
+  {
+    "id": "ch12-lincoln",
+    "file": "ch12-lincoln.png",
+    "page": 73,
+    "caption": "Abraham Lincoln.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": ["symbols-holidays"]
   }
 ]

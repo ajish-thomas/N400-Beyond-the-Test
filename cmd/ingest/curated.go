@@ -15,7 +15,7 @@ func extractCurated(source, out string) error {
 		return err
 	}
 	defer os.RemoveAll(tmp)
-	for _, page := range []int{9, 13, 22, 26, 44, 46, 48, 49, 50, 53, 58, 59, 60, 62, 63, 64, 65, 67} {
+	for _, page := range []int{9, 13, 22, 26, 44, 46, 48, 49, 50, 53, 58, 59, 60, 62, 63, 64, 65, 67, 69, 73} {
 		n := strconv.Itoa(page)
 		if err := command("pdfimages", "-f", n, "-l", n, "-j", "-png", filepath.Join(source, "USCIS-2025-Civics-Test-Study-Guide.pdf"), filepath.Join(tmp, "p"+n)); err != nil {
 			return err
@@ -50,6 +50,9 @@ func extractCurated(source, out string) error {
 		{"p65-000.png", "ch11-eisenhower.png"},
 		{"p65-001.jpg", "ch11-moon-landing.jpg"},
 		{"p67-000.jpg", "ch11-pentagon-flag.jpg"},
+		{"p69-001.jpg", "ch12-statue-of-liberty.jpg"},
+		{"p73-000.jpg", "ch12-washington-princeton.jpg"},
+		{"p73-001.png", "ch12-lincoln.png"},
 	}
 	dir := filepath.Join(out, "images")
 	if err := os.MkdirAll(dir, 0755); err != nil {

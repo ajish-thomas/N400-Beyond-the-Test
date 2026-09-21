@@ -8,7 +8,7 @@ remain the target specification; they are not claims that every feature exists.
 | Area | Status | Implemented / remaining |
 |---|---|---|
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
-| Phase 2: chapters | In progress | Chapters 1–11 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, and 15 question links respectively and thirty-three credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). Chapter 12 remains. |
+| Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | Not implemented | Declaration/Constitution/library authoring, dated officials/state snapshots, and Census crosswalk remain. Raw source text is available. |
 | Phase 3: engines | Not implemented | Grading, quiz sessions, Leitner scheduling, progress store, officials overlays, and network clients remain. |
@@ -219,6 +219,27 @@ remain the target specification; they are not claims that every feature exists.
   Congress exercising it in 1941) and the 22nd Amendment's two-term limit
   (naming the amendment directly, unlike Chapter 3's mention of the rule
   without naming its source).
+- Chapter 12 (American Symbols and Holidays, pages 69–76) was visually
+  reviewed the same way, completing all 12 chapters. Three of its fifteen
+  captioned illustrations carry a printed credit and are reproduced (the
+  Statue of Liberty and Abraham Lincoln from the Library of Congress,
+  "George Washington at Princeton" from the U.S. Senate); one more carries a
+  printed credit that is explicitly excluded, "Raising the Flag on Iwo
+  Jima," credited to "the Associated Press" — the first chapter where the
+  project's standing AP/wire-service rejection rule actually excludes an
+  image. The other eleven captioned illustrations have no printed credit
+  and are omitted. Two further graphics (the chapter-opening banner and the
+  full flag illustration) have no caption at all and are not counted as
+  illustrations, the same treatment given every chapter's uncaptioned
+  opening banner. This chapter adds five new multi-chapter links: George
+  Washington's "Father of Our Country" epithet (Q86, now four chapters),
+  the War of 1812 and Civil War as 1800s wars (Q91), the 50 stars (Q122),
+  Veterans Day (Q128), and national holidays generally (Q126, now three
+  chapters), for which this chapter's own "U.S. Holidays" list is the
+  definitive source. Q125 ("What is Independence Day?") is a new link,
+  stated directly by this chapter's Independence Day section. Q8 is
+  deliberately not linked here despite similar phrasing, for consistency
+  with Chapter 8's existing scope.
 - The grading test contract needs resolution before Phase 3: every official
   bullet must self-match **as an item**, but one item cannot pass a question that
   requires N distinct answers. “Answers will vary” and “Visit…” are instructions,
@@ -234,11 +255,15 @@ and flagged in chapter notes, not silently corrected.
 
 ### Next work
 
-1. Author Chapter 12 with question mappings and licensed image review. Verify
-   complete 128-question coverage when finished. Separately, decide whether to
-   pursue a licensing review for the non-federal photo credits deferred so
-   far: the Polling Place Photo Project (Chapter 5) and the Jamestown
-   Yorktown Foundation (Chapter 7); neither is blocking.
+1. All 12 chapters are authored. 107 of 128 official questions are linked to
+   a chapter from prose that literally states an accepted answer; the other
+   21 are not stated verbatim anywhere in the 12 chapters and remain
+   deliberately unlinked — full 128-question coverage was never assumed to
+   follow automatically from finishing the chapters, and isn't a
+   near-term goal. Separately, decide whether to pursue a licensing review
+   for the non-federal photo credits deferred so far: the Polling Place
+   Photo Project (Chapter 5) and the Jamestown Yorktown Foundation
+   (Chapter 7); neither is blocking.
 2. Author the reference library and its source-checked links.
 3. Add officials/state snapshots and Census district data, then the tested engines
    and remaining UI workflows described below.
