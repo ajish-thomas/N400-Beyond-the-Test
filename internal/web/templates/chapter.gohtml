@@ -7,6 +7,7 @@
 {{else if eq .Kind "sidebar"}}<aside class="source-sidebar"><span class="eyebrow">Source sidebar</span><p>{{.Text}}</p></aside>
 {{else if eq .Kind "list"}}<ul>{{range .Items}}<li>{{.Text}}{{if .Children}}<ul>{{range .Children}}<li>{{.}}</li>{{end}}</ul>{{end}}</li>{{end}}</ul>
 {{else if eq .Kind "diagram"}}<figure class="text-diagram"><figcaption>Source diagram / map labels · text transcription</figcaption><pre>{{.Text}}</pre></figure>
+{{else if eq .Kind "verse"}}<pre class="verse">{{.Text}}</pre>
 {{else if eq .Kind "caption"}}<div class="omitted-illustration"><span>Source caption · illustration not reproduced</span><p>{{.Text}}</p></div>
 {{else if eq .Kind "image"}}{{with .Image}}<figure class="source-image"><img src="/images/{{.File}}" alt="{{.Caption}}" width="{{.Width}}" height="{{.Height}}" loading="lazy"><figcaption>{{.Caption}} <span class="image-credit">{{.Credit}}</span></figcaption></figure>{{end}}
 {{end}}

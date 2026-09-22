@@ -5,8 +5,12 @@ amendments, and — from the Citizen's Almanac — speeches, symbols/anthems, an
 landmark Supreme Court cases) share the exact Markdown grammar and JSON front
 matter used by Learn chapters (see `data/chapters/README.txt`): the same
 `##`/`###` headings, one-line reflowed paragraphs, `- ` lists, `<!-- page:N
--->` markers, and `> ` captions, parsed by the same `splitDocument`/
-`parseBlocks` functions in `chapters.go`. `ParseLibraryDoc` (`library.go`)
+-->` markers, `> ` captions, and fenced ` ```verse ` blocks (added for the
+Almanac's songs and poems; renders as preformatted text, preserving line
+breaks the way ` ```text ` diagrams do, but in the reader's serif type rather
+than monospace, since it is verse, not a diagram), parsed by the same
+`splitDocument`/`parseBlocks` functions in `chapters.go`. `ParseLibraryDoc`
+(`library.go`)
 decodes front matter into `LibraryDoc` instead of `Chapter`; it has no
 chapter number, objectives, or images, and adds three fields chapters don't
 need:
@@ -102,6 +106,50 @@ while the source's ratification notes remain on their original pages. The
 Eighteenth Amendment remains bracketed exactly as printed, with its repeal
 note. It links 13 questions whose accepted answers are stated directly.
 
-Remaining: the Citizen's Almanac's seven
-speeches, symbols/anthems, and four landmark Supreme Court cases, each
-carrying the required citation.
+`patriotic-anthems.md` (pages 9-15) is the fourth document and the first from
+the Citizen's Almanac. almanac.txt's raw pages are split by the PDF's own
+page breaks, which include eight unnumbered/roman-numeral front-matter pages
+(cover, the "Spirit of '76" plate, title page, ISBN notice, two Table of
+Contents pages, and two "Message from the Director" pages) before the
+printed Arabic page 1 begins; this document (like every Almanac document to
+follow) is authored with the printed page numbers a reader sees in the book,
+matching declaration.md's and us-constitution.md's convention, so
+`TestLibrarySourceCoverage` applies an eight-page offset only when indexing
+into the raw almanac pages for citizens-almanac-sourced documents, never to
+the authored/displayed page numbers themselves. It covers three of the nine
+items in the Almanac's own "Patriotic Anthems and Symbols of the United
+States" section (pages 9-26): the national anthem, "America the Beautiful,"
+and "The New Colossus" — the three the section's own intro names directly.
+Two poems in the same printed section, Walt Whitman's "I Hear America
+Singing" and Ralph Waldo Emerson's "Concord Hymn" (pages 16-19), are outside
+this project's planned Almanac scope and are not transcribed; the section's
+remaining four items (Pledge of Allegiance, Flag, Motto, Great Seal, pages
+20-26) are a separate document so each document's own source_start/source_end
+stays fully contiguous — `TestLibrarySourceCoverage` requires every page in
+that range to be accounted for, so a document cannot silently skip pages in
+the middle of its own claimed range the way it can skip pages the Almanac
+prints between two documents. Each song's decorative cursive title and
+author attribution (e.g. "The Star-Spangled Banner (1814) by Francis Scott
+Key") renders as pure vector art with no extractable PDF text layer at all;
+its clean transcription is recorded in
+`data/raw/almanac-visual-supplement.json`, the same mechanism
+`study-guide-visual-supplement.json` uses for the Study Guide's
+non-extractable diagram/map labels, keyed by printed page instead of by
+chapter. The Almanac's narrow two-column layout also hyphenates words across
+a line wrap far more often than the Constitution's single-column pages, and
+several wraps land on a row that also carries the other column's unrelated
+text; `TestLibrarySourceCoverage`'s `almanacTextFixes` map fixes each
+affected region as one exact block, the same targeted technique
+`footnoteRefs` uses for the Constitution's footnote markers. The three
+songs/poems are transcribed verbatim, including a genuine printed
+inconsistency in "America the Beautiful" ("God shed His grace" in the first
+stanza, "God shed his grace" in the last, capitalization kept exactly as
+printed). It links Q123 (the national anthem's name, stated directly);
+"America the Beautiful" and "The New Colossus" have no dedicated question in
+the official 128 and are included anyway, per this project's second goal of
+teaching the material, not only the test answers.
+
+Remaining: the Citizen's Almanac's "Patriotic Symbols of the United States"
+document (Pledge of Allegiance, Flag, Motto, Great Seal), its seven
+speeches, and its four landmark Supreme Court cases, each carrying the
+required citation.

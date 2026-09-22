@@ -49,7 +49,7 @@ func TestLibraryGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Library) != 3 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "us-constitution" || len(c.Library[2].Questions) != 10 {
+	if len(c.Library) != 4 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "patriotic-anthems" || len(c.Library[2].Questions) != 1 || c.Library[3].ID != "us-constitution" || len(c.Library[3].Questions) != 10 {
 		t.Fatal("unexpected published library inventory")
 	}
 }
@@ -69,7 +69,31 @@ func TestLibrarySourceCoverage(t *testing.T) {
 		}
 		raw[source] = strings.Split(string(b), "\f")
 	}
+	// The Almanac's decorative script titles and author attribution lines
+	// (e.g. "The Star-Spangled Banner (1814) by Francis Scott Key") render as
+	// pure vector art with no extractable PDF text layer at all, the same
+	// class of gap Chapter 2's page 22 lawmaking diagram has; their clean
+	// transcription lives here, keyed by printed page, the same mechanism
+	// study-guide-visual-supplement.json uses for the Study Guide.
+	b, err := os.ReadFile("data/raw/almanac-visual-supplement.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var almanacSupplement map[int]string
+	if err := json.Unmarshal(b, &almanacSupplement); err != nil {
+		t.Fatal(err)
+	}
 	sourceFile := map[string]string{"declaration-constitution": "constitution", "citizens-almanac": "almanac"}
+	// almanac.txt's raw pages are split by the PDF's own page breaks, which
+	// include eight unnumbered/roman-numeral front-matter pages (cover, the
+	// "Spirit of '76" plate, title page, ISBN notice, two Table of Contents
+	// pages, and two "Message from the Director" pages) before the printed
+	// Arabic page 1 begins. Library documents are authored with the printed
+	// page numbers a reader sees in the book (matching declaration.md's and
+	// us-constitution.md's convention, and what "Source page N" shows in the
+	// reader), so this offset is applied only when indexing into the raw
+	// almanac pages, never to the authored/displayed page numbers themselves.
+	sourceOffset := map[string]int{"declaration-constitution": 0, "citizens-almanac": 8}
 	words := regexp.MustCompile(`[\p{L}\p{N}]+`)
 	inventory := func(text string) map[string]int {
 		m := map[string]int{}
@@ -111,9 +135,43 @@ func TestLibrarySourceCoverage(t *testing.T) {
 		52: {"Amendment XXVI.29": "Amendment XXVI."},
 		53: {"Amendment XXVII.30": "Amendment XXVII."},
 	}
+	// The Almanac's narrow two-column layout hyphenates words across a line
+	// wrap far more often than the Constitution's single-column pages, and
+	// several of those wraps land on a row that also carries the other
+	// column's unrelated text (pdftotext -layout dumps a full row of both
+	// columns together), so the two halves of one hyphenated word are not
+	// always adjacent once every line is joined. Each affected region is
+	// replaced here as one exact block spanning both halves and whatever
+	// sits between them, the same targeted, exact-match technique as
+	// footnoteRefs above and chapters' mapLabelFixes; this changes only
+	// which characters carry the words, never adds or removes a word the
+	// source doesn't already have.
+	almanacTextFixes := map[int]map[string]string{
+		9: {
+			"B       eginning early in our": "Beginning early in our",
+			"sporting events, spoken expres-         important patriotic anthems and sions have always been an impor-        symbols. tant part of American civic life.": "sporting events, spoken expressions important patriotic anthems and have always been an important symbols. part of American civic life.",
+		},
+		10: {
+			"“    T        he Star-Spangled Banner” is the national anthem": "“The Star-Spangled Banner” is the national anthem",
+			"the British of- ficers who agreed to release Dr.":              "the British officers who agreed to release Dr.",
+		},
+		11: {
+			"that he began a poem to com-                       United States. In 1916, President memorate the occasion. He wrote                    Woodrow Wilson ordered that the poem to be sung to the popu-                   the song be played at military lar British song,": "that he began a poem to commemorate United States. In 1916, President the occasion. He wrote Woodrow Wilson ordered that the poem to be sung to the popular the song be played at military British song,",
+			"The significance and popular- anthem of the United States. ity of the song spread across the": "The significance and popularity anthem of the United States. of the song spread across the",
+		},
+		13: {
+			"A “        merica the Beautiful” was written in 1893": "“America the Beautiful” was written in 1893",
+			"Beautiful” first ap- peared in print in":              "Beautiful” first appeared in print in",
+		},
+		15: {
+			"A        s part of an auction held": "As part of an auction held",
+			"freedom and oppor- Inauguration of the Statue of Liberty in 1886, tunity. She saw the new statue": "freedom and opportunity Inauguration of the Statue of Liberty in 1886, She saw the new statue",
+		},
+	}
 	for _, doc := range c.Library {
 		t.Run(doc.ID, func(t *testing.T) {
 			pages := raw[sourceFile[doc.Source]]
+			offset := sourceOffset[doc.Source]
 			authored := map[int]string{}
 			for _, b := range doc.Blocks {
 				authored[b.Page] += " " + b.Text
@@ -131,7 +189,7 @@ func TestLibrarySourceCoverage(t *testing.T) {
 			// handling chapters use for a multi-line splash.
 			splashLines := map[string]bool{}
 			var span []string
-			for _, l := range strings.Split(pages[doc.SourceStart-1], "\n") {
+			for _, l := range strings.Split(pages[doc.SourceStart-1+offset], "\n") {
 				t := strings.TrimSpace(l)
 				if t == "" {
 					if len(span) == 0 {
@@ -151,7 +209,7 @@ func TestLibrarySourceCoverage(t *testing.T) {
 			}
 			for page := doc.SourceStart; page <= doc.SourceEnd; page++ {
 				var source []string
-				for _, line := range strings.Split(pages[page-1], "\n") {
+				for _, line := range strings.Split(pages[page-1+offset], "\n") {
 					line = strings.TrimSpace(line)
 					if number.MatchString(line) {
 						continue
@@ -164,7 +222,14 @@ func TestLibrarySourceCoverage(t *testing.T) {
 					}
 					source = append(source, line)
 				}
-				want, got := inventory(strings.Join(source, " ")), inventory(authored[page])
+				sourceText := strings.Join(source, " ")
+				if doc.Source == "citizens-almanac" {
+					for old, clean := range almanacTextFixes[page] {
+						sourceText = strings.ReplaceAll(sourceText, old, clean)
+					}
+					sourceText += " " + almanacSupplement[page]
+				}
+				want, got := inventory(sourceText), inventory(authored[page])
 				var differences []string
 				for word, n := range want {
 					if got[word] != n {

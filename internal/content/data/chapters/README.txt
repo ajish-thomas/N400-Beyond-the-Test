@@ -3,8 +3,10 @@ Chapter authoring format
 Metadata between --- lines is JSON (a YAML subset), decoded strictly by the
 standard library. Unknown fields are errors. Body markup deliberately supports
 only ## and ### headings, one-line reflowed paragraphs, - lists with one nested
-level, ![printed caption](manifest-id), fenced text diagrams, :::sidebar blocks,
-and > printed captions for illustrations not reproduced. No raw HTML is trusted.
+level, ![printed caption](manifest-id), fenced text diagrams, fenced verse
+blocks (```verse; library documents only so far, for the Citizen's Almanac's
+songs and poems — see data/library/README.txt), :::sidebar blocks, and >
+printed captions for illustrations not reproduced. No raw HTML is trusted.
 
 Each source page begins with <!-- page:N -->. Source page markers are increasing
 and lie within source_start/source_end. Figure captions and credit lines live in

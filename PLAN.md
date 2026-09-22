@@ -10,7 +10,7 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, both senators in every state, and all 435 House members plus D.C.'s delegate; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Four source-verified documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, Amendments I-XXVII, and — the first from the Citizen's Almanac — "Patriotic Anthems of the United States" (the national anthem, "America the Beautiful," and "The New Colossus"). The Almanac's remaining symbols (Pledge, Flag, Motto, Great Seal), seven speeches, and four landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, both senators in every state, and all 435 House members plus D.C.'s delegate; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). |
 | Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. The bundled House roster resolves Q29 from state + district (or from state alone for at-large/single-seat cases), and a Census address geocoder lets a learner resolve an exact district by street address instead of picking from a multi-district ZIP's candidate list. All eight changing questions now resolve to a concrete, source-labeled answer wherever their source data allows it. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
@@ -321,8 +321,16 @@ and flagged in chapter notes, not silently corrected.
    are all done. All eight changing questions resolve automatically wherever
    their source data allows it, each labeled with its source and date,
    through the same manual > sidecar > bundled precedence.
-3. Return to the deferred Citizen's Almanac library documents after the study
-   workflows are complete.
+3. The Citizen's Almanac library documents are underway: "Patriotic Anthems
+   of the United States" (national anthem, "America the Beautiful," "The New
+   Colossus") is published, source-verified against the rendered PDF pages
+   the same way every chapter has been, with a new `almanac-visual-supplement.json`
+   for its non-extractable decorative titles and an eight-page front-matter
+   offset documented in data/library/README.txt. Remaining: "Patriotic
+   Symbols of the United States" (Pledge of Allegiance, Flag, Motto, Great
+   Seal — pages 20-26, already page-verified during this session), the seven
+   speeches, and the four landmark Supreme Court cases, each carrying the
+   required citation.
 
 ---
 
@@ -867,9 +875,43 @@ for PDF-extraction artifacts) so the word inventory still balances exactly.
 heading footnote markers are stripped by the same exact-match coverage logic,
 while every printed ratification note remains on its source page; the bracketed
 Eighteenth Amendment and its repeal note are retained. It links 13 questions
-whose accepted answers appear directly in the amendment text. Remaining: the
-Almanac's speeches, symbols/anthems, and landmark cases, each carrying the
-required citation.
+whose accepted answers appear directly in the amendment text.
+
+`patriotic-anthems.md` (pages 9–15) is the fourth document and the first
+from `CitizensAlmanac-M-76.pdf` rather than the Constitution booklet. Its raw
+extraction (`data/raw/almanac.txt`) splits on the PDF's own page breaks,
+which include eight unnumbered/roman-numeral front-matter pages before the
+printed Arabic page 1 begins; the document is authored with the printed page
+numbers a reader sees in the book (matching the Constitution documents'
+convention), so `TestLibrarySourceCoverage` applies an eight-page offset only
+when indexing into the raw almanac pages for `citizens-almanac`-sourced
+documents. It covers three of the nine items in the Almanac's own "Patriotic
+Anthems and Symbols of the United States" section (pages 9–26) — the
+national anthem, "America the Beautiful," and "The New Colossus," the three
+the section's own intro names directly — leaving out two poems in the same
+printed section (Whitman's "I Hear America Singing," Emerson's "Concord
+Hymn," pages 16–19) that are outside this project's planned Almanac scope;
+the section's other four items (Pledge, Flag, Motto, Great Seal, pages
+20–26) are a separate document so both documents' page ranges stay fully
+contiguous, since the coverage test requires every page within a document's
+own range to be accounted for. Each song's decorative cursive title/author
+attribution renders as pure vector art with no extractable PDF text layer at
+all; its clean transcription lives in the new
+`data/raw/almanac-visual-supplement.json`, the same mechanism the Study
+Guide's non-extractable diagram/map labels already use, keyed by printed
+page. The Almanac's two-column layout hyphenates words across a line wrap
+far more often than the Constitution's single-column pages, and several
+wraps land on a row that also carries the other column's unrelated text; a
+new `almanacTextFixes` map fixes each affected region as one exact block,
+the same targeted technique `footnoteRefs` uses. A new fenced ` ```verse `
+block (parsed alongside chapters' existing ` ```text ` diagrams, rendered in
+serif type rather than monospace) preserves each song's line breaks. It
+links Q123 (the national anthem's name, stated directly); "America the
+Beautiful" and "The New Colossus" have no dedicated question in the official
+128 and are included anyway, per this project's second goal of teaching the
+material, not only the test answers. Remaining: "Patriotic Symbols of the
+United States" (Pledge, Flag, Motto, Great Seal), the Almanac's seven
+speeches, and its four landmark cases, each carrying the required citation.
 
 -> *verify:* `TestLibrarySourceCoverage` (a per-page word inventory against
 `data/raw/constitution.txt`/`almanac.txt`, the same technique
@@ -1108,7 +1150,7 @@ stack plus one self-hosted serif for chapter prose.
 | `GET /welcome` · `POST /welcome` | First-run wizard: state + ZIP -> district (with candidate picker if the ZIP spans several), optional address disambiguation, optional initial refresh. Skippable. |
 | `GET /` | Dashboard: progress, due flashcards, next chapter, "take a test" |
 | `GET /learn` · `/learn/{chapter}` | Chapter list; reader with objectives, prose, images+credits, linked questions |
-| `GET /library` · `/library/{doc}` | Reference browser: document list; reader with prose, linked questions. Deep links into a specific Article/Section/Amendment use in-page anchors on the Constitution document, the same way chapter sections do, rather than a separate nested route. **Implemented** for the Declaration, Constitution, and Amendments; Almanac documents remain. |
+| `GET /library` · `/library/{doc}` | Reference browser: document list; reader with prose, linked questions. Deep links into a specific Article/Section/Amendment use in-page anchors on the Constitution document, the same way chapter sections do, rather than a separate nested route. **Implemented** for the Declaration, Constitution, Amendments, and the first Almanac document; the rest of the Almanac remains. |
 | `GET /flashcards` · `POST /flashcards/{id}/answer` | Deck picker; card flip (Alpine) + HTMX answer posting |
 | `GET /practice` · `POST /practice/start` · `/practice/{session}` | Implemented local-only mode picker, free-text question flow, advisory grading, self-check override, early pass/fail result, and official/65-20 modes. Attempts are intentionally not persisted yet; review links and custom drills remain. |
 | `GET /questions` · `/questions/{id}` | Browse all 128; single question with all acceptable answers, required count, chapter links, ⚠ banner if changeable |

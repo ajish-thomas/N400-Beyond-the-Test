@@ -90,12 +90,15 @@ func parseBlocks(body string, sourceStart, sourceEnd int) ([]Block, error) {
 		}
 		block := Block{Page: page}
 		switch {
-		case line == "```text" || line == ":::sidebar":
+		case line == "```text" || line == "```verse" || line == ":::sidebar":
 			closing := "```"
 			block.Kind = "diagram"
-			if line == ":::sidebar" {
+			switch line {
+			case ":::sidebar":
 				closing = ":::"
 				block.Kind = "sidebar"
+			case "```verse":
+				block.Kind = "verse"
 			}
 			var text []string
 			for i++; i < len(lines) && strings.TrimSpace(lines[i]) != closing; i++ {

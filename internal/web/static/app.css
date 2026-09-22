@@ -166,6 +166,7 @@ footer { border-top:1px solid var(--ink); padding-block:28px 40px; display:grid;
 .text-diagram figcaption { margin:0 0 20px; }
 .text-diagram pre { font:13px/1.8 ui-monospace,monospace; white-space:pre-wrap; overflow-wrap:anywhere; margin:0; }
 .source-sidebar p { margin:12px 0; }
+.verse { font:italic 20px/1.8 Georgia,"Times New Roman",serif; white-space:pre-wrap; margin:32px 0; padding-left:24px; border-left:2px solid var(--line); }
 .omitted-illustration { font:13px/1.7 system-ui,sans-serif; color:var(--muted); border-left:1px solid var(--line); padding-left:18px; margin:24px 0; }
 .omitted-illustration span { font-size:10px; text-transform:uppercase; letter-spacing:.05em; }
 .omitted-illustration p { margin:6px 0; }
