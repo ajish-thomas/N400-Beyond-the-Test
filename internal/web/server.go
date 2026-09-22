@@ -84,6 +84,25 @@ type flashcardView struct {
 	Empty    bool
 }
 
+// reviewedAnswers is what the practice "correct answers" reveal shows for
+// the question just answered. For a changing question, q.Answers is the
+// PDF's generic "Answers will vary" instruction, not a real answer — showing
+// it after grading against resolved (senator names, the sitting president,
+// etc.) would tell the user something different from what they were just
+// graded against. When a resolution is available, it replaces q.Answers with
+// the resolved values instead; a question that isn't changing, or a changing
+// question with no resolution yet, is returned unmodified.
+func reviewedAnswers(q content.Question, resolved []string) content.Question {
+	if !q.Changing() || len(resolved) == 0 {
+		return q
+	}
+	q.Answers = make([]content.Answer, len(resolved))
+	for i, v := range resolved {
+		q.Answers[i] = content.Answer{Text: v, Core: v, Full: v}
+	}
+	return q
+}
+
 func New() (http.Handler, error) {
 	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 }
@@ -502,6 +521,7 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 		for _, answer := range resolved {
 			values = append(values, answer.Text)
 		}
+		reviewed := reviewedAnswers(question, values)
 		result := quiz.GradeWithResolvedAnswers(question, r.FormValue("answer"), values)
 		correct := result.Correct || r.FormValue("override") == "right"
 		if r.FormValue("override") == "right" {
@@ -528,7 +548,7 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 			}
 		}
 		state.feedback = &result
-		state.reviewed = &question
+		state.reviewed = &reviewed
 		practicePage(w, r.PathValue("id"), state)
 	})
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {

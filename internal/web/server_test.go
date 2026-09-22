@@ -477,6 +477,29 @@ func TestPracticeFeedbackShowsAnswersAfterTerminalMiss(t *testing.T) {
 	}
 }
 
+func TestReviewedAnswersShowsResolvedValuesForChangingQuestions(t *testing.T) {
+	changing := content.Question{ID: 23, Prompt: "Who is one of your state's U.S. senators now?", AnswerKind: content.StateSpecific, Answers: []content.Answer{{Text: "Answers will vary.", Guidance: "..."}}}
+	got := reviewedAnswers(changing, []string{"Alex Padilla", "Adam B. Schiff"})
+	if len(got.Answers) != 2 || got.Answers[0].Text != "Alex Padilla" || got.Answers[1].Text != "Adam B. Schiff" {
+		t.Fatalf("resolved answers not substituted: %#v", got.Answers)
+	}
+
+	// No resolution available yet (e.g. no state set): the generic PDF
+	// instruction must survive untouched, not be silently blanked out.
+	got = reviewedAnswers(changing, nil)
+	if len(got.Answers) != 1 || got.Answers[0].Text != "Answers will vary." {
+		t.Fatalf("unresolved changing question should keep its original answer: %#v", got.Answers)
+	}
+
+	// A fixed (non-changing) question is never touched, even if resolved
+	// values were somehow passed in.
+	fixed := content.Question{ID: 1, AnswerKind: content.Fixed, Answers: []content.Answer{{Text: "Republic"}}}
+	got = reviewedAnswers(fixed, []string{"should not appear"})
+	if len(got.Answers) != 1 || got.Answers[0].Text != "Republic" {
+		t.Fatalf("fixed question must be returned unmodified: %#v", got.Answers)
+	}
+}
+
 func TestFlashcardFlowPersistsReview(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}
