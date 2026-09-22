@@ -10,8 +10,8 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, and both senators in every state; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). The House-member roster remains. |
-| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. Remaining: House roster and Census address geocoding. |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, both senators in every state, and all 435 House members plus D.C.'s delegate; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). |
+| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. The bundled House roster resolves Q29 from state + district (or from state alone for at-large/single-seat cases). Remaining: Census address geocoding. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
 
@@ -26,22 +26,28 @@ remain the target specification; they are not claims that every feature exists.
   tests have advisory automatic grading and save answer history locally, as do
   Flashcard reviews.
 - All eight changing questions display the permanent USCIS verification link and
-  the original source instructions. Four federal officeholders and state senators
-  are bundled as a dated snapshot, refreshable from Wikidata; other changing
-  answers remain unavailable. `--offline` disables the refresh action; it does
-  not (and does not need to) touch the sidecar file read, which is local disk,
-  not network.
+  the original source instructions. Four federal officeholders, state senators,
+  and House representatives are bundled as a dated snapshot; the four federal
+  offices and the learner's state governor are additionally refreshable from
+  Wikidata. `--offline` disables the refresh action; it does not (and does not
+  need to) touch the sidecar file read, which is local disk, not network.
 - A dated 2026-09-21 bundled snapshot resolves President, Vice President,
   Speaker of the House, and Chief Justice, with its official source URL shown
   alongside the permanent USCIS verification banner. A local state selection
   resolves the state-capital question and displays both current senators, any
   one of whom grades as correct for Q23. The resolver enforces manual
-  override, local sidecar, then bundled-data precedence; representative and
-  full district data remain unavailable until their sources are added.
+  override, local sidecar, then bundled-data precedence; only full-address
+  district disambiguation (an alternative to picking from the crosswalk's
+  candidate list) remains unavailable, pending the optional Census geocoder.
   Settings now saves a ZIP locally, shows every crosswalk candidate, and
-  requires a district choice when needed. It also provides a local manual
-  representative entry paired with the official House lookup; it never guesses
-  a district from a state or ZIP. A Settings **Refresh current officials**
+  requires a district choice when needed. Once state and district are set, Q29
+  resolves automatically from the bundled House roster (falling back to a
+  state's sole seat for at-large states and D.C.'s delegate, since the
+  crosswalk's district numbering for those seats doesn't always match
+  congress-legislators' own); Settings also provides a local manual
+  representative override, paired with the official House lookup, that always
+  takes precedence, for the day a seat turns over between rebuilds. A Settings
+  **Refresh current officials**
   action fetches the four federal offices, plus the governor of the learner's
   selected state (Q61), from Wikidata through the bounded, fixture-tested
   `FederalClient`/`GovernorClient`, and writes them to a local
@@ -306,11 +312,13 @@ and flagged in chapter notes, not silently corrected.
    for the non-federal photo credits deferred so far: the Polling Place
    Photo Project (Chapter 5) and the Jamestown Yorktown Foundation
    (Chapter 7); neither is blocking.
-2. Complete officials resolution: sidecar persistence, the Settings refresh
-   action, the `--offline` guard, and a live per-state governor refresh
-   (Q61) are done. Remaining: the House-member roster, so the selected
-   district resolves Q29 automatically instead of requiring a manual
-   entry, plus the optional Census address geocoder for a multi-district ZIP.
+2. Officials resolution is now feature-complete for every bundleable source:
+   sidecar persistence, the Settings refresh action, the `--offline` guard, a
+   live per-state governor refresh (Q61), and the bundled House roster (Q29,
+   resolving automatically once a district is selected) are all done.
+   Remaining: the optional Census address geocoder for a learner who wants to
+   disambiguate a multi-district ZIP by street address instead of picking
+   from the candidate list (the candidate-list path already works without it).
 3. Return to the deferred Citizen's Almanac library documents after the study
    workflows are complete.
 
@@ -1046,9 +1054,24 @@ state's previously fetched governor; **Reset to bundled** removes it entirely;
 all of this is route- and fixture-tested, including a failed refresh (from
 either client) leaving a prior sidecar value intact and rendering its error
 inline. `--offline` disables the refresh route only — reading an existing
-sidecar is local disk I/O, not network, so it stays available offline. Still
-required before release: timeout/malformed/empty/schema-drift fixtures for
-both Wikidata clients, the House roster, and address geocoding.
+sidecar is local disk I/O, not network, so it stays available offline.
+
+The House roster (`internal/officials/data/house.json`) is bundled the same
+way senators are: fetched once from `unitedstates/congress-legislators`,
+dated, and checked in rather than live-refreshed, since representatives don't
+change on a schedule frequent enough to justify the added client and the
+resolver already supports a manual override for the day a seat turns over
+early. `Snapshot.Representative(stateCode, district)` resolves Q29: an exact
+`"ST-DD"` match first, falling back to a state's sole roster entry when it has
+only one (every at-large state, and D.C.'s non-voting delegate) — needed
+because the ZIP crosswalk's Census-assigned district number for those seats
+doesn't always match congress-legislators' own numbering (D.C.'s crosswalk
+entries use district "98"; congress-legislators lists its delegate as
+district "0"). `Resolver` gained a `District` field, set from the stored
+profile the same way `Manual`/`Sidecar` already are, so `ResolveAll`'s
+signature didn't need to change. Still required before release:
+timeout/malformed/empty/schema-drift fixtures for both Wikidata clients, and
+address geocoding.
 
 ---
 

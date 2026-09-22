@@ -121,6 +121,7 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 	resolverFor := func(profile store.Profile) officials.Resolver {
 		active := resolver
 		active.Manual = profile.Overrides
+		active.District = profile.District
 		if sidecarPath != "" {
 			if sidecar, err := officials.LoadSidecar(sidecarPath); err == nil {
 				active.Sidecar = sidecar.Overrides(profile.State)

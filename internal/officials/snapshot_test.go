@@ -56,6 +56,56 @@ func TestResolverPrecedence(t *testing.T) {
 	}
 }
 
+func TestRepresentativeResolvesFromBundledHouseRoster(t *testing.T) {
+	snapshot, err := LoadSnapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if name, ok := snapshot.Representative("CA", "37"); !ok || name != "Sydney Kamlager-Dove" {
+		t.Fatalf("CA-37 representative = %q, %v", name, ok)
+	}
+	// Wyoming has a single at-large seat; the crosswalk and congress-legislators
+	// agree on "00" for it, but the state-only fallback should still resolve it
+	// even if an unrelated or blank district string is passed.
+	if name, ok := snapshot.Representative("WY", ""); !ok || name != "Harriet M. Hageman" {
+		t.Fatalf("Wyoming at-large representative = %q, %v", name, ok)
+	}
+	// D.C.'s crosswalk-derived district ("98") does not match
+	// congress-legislators' own numbering for its delegate ("00"); the
+	// single-seat fallback must resolve it anyway.
+	if name, ok := snapshot.Representative("DC", "98"); !ok || name != "Eleanor Holmes Norton" {
+		t.Fatalf("D.C. delegate = %q, %v", name, ok)
+	}
+	if _, ok := snapshot.Representative("CA", "99"); ok {
+		t.Fatal("an unknown district in a multi-district state must not resolve")
+	}
+	if _, ok := snapshot.Representative("", "37"); ok {
+		t.Fatal("an empty state must not resolve")
+	}
+}
+
+func TestRepresentativeResolvesThroughResolver(t *testing.T) {
+	snapshot, err := LoadSnapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	resolver := Resolver{Snapshot: snapshot, District: "37"}
+	if answer := resolver.Resolve(29, "CA"); !answer.Available || answer.Text != "Sydney Kamlager-Dove" || answer.Source != "bundled House roster" || answer.AsOf != snapshot.AsOf {
+		t.Fatalf("California representative = %#v", answer)
+	}
+	noDistrict := Resolver{Snapshot: snapshot}
+	if answer := noDistrict.Resolve(29, "CA"); answer.Available {
+		t.Fatalf("a multi-district state with no district selected must be unavailable: %#v", answer)
+	}
+	if answer := noDistrict.Resolve(29, "WY"); !answer.Available || answer.Text != "Harriet M. Hageman" {
+		t.Fatalf("an at-large state should resolve without a district selected: %#v", answer)
+	}
+	overridden := Resolver{Snapshot: snapshot, District: "37", Manual: map[int]string{29: "Manual Representative"}}
+	if answer := overridden.Resolve(29, "CA"); answer.Text != "Manual Representative" || answer.Source != "manual entry" {
+		t.Fatalf("manual override must still win: %#v", answer)
+	}
+}
+
 func TestGovernorResolvesFromSidecarOverridesForSelectedStateOnly(t *testing.T) {
 	snapshot, err := LoadSnapshot()
 	if err != nil {

@@ -12,15 +12,16 @@ import (
 	"strings"
 )
 
-//go:embed data/officials.json data/states.json data/zcta_cd119.txt.gz
+//go:embed data/officials.json data/states.json data/zcta_cd119.txt.gz data/house.json
 var data embed.FS
 
 type Snapshot struct {
-	AsOf      string              `json:"as_of"`
-	Federal   map[string]string   `json:"federal"`
-	States    []State             `json:"states"`
-	Sources   map[string]string   `json:"sources"`
-	Districts map[string][]string `json:"-"`
+	AsOf        string              `json:"as_of"`
+	Federal     map[string]string   `json:"federal"`
+	States      []State             `json:"states"`
+	Sources     map[string]string   `json:"sources"`
+	Districts   map[string][]string `json:"-"`
+	HouseRoster map[string]string   `json:"-"`
 }
 
 type State struct {
@@ -80,6 +81,11 @@ func LoadSnapshot() (Snapshot, error) {
 		return Snapshot{}, err
 	}
 	snapshot.Districts = districts
+	roster, err := loadHouseRoster()
+	if err != nil {
+		return Snapshot{}, err
+	}
+	snapshot.HouseRoster = roster
 	return snapshot, nil
 }
 
@@ -121,6 +127,57 @@ func (s Snapshot) DistrictCandidates(zip string) []string {
 	return append([]string(nil), s.Districts[zip]...)
 }
 
+func loadHouseRoster() (map[string]string, error) {
+	b, err := data.ReadFile("data/house.json")
+	if err != nil {
+		return nil, err
+	}
+	var roster map[string]string
+	decoder := json.NewDecoder(bytes.NewReader(b))
+	decoder.DisallowUnknownFields()
+	if err := decoder.Decode(&roster); err != nil {
+		return nil, fmt.Errorf("decoding House roster: %w", err)
+	}
+	if len(roster) < 400 {
+		return nil, fmt.Errorf("House roster is incomplete: %d entries", len(roster))
+	}
+	for key, name := range roster {
+		state, district, ok := strings.Cut(key, "-")
+		if !ok || len(state) != 2 || len(district) != 2 || strings.TrimSpace(name) == "" {
+			return nil, fmt.Errorf("invalid House roster entry %q", key)
+		}
+	}
+	return roster, nil
+}
+
+// Representative resolves the bundled current U.S. representative for a
+// state and district. A state (or D.C.) with only one seat resolves from the
+// state alone, since the ZIP-to-district crosswalk's Census-assigned district
+// number for an at-large or non-voting-delegate seat does not always match
+// congress-legislators' own numbering — D.C.'s crosswalk entries use district
+// "98" for its delegate, while congress-legislators lists it as district "0".
+func (s Snapshot) Representative(stateCode, district string) (string, bool) {
+	stateCode = strings.ToUpper(strings.TrimSpace(stateCode))
+	if stateCode == "" {
+		return "", false
+	}
+	if name, ok := s.HouseRoster[stateCode+"-"+district]; ok {
+		return name, true
+	}
+	var only string
+	count := 0
+	for key, name := range s.HouseRoster {
+		if state, _, ok := strings.Cut(key, "-"); ok && state == stateCode {
+			count++
+			only = name
+		}
+	}
+	if count == 1 {
+		return only, true
+	}
+	return "", false
+}
+
 type Answer struct {
 	Text      string
 	Source    string
@@ -137,6 +194,7 @@ type Resolver struct {
 	Manual      map[int]string
 	Sidecar     map[int]string
 	SidecarAsOf string
+	District    string
 }
 
 // federalQuestionKeys maps each changing-federal-office question to its
@@ -160,6 +218,12 @@ func (r Resolver) ResolveAll(questionID int, stateCode string) []Answer {
 	}
 	if answer := strings.TrimSpace(r.Sidecar[questionID]); answer != "" {
 		return []Answer{{Text: answer, Source: "local refreshed data", AsOf: r.SidecarAsOf, Available: true}}
+	}
+	if questionID == 29 {
+		if name, ok := r.Snapshot.Representative(stateCode, r.District); ok {
+			return []Answer{{Text: name, Source: "bundled House roster", AsOf: r.Snapshot.AsOf, Available: true}}
+		}
+		return nil
 	}
 	if questionID == 23 || questionID == 62 {
 		for _, state := range r.Snapshot.States {

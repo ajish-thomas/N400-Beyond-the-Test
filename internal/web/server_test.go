@@ -201,6 +201,33 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 	}
 }
 
+func TestZIPResolvesRepresentativeFromBundledHouseRoster(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, "", false, officials.FederalClient{}, officials.GovernorClient{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/settings/state", strings.NewReader("state=CA"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save state: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", "/settings/zip", strings.NewReader("zip=90008"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save zip: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/29", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Sydney Kamlager-Dove") || !strings.Contains(w.Body.String(), "bundled House roster") {
+		t.Fatalf("representative answer: %d %s", w.Code, w.Body.String())
+	}
+}
+
 func wikidataFixtureServer(t *testing.T, governor string) *httptest.Server {
 	t.Helper()
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
