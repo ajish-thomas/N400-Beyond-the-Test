@@ -49,7 +49,7 @@ func TestLibraryGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Library) != 5 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "patriotic-anthems" || len(c.Library[2].Questions) != 1 || c.Library[3].ID != "patriotic-symbols" || len(c.Library[3].Questions) != 4 || c.Library[4].ID != "us-constitution" || len(c.Library[4].Questions) != 10 {
+	if len(c.Library) != 6 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "patriotic-anthems" || len(c.Library[2].Questions) != 1 || c.Library[3].ID != "patriotic-symbols" || len(c.Library[3].Questions) != 4 || c.Library[4].ID != "us-constitution" || len(c.Library[4].Questions) != 10 || c.Library[5].ID != "washington-farewell-address" || len(c.Library[5].Questions) != 1 {
 		t.Fatal("unexpected published library inventory")
 	}
 }
@@ -201,6 +201,13 @@ func TestLibrarySourceCoverage(t *testing.T) {
 		},
 		26: {
 			"U.S. em- bassies worldwide": "U.S. embassies worldwide",
+		},
+		28: {
+			"A        fter leading the": "After leading the",
+			"He called for a dis- new government and guiding the       tinctly “American character” that young country through several        concentrated on the good of the foreign and domestic crises. Early   country and would avoid poten- in the year 1796, Washington         tially troublesome alliances with decided not to seek reelection for   foreign nations.": "He called for a distinctly new government and guiding the       “American character” that young country through several        concentrated on the good of the foreign and domestic crises. Early   country and would avoid potentially in the year 1796, Washington         troublesome alliances with decided not to seek reelection for   foreign nations.",
+		},
+		29: {
+			"a right to con- centrate your affections": "a right to concentrate your affections",
 		},
 	}
 	for _, doc := range c.Library {

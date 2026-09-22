@@ -183,7 +183,37 @@ printed). It links Q123 (the national anthem's name, stated directly);
 the official 128 and are included anyway, per this project's second goal of
 teaching the material, not only the test answers.
 
-Remaining: the Citizen's Almanac's "Patriotic Symbols of the United States"
-document (Pledge of Allegiance, Flag, Motto, Great Seal), its seven
-speeches, and its four landmark Supreme Court cases, each carrying the
-required citation.
+`patriotic-symbols.md` (pages 20-26) is the fifth document, completing the
+Almanac's "Patriotic Anthems and Symbols" section alongside
+patriotic-anthems.md: the Pledge of Allegiance, Flag, Motto, and Great Seal.
+Every one of these seven pages has at least one hyphen-broken word, several
+spanning an interleaved image caption rather than sitting adjacent once
+joined, each fixed the same way as patriotic-anthems.md's. It links Q66
+(loyalty shown by the Pledge, to "the Flag of the United States of America"
+and "the Republic for which it stands"), Q121 and Q122 (13 stripes, 50
+stars, both stated on the Flag page), and Q124 (the meaning of "E Pluribus
+Unum," stated only on the Great Seal page — the Motto page names the phrase
+but never translates it, so the link belongs to the page that actually
+states the fact). Neither the Motto nor the Great Seal has a dedicated
+question in the official 128; both are included anyway, per the same
+second-goal reasoning as the anthems document. (The Pledge's own text uses
+the fenced ` ```verse ` block introduced for patriotic-anthems.md.)
+
+`washington-farewell-address.md` (pages 28-29) is the sixth document and the
+first of the Almanac's seven presidential and historical speeches
+(pages 27-44). Unlike the founding documents, the Almanac prints only
+excerpts of each speech — three paragraphs here, each already separated by
+an ellipsis in the source — not the full text; this project transcribes
+exactly that selection rather than inventing the "missing" remainder, which
+would violate its own sourcing rule. The decorative title and author
+attribution are non-extractable, recorded in the same visual-supplement
+file; one sentence splits across the page 28/29 boundary
+("...Washington's Farewell" / "Address. This practice..."), authored as a
+matching split. It links Q86 ("George Washington is famous for many things.
+Name one."): the document's own introduction states two of its four
+accepted answers directly ("Father of Our Country," quoted, and "the first
+president of the United States"), joining the four Learn chapters that
+already link it.
+
+Remaining: six more of the Citizen's Almanac's speeches and its four
+landmark Supreme Court cases, each carrying the required citation.

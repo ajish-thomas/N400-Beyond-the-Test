@@ -1,0 +1,148 @@
+{
+  "Doc": {
+    "id": "washington-farewell-address",
+    "title": "Washington's Farewell Address",
+    "kind": "speech",
+    "source": "citizens-almanac",
+    "citation": "U.S. Department of Homeland Security, U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's Almanac, Washington, DC, 2014.",
+    "questions": [
+      86
+    ],
+    "source_start": 28,
+    "source_end": 29,
+    "editorial_notes": [
+      "This is the first of the Almanac's seven presidential and historical speeches (pages 27-44), each printed the same way: a short biographical/historical introduction, one or two credited illustrations, and a heading of excerpts from the speech itself rather than its full text. This document transcribes M-76's actual selection -- three excerpted paragraphs, each already separated by an ellipsis in the source -- not the complete 1796 address; a study app inventing additional 'missing' text the source itself does not print would violate this project's own sourcing rule. Page 27's own section introduction (naming all seven speeches collectively) is general framing for the whole section, not specific to this speech, and is not part of any one speech document.",
+      "The decorative cursive title ('Farewell Address (1796)') and its 'George Washington' attribution line render as pure vector art with no extractable PDF text layer at all, the same gap the Almanac's anthem/symbol titles have; the clean transcription is recorded in data/raw/almanac-visual-supplement.json. The 'Excerpts' heading itself, unlike the title, is ordinary extractable body text.",
+      "One sentence splits across the page 28/29 boundary in the source itself, authored as a matching split across two blocks: '...read aloud Washington's Farewell' (page 28) / 'Address. This practice was later revived...' (page 29).",
+      "Q86 ('George Washington is famous for many things. Name one.') is linked: this document's own introduction states two of its four accepted answers directly -- 'Father of Our Country' (quoted) and 'the first president of the United States' -- joining the four Learn chapters that already link it. 'General of the Continental Army' is not linked from here: the text says Washington 'led the Continental army,' which is not the same stated fact as holding that specific rank/title."
+    ]
+  },
+  "Blocks": [
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 28,
+      "Anchor": "page-28",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "Farewell Address (1796)",
+      "Page": 28,
+      "Anchor": "section-1",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "by George Washington",
+      "Page": 28,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "After leading the Continental army to victory over the British during the American Revolution, George Washington was the obvious choice to become the first president of the United States. Known as the \"Father of Our Country,\" Washington performed honorably during his two terms as president in helping form the new government and guiding the young country through several foreign and domestic crises. Early in the year 1796, Washington decided not to seek reelection for a third time and began drafting a farewell address to the American people.",
+      "Page": 28,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "With the help of former Treasury Secretary Alexander Hamilton, Washington completed his farewell address and the final version was printed in Philadelphia's American Daily Advertiser on September 19, 1796. Washington was concerned that increasing geographical sectionalism and the rise of political factions would threaten the stability of the eight-year-old Constitution and he used his address to urge Americans to unite for the long-term success of the Nation. He called for a distinctly \"American character\" that concentrated on the good of the country and would avoid potentially troublesome alliances with foreign nations.",
+      "Page": 28,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "On February 22, 1862, when America was engulfed in the Civil War, both houses of the U.S. Congress agreed to assemble and read aloud Washington's Farewell",
+      "Page": 28,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "\"Washington Crossing the Delaware,\" by Emanuel Leutze. Courtesy of the National Archives, NARA File # 066-G-15D-25",
+      "Page": 28,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "page",
+      "Text": "",
+      "Page": 29,
+      "Anchor": "page-29",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Address. This practice was later revived and performed annually by both houses of Congress. Since 1893, the U.S. Senate has observed our first president's birthday by selecting one of its members to read aloud Washington's Farewell Address from the Senate floor.",
+      "Page": 29,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "caption",
+      "Text": "\"George Washington at Princeton,\" by Charles Willson Peale. Courtesy of the Library of Congress, LC-USZ62-96753",
+      "Page": 29,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "heading",
+      "Text": "Excerpts",
+      "Page": 29,
+      "Anchor": "section-10",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "…Citizens, by birth or choice, of a common country, that country has a right to concentrate your affections. The name of American, which belongs to you in your national capacity, must always exalt the just pride of patriotism, more than any appellation derived from local discriminations. With slight shades of difference, you have the same religion, manners, habits and political principles. You have in a common cause, fought and triumphed together; the independence and liberty you possess are the work of joint councils and joint efforts, of common dangers, sufferings, and successes….",
+      "Page": 29,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "It is substantially true, that virtue or morality is a necessary spring of popular government. The rule, indeed, extends with more or less force to every species of free government. Who that is a sincere friend to it can look with indifference upon attempts to shake the foundation of the fabric?",
+      "Page": 29,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    },
+    {
+      "Kind": "paragraph",
+      "Text": "Promote, then, as an object of primary importance, institutions for the general diffusion of knowledge. In proportion as the structure of a government gives force to public opinion, it is essential that the public opinion should be enlightened.",
+      "Page": 29,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "",
+      "Image": null
+    }
+  ]
+}
