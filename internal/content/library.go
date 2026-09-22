@@ -29,25 +29,42 @@ type LibraryDoc struct {
 	CategoryNav    []CategoryGroup   `json:"-"`
 }
 
-// LibraryCategory is optional, editorial grouping metadata for navigation
-// only (e.g. the Bill of Rights vs. the Reconstruction Amendments) — it is
-// never checked against the source text the way Blocks are, so a category
-// name or year range is never mistaken for part of the transcribed document
-// itself. Count is how many consecutive "###" subheadings (in document
-// order) belong to this group; the counts across all categories must sum to
-// exactly the number of subheadings in the document.
+// LibraryCategory is optional, editorial grouping and timeline metadata for
+// navigation only (e.g. the Bill of Rights vs. the Reconstruction
+// Amendments, and each amendment's own ratification year) — it is never
+// checked against the source text the way Blocks are, so it is never
+// mistaken for part of the transcribed document itself. Items is one entry
+// per consecutive "###" subheading (in document order) belonging to this
+// group; the item counts across all categories must sum to exactly the
+// number of subheadings in the document. Each item's Year is a fact already
+// stated in the document's own transcribed text (e.g. "was ratified
+// February 7, 1795"), repeated here only so the reader's table of contents
+// can show it without re-parsing prose.
 type LibraryCategory struct {
-	Name  string `json:"name"`
-	Years string `json:"years"`
-	Count int    `json:"count"`
+	Name  string         `json:"name"`
+	Years string         `json:"years"`
+	Items []CategoryItem `json:"items"`
+}
+
+type CategoryItem struct {
+	Year string `json:"year"`
 }
 
 // CategoryGroup is Categories resolved against the document's actual
-// subheading blocks, ready for the reader's grouped table of contents.
+// subheading blocks, ready for the reader's grouped, chronological table of
+// contents.
 type CategoryGroup struct {
 	Name  string
 	Years string
-	Items []Block
+	Items []CategoryEntry
+}
+
+// CategoryEntry pairs one subheading with its declared year for the
+// timeline-style table of contents.
+type CategoryEntry struct {
+	Anchor string
+	Text   string
+	Year   string
 }
 
 // ParseLibraryDoc supports the same authored Markdown subset as ParseChapter
@@ -86,10 +103,10 @@ func ParseLibraryDoc(r io.Reader) (LibraryDoc, error) {
 }
 
 // resolveCategories groups the document's subheadings into its declared
-// categories, in order. It fails closed if the counts don't exactly cover
-// every subheading, so a category list can never silently drift out of sync
-// with the document it describes (an amendment added, removed, or
-// reordered without updating its category's count).
+// categories, in order, pairing each with its declared year. It fails closed
+// if the item counts don't exactly cover every subheading, so a category
+// list can never silently drift out of sync with the document it describes
+// (an amendment added, removed, or reordered without updating its category).
 func resolveCategories(categories []LibraryCategory, blocks []Block) ([]CategoryGroup, error) {
 	var subheadings []Block
 	for _, b := range blocks {
@@ -100,14 +117,21 @@ func resolveCategories(categories []LibraryCategory, blocks []Block) ([]Category
 	groups := make([]CategoryGroup, 0, len(categories))
 	i := 0
 	for _, c := range categories {
-		if c.Count < 1 {
+		if len(c.Items) < 1 {
 			return nil, fmt.Errorf("category %q must cover at least one subheading", c.Name)
 		}
-		if i+c.Count > len(subheadings) {
+		if i+len(c.Items) > len(subheadings) {
 			return nil, fmt.Errorf("category %q claims more subheadings than the document has", c.Name)
 		}
-		groups = append(groups, CategoryGroup{Name: c.Name, Years: c.Years, Items: subheadings[i : i+c.Count]})
-		i += c.Count
+		entries := make([]CategoryEntry, len(c.Items))
+		for j, item := range c.Items {
+			if item.Year == "" {
+				return nil, fmt.Errorf("category %q item %d is missing a year", c.Name, j)
+			}
+			entries[j] = CategoryEntry{Anchor: subheadings[i+j].Anchor, Text: subheadings[i+j].Text, Year: item.Year}
+		}
+		groups = append(groups, CategoryGroup{Name: c.Name, Years: c.Years, Items: entries})
+		i += len(c.Items)
 	}
 	if i != len(subheadings) {
 		return nil, fmt.Errorf("categories cover %d of %d subheadings", i, len(subheadings))

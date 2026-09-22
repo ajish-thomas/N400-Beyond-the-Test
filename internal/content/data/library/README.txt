@@ -107,19 +107,26 @@ Eighteenth Amendment remains bracketed exactly as printed, with its repeal
 note. It links 13 questions whose accepted answers are stated directly.
 
 `amendments.md` is also the first document to use the optional `categories`
-front-matter field: an ordered list of `{name, years, count}` groups (Bill of
-Rights; Early Amendments; Reconstruction Amendments; Progressive Era
+front-matter field: an ordered list of `{name, years, items}` groups (Bill
+of Rights; Early Amendments; Reconstruction Amendments; Progressive Era
 Amendments; Modern Amendments — standard historical periodization for the 27
-amendments, used purely for reader navigation). `count` is how many
-consecutive `###` subheadings belong to that group; `ParseLibraryDoc`
-resolves this against the document's actual subheadings into `CategoryNav`
-and fails closed if the counts don't sum to exactly the number of
-subheadings present, so a category list can never silently drift out of
-sync with an edited document. Categories are never checked against the
-source text the way `Blocks` are — `TestLibrarySourceCoverage` never sees
-them — and never appear inside the transcribed legal text itself; they exist
-only to group the reader's sidebar table of contents (`library.gohtml`),
-which otherwise lists all 27 amendments flat. Each amendment's own heading
+amendments, used purely for reader navigation). `items` is one `{year}`
+entry per consecutive `###` subheading belonging to that group, in document
+order; each year is a fact already stated in the document's own transcribed
+ratification note (e.g. "The Eleventh Amendment was ratified February 7,
+1795."), repeated here only so the sidebar can display it without
+re-parsing prose. `ParseLibraryDoc` resolves `items` against the document's
+actual subheadings into `CategoryNav` and fails closed if an era's item
+count doesn't exactly match its slice of the document's subheadings, so a
+category list can never silently drift out of sync with an edited document.
+Categories are never checked against the source text the way `Blocks` are —
+`TestLibrarySourceCoverage` never sees them, and their declared years are
+verified only by inspection against the printed ratification notes, the
+same trust boundary as every other editorial note in this project — and
+never appear inside the transcribed legal text itself; they exist only to
+drive the reader's sidebar, which renders as a chronological timeline (one
+dot per era, each amendment listed under it with its own year) instead of
+listing all 27 amendments flat. Each amendment's own heading
 is a `###` subheading rather than a top-level `##` heading for the same
 reason: the flat per-`##`-heading table of contents every other document
 uses would otherwise list all 27 individually. The three-line printed title
