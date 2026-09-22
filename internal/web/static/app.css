@@ -146,12 +146,12 @@ footer { border-top:1px solid var(--ink); padding-block:28px 40px; display:grid;
 .settings-representative p { color:var(--muted); font-size:14px; }
 .settings-form input { min-height:48px; border:1px solid var(--line); border-radius:0; background:var(--bg); color:var(--ink); padding:8px; }
 .reader-layout { display:grid; grid-template-columns:220px minmax(0,1fr); gap:60px; align-items:start; margin-block:50px 64px; }
-.chapter-toc { position:sticky; top:24px; display:flex; flex-direction:column; align-items:stretch; gap:12px; font-size:11px; line-height:1.5; border-top:1px solid var(--line); padding-top:18px; max-height:calc(100vh - 48px); overflow-y:auto; }
+.chapter-toc { position:sticky; top:24px; display:flex; flex-direction:column; align-items:stretch; gap:12px; font-size:11px; line-height:1.5; border-top:1px solid var(--line); padding-top:18px; }
 .chapter-toc a { text-decoration:none; }
 .chapter-toc a:hover { text-decoration:underline; color:var(--accent); }
 .timeline { display:flex; flex-direction:column; gap:20px; padding-left:18px; border-left:2px solid var(--line); }
 .timeline-era { position:relative; display:flex; flex-direction:column; gap:6px; }
-.timeline-era::before { content:""; position:absolute; left:-24px; top:3px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--paper); }
+.timeline-era::before { content:""; position:absolute; left:-16px; top:3px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--paper); }
 .timeline-era-label { display:flex; flex-direction:column; gap:2px; font:600 12px/1.4 var(--display); color:var(--ink); text-transform:none; letter-spacing:0; }
 .timeline-era-label small { color:var(--muted); font:11px/1.5 ui-monospace,"SFMono-Regular",Consolas,monospace; letter-spacing:.05em; }
 .timeline-items { display:flex; flex-direction:column; gap:5px; margin:0; padding:0; list-style:none; }
@@ -195,7 +195,7 @@ footer { border-top:1px solid var(--ink); padding-block:28px 40px; display:grid;
 }
 @media(max-width:620px) {
   .reader-layout { grid-template-columns:1fr; gap:24px; margin-block:28px 44px; }
-  .chapter-toc { position:static; max-height:none; overflow-y:visible; }
+  .chapter-toc { position:static; }
   .chapter-reader { font-size:18px; }
   .objectives { padding:20px; }
   .chapter-feature { align-items:flex-start; flex-direction:column; }
