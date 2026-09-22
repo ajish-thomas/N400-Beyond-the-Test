@@ -501,6 +501,41 @@ func TestReviewedAnswersShowsResolvedValuesForChangingQuestions(t *testing.T) {
 	}
 }
 
+func TestFlashcardShowsResolvedAnswerForChangingQuestion(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}
+	h, err := NewWithStore(progress, clock, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The 65/20 deck is drawn in ascending question order; push every
+	// starred question ahead of Q30 (Speaker of the House) out of "due
+	// today" by answering it correctly, so Q30 becomes the card shown.
+	for _, id := range []int{2, 7, 12, 20} {
+		w := httptest.NewRecorder()
+		req := httptest.NewRequest("POST", fmt.Sprintf("/flashcards/%d", id), strings.NewReader("result=right"))
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		h.ServeHTTP(w, req)
+		if w.Code != http.StatusSeeOther {
+			t.Fatalf("mark Q%d correct: %d", id, w.Code)
+		}
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/flashcards?deck=6520", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Question 30 of 128") {
+		t.Fatalf("expected Q30 as the current card: %d %s", w.Code, w.Body.String())
+	}
+	if !strings.Contains(w.Body.String(), "Mike Johnson") {
+		t.Fatalf("flashcard reveal did not show the resolved Speaker: %s", w.Body.String())
+	}
+	if strings.Contains(w.Body.String(), "Answers will vary") {
+		t.Fatalf("flashcard reveal should not show the generic PDF instruction once resolved: %s", w.Body.String())
+	}
+	if !strings.Contains(w.Body.String(), "uscis.gov/citizenship/testupdates") {
+		t.Fatalf("flashcard for a changing question should carry the verification banner: %s", w.Body.String())
+	}
+}
+
 func TestFlashcardFlowPersistsReview(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}

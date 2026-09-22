@@ -103,6 +103,18 @@ func reviewedAnswers(q content.Question, resolved []string) content.Question {
 	return q
 }
 
+// resolvedValues extracts the plain text of every answer a Resolver finds
+// for a question, for callers (practice grading, the flashcard reveal) that
+// only need the values, not their source/date provenance.
+func resolvedValues(active officials.Resolver, questionID int, stateCode string) []string {
+	resolved := active.ResolveAll(questionID, stateCode)
+	values := make([]string, 0, len(resolved))
+	for _, answer := range resolved {
+		values = append(values, answer.Text)
+	}
+	return values
+}
+
 func New() (http.Handler, error) {
 	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 }
@@ -242,6 +254,13 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 			}
 		}
 		view.Empty = view.Question.ID == 0
+		if !view.Empty && view.Question.Changing() {
+			active := resolver
+			if progress != nil {
+				active = resolverFor(data.Profile)
+			}
+			view.Question = reviewedAnswers(view.Question, resolvedValues(active, view.Question.ID, data.Profile.State))
+		}
 		render(w, page{Title: "Flashcards", Flashcards: true, Flashcard: view})
 	}
 	mux.HandleFunc("GET /flashcards", flashcardPage)
@@ -516,11 +535,7 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 				active = resolverFor(data.Profile)
 			}
 		}
-		resolved := active.ResolveAll(question.ID, stateCode)
-		values := make([]string, 0, len(resolved))
-		for _, answer := range resolved {
-			values = append(values, answer.Text)
-		}
+		values := resolvedValues(active, question.ID, stateCode)
 		reviewed := reviewedAnswers(question, values)
 		result := quiz.GradeWithResolvedAnswers(question, r.FormValue("answer"), values)
 		correct := result.Correct || r.FormValue("override") == "right"
