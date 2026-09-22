@@ -15,16 +15,39 @@ var libraryKinds = map[string]bool{"founding-document": true, "speech": true, "s
 var librarySources = map[string]bool{"declaration-constitution": true, "citizens-almanac": true}
 
 type LibraryDoc struct {
-	ID             string   `json:"id"`
-	Title          string   `json:"title"`
-	Kind           string   `json:"kind"`
-	Source         string   `json:"source"`
-	Citation       string   `json:"citation,omitempty"`
-	Questions      []int    `json:"questions"`
-	SourceStart    int      `json:"source_start"`
-	SourceEnd      int      `json:"source_end"`
-	EditorialNotes []string `json:"editorial_notes"`
-	Blocks         []Block  `json:"-"`
+	ID             string            `json:"id"`
+	Title          string            `json:"title"`
+	Kind           string            `json:"kind"`
+	Source         string            `json:"source"`
+	Citation       string            `json:"citation,omitempty"`
+	Questions      []int             `json:"questions"`
+	SourceStart    int               `json:"source_start"`
+	SourceEnd      int               `json:"source_end"`
+	EditorialNotes []string          `json:"editorial_notes"`
+	Categories     []LibraryCategory `json:"categories,omitempty"`
+	Blocks         []Block           `json:"-"`
+	CategoryNav    []CategoryGroup   `json:"-"`
+}
+
+// LibraryCategory is optional, editorial grouping metadata for navigation
+// only (e.g. the Bill of Rights vs. the Reconstruction Amendments) — it is
+// never checked against the source text the way Blocks are, so a category
+// name or year range is never mistaken for part of the transcribed document
+// itself. Count is how many consecutive "###" subheadings (in document
+// order) belong to this group; the counts across all categories must sum to
+// exactly the number of subheadings in the document.
+type LibraryCategory struct {
+	Name  string `json:"name"`
+	Years string `json:"years"`
+	Count int    `json:"count"`
+}
+
+// CategoryGroup is Categories resolved against the document's actual
+// subheading blocks, ready for the reader's grouped table of contents.
+type CategoryGroup struct {
+	Name  string
+	Years string
+	Items []Block
 }
 
 // ParseLibraryDoc supports the same authored Markdown subset as ParseChapter
@@ -53,7 +76,43 @@ func ParseLibraryDoc(r io.Reader) (LibraryDoc, error) {
 	if err != nil {
 		return doc, err
 	}
+	if len(doc.Categories) > 0 {
+		doc.CategoryNav, err = resolveCategories(doc.Categories, doc.Blocks)
+		if err != nil {
+			return doc, fmt.Errorf("document %s: %w", doc.ID, err)
+		}
+	}
 	return doc, nil
+}
+
+// resolveCategories groups the document's subheadings into its declared
+// categories, in order. It fails closed if the counts don't exactly cover
+// every subheading, so a category list can never silently drift out of sync
+// with the document it describes (an amendment added, removed, or
+// reordered without updating its category's count).
+func resolveCategories(categories []LibraryCategory, blocks []Block) ([]CategoryGroup, error) {
+	var subheadings []Block
+	for _, b := range blocks {
+		if b.Kind == "subheading" {
+			subheadings = append(subheadings, b)
+		}
+	}
+	groups := make([]CategoryGroup, 0, len(categories))
+	i := 0
+	for _, c := range categories {
+		if c.Count < 1 {
+			return nil, fmt.Errorf("category %q must cover at least one subheading", c.Name)
+		}
+		if i+c.Count > len(subheadings) {
+			return nil, fmt.Errorf("category %q claims more subheadings than the document has", c.Name)
+		}
+		groups = append(groups, CategoryGroup{Name: c.Name, Years: c.Years, Items: subheadings[i : i+c.Count]})
+		i += c.Count
+	}
+	if i != len(subheadings) {
+		return nil, fmt.Errorf("categories cover %d of %d subheadings", i, len(subheadings))
+	}
+	return groups, nil
 }
 
 func loadLibrary() ([]LibraryDoc, error) {

@@ -106,6 +106,33 @@ while the source's ratification notes remain on their original pages. The
 Eighteenth Amendment remains bracketed exactly as printed, with its repeal
 note. It links 13 questions whose accepted answers are stated directly.
 
+`amendments.md` is also the first document to use the optional `categories`
+front-matter field: an ordered list of `{name, years, count}` groups (Bill of
+Rights; Early Amendments; Reconstruction Amendments; Progressive Era
+Amendments; Modern Amendments — standard historical periodization for the 27
+amendments, used purely for reader navigation). `count` is how many
+consecutive `###` subheadings belong to that group; `ParseLibraryDoc`
+resolves this against the document's actual subheadings into `CategoryNav`
+and fails closed if the counts don't sum to exactly the number of
+subheadings present, so a category list can never silently drift out of
+sync with an edited document. Categories are never checked against the
+source text the way `Blocks` are — `TestLibrarySourceCoverage` never sees
+them — and never appear inside the transcribed legal text itself; they exist
+only to group the reader's sidebar table of contents (`library.gohtml`),
+which otherwise lists all 27 amendments flat. Each amendment's own heading
+is a `###` subheading rather than a top-level `##` heading for the same
+reason: the flat per-`##`-heading table of contents every other document
+uses would otherwise list all 27 individually. The three-line printed title
+splash ("AMENDMENTS" / "TO THE CONSTITUTION OF THE" / "UNITED STATES OF
+AMERICA", page 39) is treated purely as page furniture and not authored as a
+heading at all, matching declaration.md's and us-constitution.md's own
+splashes (this had been an inconsistency in amendments.md until now, and its
+correction surfaced a real ordering bug in `TestLibrarySourceCoverage`: the
+splash's own footnote-reference digit — "AMENDMENTS12" — needs the
+`footnoteRefs` fix applied before, not after, the splash-detection and
+per-page furniture checks that key off the fixed text, or a mismatched raw
+line silently fails to match either check).
+
 `patriotic-anthems.md` (pages 9-15) is the fourth document and the first from
 the Citizen's Almanac. almanac.txt's raw pages are split by the PDF's own
 page breaks, which include eight unnumbered/roman-numeral front-matter pages

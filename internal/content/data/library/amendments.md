@@ -7,69 +7,71 @@
   "questions": [4,13,14,24,26,40,59,60,64,65,68,70,99],
   "source_start": 39,
   "source_end": 53,
+  "categories": [
+    {"name": "Bill of Rights", "years": "1791", "count": 10},
+    {"name": "Early Amendments", "years": "1795–1804", "count": 2},
+    {"name": "Reconstruction Amendments", "years": "1865–1870", "count": 3},
+    {"name": "Progressive Era Amendments", "years": "1913–1920", "count": 4},
+    {"name": "Modern Amendments", "years": "1933–1992", "count": 8}
+  ],
   "editorial_notes": [
     "This text edition transcribes all 27 amendments from pages 39-53 of M-654 (rev. 07/25). The source's amendment headings carry numbered footnote references; those reference digits are omitted from headings while the source's ratification notes are reproduced on their printed pages. The source calls the first ten amendments the Bill of Rights in footnote 12; that note is retained with the first four amendments on page 39.",
+    "The five eras above (Bill of Rights; Early Amendments; Reconstruction; Progressive Era; Modern) are standard historical periodization for grouping the 27 amendments, used here purely for reader navigation (the grouped table of contents) — they are editorial metadata, never checked against the source text the way the transcribed amendments themselves are, and never appear inside the transcribed text itself. The three-line printed title splash ('AMENDMENTS' / 'TO THE CONSTITUTION OF THE' / 'UNITED STATES OF AMERICA', page 39) is treated as page furniture and not authored as a heading, the same as declaration.md's and us-constitution.md's own splashes; each amendment's own heading is a subheading (###), not a top-level heading, so the reader's table of contents groups by era instead of listing all 27 individually.",
     "The Eighteenth Amendment is printed in brackets because it was repealed by the Twenty-First Amendment; its printed ratification and repeal note is retained. The original Constitution's superseded clauses are marked and annotated in the preceding Constitution document; this document supplies the amendments those annotations identify.",
     "Question links require an amendment's own text to state an accepted answer. The linked questions cover the amendment process and constitutional rights (Q4, Q13, Q14, Q59, Q65), Senate terms and representation (Q24, Q26), presidential succession (Q40), voting eligibility and voting rights (Q60, Q64, Q68, Q70), and the abolition of slavery (Q99). Similar topics without the accepted wording are deliberately not linked."
   ]
 }
 ---
 <!-- page:39 -->
-## AMENDMENTS
-
-## TO THE CONSTITUTION OF THE
-
-## UNITED STATES OF AMERICA
-
-## Amendment I.
+### Amendment I.
 
 Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.
 
-## Amendment II.
+### Amendment II.
 
 A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.
 
-## Amendment III.
+### Amendment III.
 
 No Soldier shall, in time of peace be quartered in any house, without the consent of the Owner, nor in time of war, but in a manner to be prescribed by law.
 
-## Amendment IV.
+### Amendment IV.
 
 The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures, shall not be violated, and no Warrants shall issue, but upon probable cause, supported by Oath or affirmation, and particularly describing the place to be searched, and the persons or things to be seized.
 
 The first ten Amendments (the Bill of Rights) were ratified effective December 15, 1791.
 
 <!-- page:40 -->
-## Amendment V.
+### Amendment V.
 
 No person shall be held to answer for a capital, or otherwise infamous crime, unless on a presentment or indictment of a Grand Jury, except in cases arising in the land or naval forces, or in the Militia, when in actual service in time of War or public danger; nor shall any person be subject for the same offence to be twice put in jeopardy of life or limb; nor shall be compelled in any criminal case to be a witness against himself, nor be deprived of life, liberty, or property, without due process of law; nor shall private property be taken for public use, without just compensation.
 
-## Amendment VI.
+### Amendment VI.
 
 In all criminal prosecutions, the accused shall enjoy the right to a speedy and public trial, by an impartial jury of the State and district wherein the crime shall have been committed; which district shall have been previously ascertained by law, and to be informed of the nature and cause of the accusation; to be confronted with the witnesses against him; to have compulsory process for obtaining witnesses in his favor, and to have the assistance of counsel for his defence.
 
-## Amendment VII.
+### Amendment VII.
 
 In Suits at common law, where the value in controversy shall exceed twenty dollars, the right of trial by jury shall be preserved, and no fact tried by a jury, shall be otherwise re-examined in any Court of the United States, than according to the rules of the common law.
 
 <!-- page:41 -->
-## Amendment VIII.
+### Amendment VIII.
 
 Excessive bail shall not be required, nor excessive fines imposed, nor cruel and unusual punishments inflicted.
 
-## Amendment IX.
+### Amendment IX.
 
 The enumeration in the Constitution of certain rights shall not be construed to deny or disparage others retained by the people.
 
-## Amendment X.
+### Amendment X.
 
 The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are reserved to the States respectively, or to the people.
 
-## Amendment XI.
+### Amendment XI.
 
 The Judicial power of the United States shall not be construed to extend to any suit in law or equity, commenced or prosecuted against one of the United States by Citizens of another State, or by Citizens or Subjects of any Foreign State.
 
-## Amendment XII.
+### Amendment XII.
 
 The Electors shall meet in their respective states, and vote by ballot for President and Vice-President, one of whom, at least, shall not be an inhabitant of the same state with themselves; they shall name in their ballots the person voted for as President, and in distinct ballots the person voted for as Vice-President, and they shall make distinct
 
@@ -85,13 +87,13 @@ Superseded by section 3 of the Twentieth Amendment.
 <!-- page:43 -->
 majority, then from the two highest numbers on the list, the Senate shall choose the Vice-President; a quorum for the purpose shall consist of two-thirds of the whole number of Senators, and a majority of the whole number shall be necessary to a choice. But no person constitutionally ineligible to the office of President shall be eligible to that of Vice-President of the United States.
 
-## Amendment XIII.
+### Amendment XIII.
 
 Section 1. Neither slavery nor involuntary servitude, except as a punishment for crime whereof the party shall have been duly convicted, shall exist within the United States, or any place subject to their jurisdiction.
 
 Section 2. Congress shall have power to enforce this article by appropriate legislation.
 
-## Amendment XIV.
+### Amendment XIV.
 
 Section 1. All persons born or naturalized in the United States and subject to the jurisdiction thereof, are citizens of the United States and of the State wherein they reside. No State shall make or enforce any law which shall abridge the privileges or immunities of citizens of the United States; nor shall any State deprive any person of life, liberty, or property, without due process of law; nor deny to any person within its jurisdiction the equal protection of the laws.
 
@@ -113,17 +115,17 @@ States nor any State shall assume or pay any debt or obligation incurred in aid 
 
 Section 5. The Congress shall have power to enforce, by appropriate legislation, the provisions of this article.
 
-## Amendment XV.
+### Amendment XV.
 
 Section 1. The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of race, color, or previous condition of servitude.
 
 Section 2. The Congress shall have power to enforce this article by appropriate legislation.
 
-## Amendment XVI.
+### Amendment XVI.
 
 The Congress shall have power to lay and collect taxes on incomes, from whatever source derived, without apportionment among the several States, and without regard to any census or enumeration.
 
-## Amendment XVII.
+### Amendment XVII.
 
 The Senate of the United States shall be composed of two Senators from each State, elected by the people thereof, for six years; and each Senator shall have one vote. The electors in each State shall
 
@@ -140,7 +142,7 @@ When vacancies happen in the representation of any State in the Senate, the exec
 
 This amendment shall not be so construed as to affect the election or term of any Senator chosen before it becomes valid as part of the Constitution.
 
-## Amendment XVIII.
+### Amendment XVIII.
 
 [Section 1. After one year from the ratification of this article the manufacture, sale, or transportation of intoxicating liquors within, the importation thereof into, or the exportation thereof from the United States and all territory subject to the jurisdiction thereof for beverage purposes is hereby prohibited.
 
@@ -153,13 +155,13 @@ The Eighteenth Amendment was ratified January 16, 1919.
 It was repealed by the Twenty-First Amendment, December 5, 1933.
 
 <!-- page:47 -->
-## Amendment XIX.
+### Amendment XIX.
 
 The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of sex.
 
 Congress shall have power to enforce this article by appropriate legislation.
 
-## Amendment XX.
+### Amendment XX.
 
 Section 1. The terms of the President and the Vice President shall end at noon on the 20th day of January, and the terms of Senators and Representatives at noon on the 3d day of January, of the years in which such terms would have ended if this article had not been ratified; and the terms of their successors shall then begin.
 
@@ -180,7 +182,7 @@ Section 5. Sections 1 and 2 shall take effect on the 15th day of October followi
 
 Section 6. This article shall be inoperative unless it shall have been ratified as an amendment to the Constitution by the legislatures of three-fourths of the several States within seven years from the date of its submission.
 
-## Amendment XXI.
+### Amendment XXI.
 
 Section 1. The eighteenth article of amendment to the Constitution of the United States is hereby repealed.
 
@@ -191,7 +193,7 @@ The Twenty-First Amendment was ratified December 5, 1933.
 <!-- page:49 -->
 Section 3. This article shall be inoperative unless it shall have been ratified as an amendment to the Constitution by conventions in the several States, as provided in the Constitution, within seven years from the date of the submission hereof to the States by the Congress.
 
-## Amendment XXII.
+### Amendment XXII.
 
 Section 1. No person shall be elected to the office of the President more than twice, and no person who has held the office of President, or acted as President, for more than two years of a term to which some other person was elected President shall be elected to the office of President more than once. But this Article shall not apply to any person holding the office of President when this Article was proposed by the Congress, and shall not prevent any person who may be holding the office of President, or acting as President, during the term within which this Article becomes operative from holding the office of President or acting as President during the remainder of such term.
 
@@ -200,7 +202,7 @@ Section 2. This article shall be inoperative unless it shall have been ratified 
 The Twenty-Second Amendment was ratified February 27, 1951.
 
 <!-- page:50 -->
-## Amendment XXIII.
+### Amendment XXIII.
 
 Section 1. The District constituting the seat of Government of the United States shall appoint in such manner as Congress may direct:
 
@@ -208,7 +210,7 @@ A number of electors of President and Vice President equal to the whole number o
 
 Section 2. The Congress shall have power to enforce this article by appropriate legislation.
 
-## Amendment XXIV.
+### Amendment XXIV.
 
 Section 1. The right of citizens of the United States to vote in any primary or other election for President or Vice President, for electors for President or Vice President, or for Senator or Representative in Congress, shall not be denied or abridged by the United States or any State by reason of failure to pay any poll tax or other tax.
 
@@ -219,7 +221,7 @@ The Twenty-Third Amendment was ratified March 29, 1961.
 The Twenty-Fourth Amendment was ratified January 23, 1964.
 
 <!-- page:51 -->
-## Amendment XXV.
+### Amendment XXV.
 
 Section 1. In case of the removal of the President from office or of his death or resignation, the Vice President shall become President.
 
@@ -236,7 +238,7 @@ The Twenty-Fifth Amendment was ratified February 10, 1967.
 <!-- page:52 -->
 written declaration that no inability exists, he shall resume the powers and duties of his office unless the Vice President and a majority of either the principal officers of the executive department or of such other body as Congress may by law provide, transmit within four days to the President pro tempore of the Senate and the Speaker of the House of Representatives their written declaration that the President is unable to discharge the powers and duties of his office. Thereupon Congress shall decide the issue, assembling within forty-eight hours for that purpose if not in session. If the Congress, within twenty-one days after receipt of the latter written declaration, or, if Congress is not in session, within twenty-one days after Congress is required to assemble, determines by two-thirds vote of both Houses that the President is unable to discharge the powers and duties of his office, the Vice President shall continue to discharge the same as Acting President; otherwise, the President shall resume the powers and duties of his office.
 
-## Amendment XXVI.
+### Amendment XXVI.
 
 Section 1. The right of citizens of the United States, who are eighteen years of age or older, to vote shall not be denied or abridged by the United States or by any State on account of age.
 
@@ -245,7 +247,7 @@ Section 2. The Congress shall have power to enforce this article by appropriate 
 The Twenty-Sixth Amendment was ratified July 1, 1971.
 
 <!-- page:53 -->
-## Amendment XXVII.
+### Amendment XXVII.
 
 No law, varying the compensation for the services of the Senators and Representatives, shall take effect, until an election of Representatives shall have intervened.
 

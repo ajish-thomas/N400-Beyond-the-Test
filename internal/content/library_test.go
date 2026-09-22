@@ -232,6 +232,13 @@ func TestLibrarySourceCoverage(t *testing.T) {
 					}
 					break
 				}
+				// A footnote-reference digit can be glued directly onto the
+				// splash's own first word (e.g. "AMENDMENTS12"); apply the
+				// same per-page fix used below so the splash still matches
+				// the document's title and is recognized as furniture.
+				for old, clean := range footnoteRefs[doc.SourceStart] {
+					t = strings.Replace(t, old, clean, 1)
+				}
 				span = append(span, t)
 				if strings.Join(span, " ") == strings.ToUpper(doc.Title) {
 					break
@@ -249,11 +256,16 @@ func TestLibrarySourceCoverage(t *testing.T) {
 					if number.MatchString(line) {
 						continue
 					}
-					if page == doc.SourceStart && splashLines[line] {
-						continue
-					}
+					// Must run before the splashLines check: amendments.md's
+					// splash carries a footnote digit glued onto its own
+					// first word ("AMENDMENTS12"), fixed to match
+					// splashLines' already-fixed keys, so the fix has to
+					// land before the lookup, not after.
 					for old, clean := range footnoteRefs[page] {
 						line = strings.Replace(line, old, clean, 1)
+					}
+					if page == doc.SourceStart && splashLines[line] {
+						continue
 					}
 					source = append(source, line)
 				}

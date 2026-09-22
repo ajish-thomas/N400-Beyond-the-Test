@@ -777,7 +777,7 @@ func TestLibraryReaderGolden(t *testing.T) {
 	w := httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/library/amendments", nil))
 	for _, s := range []string{
-		"AMENDMENTS",
+		"Bill of Rights",
 		"Congress shall make no law respecting an establishment of religion",
 		"The Senate of the United States shall be composed of two Senators from each State",
 		"the Vice President shall become President",

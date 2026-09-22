@@ -23,8 +23,36 @@
     "source_end": 53,
     "editorial_notes": [
       "This text edition transcribes all 27 amendments from pages 39-53 of M-654 (rev. 07/25). The source's amendment headings carry numbered footnote references; those reference digits are omitted from headings while the source's ratification notes are reproduced on their printed pages. The source calls the first ten amendments the Bill of Rights in footnote 12; that note is retained with the first four amendments on page 39.",
+      "The five eras above (Bill of Rights; Early Amendments; Reconstruction; Progressive Era; Modern) are standard historical periodization for grouping the 27 amendments, used here purely for reader navigation (the grouped table of contents) — they are editorial metadata, never checked against the source text the way the transcribed amendments themselves are, and never appear inside the transcribed text itself. The three-line printed title splash ('AMENDMENTS' / 'TO THE CONSTITUTION OF THE' / 'UNITED STATES OF AMERICA', page 39) is treated as page furniture and not authored as a heading, the same as declaration.md's and us-constitution.md's own splashes; each amendment's own heading is a subheading (###), not a top-level heading, so the reader's table of contents groups by era instead of listing all 27 individually.",
       "The Eighteenth Amendment is printed in brackets because it was repealed by the Twenty-First Amendment; its printed ratification and repeal note is retained. The original Constitution's superseded clauses are marked and annotated in the preceding Constitution document; this document supplies the amendments those annotations identify.",
       "Question links require an amendment's own text to state an accepted answer. The linked questions cover the amendment process and constitutional rights (Q4, Q13, Q14, Q59, Q65), Senate terms and representation (Q24, Q26), presidential succession (Q40), voting eligibility and voting rights (Q60, Q64, Q68, Q70), and the abolition of slavery (Q99). Similar topics without the accepted wording are deliberately not linked."
+    ],
+    "categories": [
+      {
+        "name": "Bill of Rights",
+        "years": "1791",
+        "count": 10
+      },
+      {
+        "name": "Early Amendments",
+        "years": "1795–1804",
+        "count": 2
+      },
+      {
+        "name": "Reconstruction Amendments",
+        "years": "1865–1870",
+        "count": 3
+      },
+      {
+        "name": "Progressive Era Amendments",
+        "years": "1913–1920",
+        "count": 4
+      },
+      {
+        "name": "Modern Amendments",
+        "years": "1933–1992",
+        "count": 8
+      }
     ]
   },
   "Blocks": [
@@ -38,37 +66,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
-      "Text": "AMENDMENTS",
-      "Page": 39,
-      "Anchor": "section-1",
-      "Items": null,
-      "ImageID": "",
-      "Image": null
-    },
-    {
-      "Kind": "heading",
-      "Text": "TO THE CONSTITUTION OF THE",
-      "Page": 39,
-      "Anchor": "section-2",
-      "Items": null,
-      "ImageID": "",
-      "Image": null
-    },
-    {
-      "Kind": "heading",
-      "Text": "UNITED STATES OF AMERICA",
-      "Page": 39,
-      "Anchor": "section-3",
-      "Items": null,
-      "ImageID": "",
-      "Image": null
-    },
-    {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment I.",
       "Page": 39,
-      "Anchor": "section-4",
+      "Anchor": "section-1",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -83,10 +84,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment II.",
       "Page": 39,
-      "Anchor": "section-6",
+      "Anchor": "section-3",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -101,10 +102,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment III.",
       "Page": 39,
-      "Anchor": "section-8",
+      "Anchor": "section-5",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -119,10 +120,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment IV.",
       "Page": 39,
-      "Anchor": "section-10",
+      "Anchor": "section-7",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -155,10 +156,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment V.",
       "Page": 40,
-      "Anchor": "section-14",
+      "Anchor": "section-11",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -173,10 +174,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment VI.",
       "Page": 40,
-      "Anchor": "section-16",
+      "Anchor": "section-13",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -191,10 +192,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment VII.",
       "Page": 40,
-      "Anchor": "section-18",
+      "Anchor": "section-15",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -218,10 +219,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment VIII.",
       "Page": 41,
-      "Anchor": "section-21",
+      "Anchor": "section-18",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -236,10 +237,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment IX.",
       "Page": 41,
-      "Anchor": "section-23",
+      "Anchor": "section-20",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -254,10 +255,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment X.",
       "Page": 41,
-      "Anchor": "section-25",
+      "Anchor": "section-22",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -272,10 +273,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XI.",
       "Page": 41,
-      "Anchor": "section-27",
+      "Anchor": "section-24",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -290,10 +291,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XII.",
       "Page": 41,
-      "Anchor": "section-29",
+      "Anchor": "section-26",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -371,10 +372,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XIII.",
       "Page": 43,
-      "Anchor": "section-38",
+      "Anchor": "section-35",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -398,10 +399,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XIV.",
       "Page": 43,
-      "Anchor": "section-41",
+      "Anchor": "section-38",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -506,10 +507,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XV.",
       "Page": 45,
-      "Anchor": "section-53",
+      "Anchor": "section-50",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -533,10 +534,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XVI.",
       "Page": 45,
-      "Anchor": "section-56",
+      "Anchor": "section-53",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -551,10 +552,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XVII.",
       "Page": 45,
-      "Anchor": "section-58",
+      "Anchor": "section-55",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -632,10 +633,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XVIII.",
       "Page": 46,
-      "Anchor": "section-67",
+      "Anchor": "section-64",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -695,10 +696,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XIX.",
       "Page": 47,
-      "Anchor": "section-74",
+      "Anchor": "section-71",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -722,10 +723,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XX.",
       "Page": 47,
-      "Anchor": "section-77",
+      "Anchor": "section-74",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -821,10 +822,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXI.",
       "Page": 48,
-      "Anchor": "section-88",
+      "Anchor": "section-85",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -875,10 +876,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXII.",
       "Page": 49,
-      "Anchor": "section-94",
+      "Anchor": "section-91",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -920,10 +921,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXIII.",
       "Page": 50,
-      "Anchor": "section-99",
+      "Anchor": "section-96",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -956,10 +957,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXIV.",
       "Page": 50,
-      "Anchor": "section-103",
+      "Anchor": "section-100",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1010,10 +1011,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXV.",
       "Page": 51,
-      "Anchor": "section-109",
+      "Anchor": "section-106",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1091,10 +1092,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXVI.",
       "Page": 52,
-      "Anchor": "section-118",
+      "Anchor": "section-115",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1136,10 +1137,10 @@
       "Image": null
     },
     {
-      "Kind": "heading",
+      "Kind": "subheading",
       "Text": "Amendment XXVII.",
       "Page": 53,
-      "Anchor": "section-123",
+      "Anchor": "section-120",
       "Items": null,
       "ImageID": "",
       "Image": null

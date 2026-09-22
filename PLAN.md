@@ -878,6 +878,27 @@ while every printed ratification note remains on its source page; the bracketed
 Eighteenth Amendment and its repeal note are retained. It links 13 questions
 whose accepted answers appear directly in the amendment text.
 
+Flat, undifferentiated lists of 27 amendments read as bland and were hard to
+navigate, so `LibraryDoc` gained an optional `categories` field (name, year
+range, and a subheading count) resolved at parse time into `CategoryNav` —
+editorial grouping metadata (Bill of Rights; Early Amendments;
+Reconstruction; Progressive Era; Modern) that is never checked against the
+source text and never appears inside the transcribed legal text itself, only
+in the reader's sidebar table of contents, which now groups by era instead
+of listing all 27 individually. Each amendment's own heading became a `###`
+subheading rather than a top-level `##` heading for the same reason (the
+existing flat per-`##`-heading TOC every other document uses would still
+list all 27). `amendments.md`'s three-line printed title splash was also
+brought in line with declaration.md's and us-constitution.md's convention —
+treated purely as page furniture rather than authored as real headings — a
+correction that surfaced a genuine ordering bug in `TestLibrarySourceCoverage`
+(a footnote-reference digit glued onto the splash's own first word needed
+its fix applied before, not after, the checks that key off the already-fixed
+text). Each library reader's `h3` subheading is now a larger serif display
+treatment with a top rule and more vertical space, giving every amendment
+(and every Almanac song) clearer visual separation without needing an
+image — none is available or sourceable for a plain legal-text page.
+
 `patriotic-anthems.md` (pages 9–15) is the fourth document and the first
 from `CitizensAlmanac-M-76.pdf` rather than the Constitution booklet. Its raw
 extraction (`data/raw/almanac.txt`) splits on the PDF's own page breaks,
