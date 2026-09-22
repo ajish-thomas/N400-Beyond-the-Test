@@ -44,7 +44,8 @@ func run(port int, noBrowser, offline bool) error {
 	sidecarPath := officials.SidecarPath(configDir)
 	federalClient := officials.FederalClient{Endpoint: officials.WikidataEndpoint, HTTP: &http.Client{Timeout: 10 * time.Second}}
 	governorClient := officials.GovernorClient{Endpoint: officials.WikidataEndpoint, HTTP: &http.Client{Timeout: 10 * time.Second}}
-	handler, err := web.NewWithStore(progress, flashcard.SystemClock{}, sidecarPath, offline, federalClient, governorClient)
+	geocoderClient := officials.GeocoderClient{Endpoint: officials.CensusGeocoderEndpoint, HTTP: &http.Client{Timeout: 10 * time.Second}}
+	handler, err := web.NewWithStore(progress, flashcard.SystemClock{}, sidecarPath, offline, federalClient, governorClient, geocoderClient)
 	if err != nil {
 		return err
 	}

@@ -11,7 +11,7 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
 | Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, both senators in every state, and all 435 House members plus D.C.'s delegate; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). |
-| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. The bundled House roster resolves Q29 from state + district (or from state alone for at-large/single-seat cases). Remaining: Census address geocoding. |
+| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. The bundled House roster resolves Q29 from state + district (or from state alone for at-large/single-seat cases), and a Census address geocoder lets a learner resolve an exact district by street address instead of picking from a multi-district ZIP's candidate list. All eight changing questions now resolve to a concrete, source-labeled answer wherever their source data allows it. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
 
@@ -36,11 +36,13 @@ remain the target specification; they are not claims that every feature exists.
   alongside the permanent USCIS verification banner. A local state selection
   resolves the state-capital question and displays both current senators, any
   one of whom grades as correct for Q23. The resolver enforces manual
-  override, local sidecar, then bundled-data precedence; only full-address
-  district disambiguation (an alternative to picking from the crosswalk's
-  candidate list) remains unavailable, pending the optional Census geocoder.
-  Settings now saves a ZIP locally, shows every crosswalk candidate, and
-  requires a district choice when needed. Once state and district are set, Q29
+  override, local sidecar, then bundled-data precedence, for every one of the
+  eight changing questions. Settings saves a ZIP locally, shows every
+  crosswalk candidate, and requires a district choice when more than one
+  applies — or, once that many-candidate case shows up, offers a **Look up my
+  district** address form as an alternative: it calls the Census Bureau's
+  keyless geocoder, never stores the address itself, and keeps only the
+  resulting district. Once state and district are set (by either path), Q29
   resolves automatically from the bundled House roster (falling back to a
   state's sole seat for at-large states and D.C.'s delegate, since the
   crosswalk's district numbering for those seats doesn't always match
@@ -312,13 +314,13 @@ and flagged in chapter notes, not silently corrected.
    for the non-federal photo credits deferred so far: the Polling Place
    Photo Project (Chapter 5) and the Jamestown Yorktown Foundation
    (Chapter 7); neither is blocking.
-2. Officials resolution is now feature-complete for every bundleable source:
-   sidecar persistence, the Settings refresh action, the `--offline` guard, a
-   live per-state governor refresh (Q61), and the bundled House roster (Q29,
-   resolving automatically once a district is selected) are all done.
-   Remaining: the optional Census address geocoder for a learner who wants to
-   disambiguate a multi-district ZIP by street address instead of picking
-   from the candidate list (the candidate-list path already works without it).
+2. Officials resolution is now complete: sidecar persistence, the Settings
+   refresh action, the `--offline` guard, a live per-state governor refresh
+   (Q61), the bundled House roster (Q29), and the Census address geocoder
+   (an alternative to the ZIP candidate-list picker for a multi-district ZIP)
+   are all done. All eight changing questions resolve automatically wherever
+   their source data allows it, each labeled with its source and date,
+   through the same manual > sidecar > bundled precedence.
 3. Return to the deferred Citizen's Almanac library documents after the study
    workflows are complete.
 
@@ -1069,9 +1071,27 @@ doesn't always match congress-legislators' own numbering (D.C.'s crosswalk
 entries use district "98"; congress-legislators lists its delegate as
 district "0"). `Resolver` gained a `District` field, set from the stored
 profile the same way `Manual`/`Sidecar` already are, so `ResolveAll`'s
-signature didn't need to change. Still required before release:
-timeout/malformed/empty/schema-drift fixtures for both Wikidata clients, and
-address geocoding.
+signature didn't need to change.
+
+`GeocoderClient` (`fetch_geocoder.go`) resolves a street address to a
+district via the Census Bureau's keyless geocoder, for a learner who opts
+into it to disambiguate a multi-district ZIP instead of picking from the
+crosswalk's candidate list; the address is sent to Census but never stored,
+only the resulting district. It requires exactly one address match and
+exactly one congressional-district geography layer in the response, erring
+rather than guessing when either is ambiguous or absent. Like the ZIP
+crosswalk, it reads the district from the layer's `GEOID` field (state FIPS +
+district) rather than the Congress-numbered `CD119`/`CD120`-style field,
+since `GEOID`'s name is stable across a Congress-number rollover while the
+layer's own name and per-vintage field name are not — confirmed live: the
+Census endpoint had already moved on to serving `"120th Congressional
+Districts"` by the time this was built, not `"119th"`. Wired into Settings as
+`POST /settings/address`, shown only once a ZIP has already resolved to more
+than one district candidate, gated by `--offline` the same way refresh is,
+and rendering its error inline on failure without disturbing the ZIP/district
+already on file. Still required before release: timeout/malformed/empty/
+schema-drift fixtures for all three network clients (Wikidata's two and the
+geocoder).
 
 ---
 
@@ -1150,7 +1170,9 @@ Manual smoke before calling it done:
 6. Flashcard a deck, close the app, reopen — progress survived.
 7. Run the first-run wizard with a Texas ZIP — correct district and
    representative. Re-run with **90002** (four districts) — the candidate picker
-   appears and does not guess.
+   appears and does not guess. Use its **Look up my district** address form
+   instead — a full street address in that ZIP resolves the exact district
+   and representative without picking from the list.
 8. Set state to DC — Q23/Q61/Q62 show the PDF's exact special-case wording.
 9. Hit **Refresh current officials** — President/VP/Speaker/Chief Justice/governor
    update and show source + fetch date. Unplug the network and hit it again —

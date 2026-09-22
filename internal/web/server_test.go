@@ -161,7 +161,7 @@ func TestBundledFederalAnswerAppearsWithUSCISVerification(t *testing.T) {
 
 func TestStateSettingResolvesCapital(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -203,7 +203,7 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 
 func TestZIPResolvesRepresentativeFromBundledHouseRoster(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Now()}, "", false, officials.FederalClient{}, officials.GovernorClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -225,6 +225,91 @@ func TestZIPResolvesRepresentativeFromBundledHouseRoster(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/29", nil))
 	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Sydney Kamlager-Dove") || !strings.Contains(w.Body.String(), "bundled House roster") {
 		t.Fatalf("representative answer: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestSettingsAddressDisambiguatesMultiDistrictZIP(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"result":{"addressMatches":[{"geographies":{"120th Congressional Districts":[{"GEOID":"0642"}]}}]}}`))
+	}))
+	defer server.Close()
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{Endpoint: server.URL, HTTP: server.Client()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/settings/state", strings.NewReader("state=CA"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", "/settings/zip", strings.NewReader("zip=90002"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save multi-district zip: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/29", nil))
+	if w.Code != http.StatusOK || strings.Contains(w.Body.String(), "Robert Garcia") {
+		t.Fatalf("an unresolved multi-district ZIP must not guess a representative: %s", w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", "/settings/address", strings.NewReader("address=123+Main+St%2C+Los+Angeles%2C+CA+90002"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("address lookup: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/29", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Robert Garcia") {
+		t.Fatalf("representative after address lookup: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestSettingsAddressLookupFailureIsNonFatal(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"result":{"addressMatches":[]}}`))
+	}))
+	defer server.Close()
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{Endpoint: server.URL, HTTP: server.Client()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The address form only appears once a ZIP has already resolved to more
+	// than one district candidate, so set one up first to match the real flow.
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/settings/zip", strings.NewReader("zip=90002"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save multi-district zip: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	req = httptest.NewRequest("POST", "/settings/address", strings.NewReader("address=nowhere"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Could not look up that address") {
+		t.Fatalf("address lookup failure: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestSettingsAddressLookupDisabledOffline(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, "", true, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/settings/address", strings.NewReader("address=123 Main St"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusServiceUnavailable {
+		t.Fatalf("address lookup must be rejected offline: %d", w.Code)
 	}
 }
 
@@ -251,7 +336,7 @@ func TestSettingsRefreshUpdatesSidecarAndResets(t *testing.T) {
 	sidecarPath := t.TempDir() + "/officials-live.json"
 	client := officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()}
 	governor := officials.GovernorClient{Endpoint: server.URL, HTTP: server.Client()}
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 22, 9, 0, 0, 0, time.UTC)}, sidecarPath, false, client, governor)
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 22, 9, 0, 0, 0, time.UTC)}, sidecarPath, false, client, governor, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -304,7 +389,7 @@ func TestSettingsRefreshFailureIsNonFatal(t *testing.T) {
 	defer server.Close()
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	sidecarPath := t.TempDir() + "/officials-live.json"
-	h, err := NewWithStore(progress, testClock{now: time.Now()}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()}, officials.GovernorClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()}, officials.GovernorClient{}, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -317,7 +402,7 @@ func TestSettingsRefreshFailureIsNonFatal(t *testing.T) {
 
 func TestSettingsRefreshDisabledOffline(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Now()}, t.TempDir()+"/officials-live.json", true, officials.FederalClient{}, officials.GovernorClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, t.TempDir()+"/officials-live.json", true, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -335,7 +420,7 @@ func TestSettingsRefreshDisabledOffline(t *testing.T) {
 
 func TestPracticeSavesAnswerHistory(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -393,7 +478,7 @@ func TestPracticeFeedbackShowsAnswersAfterTerminalMiss(t *testing.T) {
 func TestFlashcardFlowPersistsReview(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}
-	h, err := NewWithStore(progress, clock, "", false, officials.FederalClient{}, officials.GovernorClient{})
+	h, err := NewWithStore(progress, clock, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -416,7 +501,7 @@ func TestFlashcardFlowPersistsReview(t *testing.T) {
 	if data.Cards[1].Box != 2 || data.Questions[1].Correct != 1 || !data.Questions[1].LastAnswered.Equal(clock.now) {
 		t.Fatalf("stored review = %#v %#v", data.Cards[1], data.Questions[1])
 	}
-	if _, err := NewWithStore(progress, nil, "", false, officials.FederalClient{}, officials.GovernorClient{}); err == nil {
+	if _, err := NewWithStore(progress, nil, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{}); err == nil {
 		t.Fatal("nil clock should be rejected")
 	}
 }

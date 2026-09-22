@@ -56,6 +56,7 @@ type page struct {
 	SidecarAsOf     string
 	SidecarSource   string
 	RefreshError    string
+	GeocodeError    string
 	Flashcards      bool
 	Flashcard       *flashcardView
 }
@@ -84,22 +85,23 @@ type flashcardView struct {
 }
 
 func New() (http.Handler, error) {
-	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{}, officials.GovernorClient{})
+	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 }
 
 // NewWithStore enables durable local study progress. The store is optional so
 // route tests and callers that only browse content need no filesystem setup.
 // sidecarPath is where a refresh writes/reads the local live-officials
 // overlay ("" disables refresh and the sidecar entirely); offline disables
-// the Settings refresh action outright, matching the app's --offline flag.
-func NewWithStore(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient, governorClient officials.GovernorClient) (http.Handler, error) {
+// the Settings refresh and address-lookup actions outright, matching the
+// app's --offline flag.
+func NewWithStore(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient, governorClient officials.GovernorClient, geocoderClient officials.GeocoderClient) (http.Handler, error) {
 	if clock == nil {
 		return nil, fmt.Errorf("flashcard clock is required")
 	}
-	return newServer(progress, clock, sidecarPath, offline, federalClient, governorClient)
+	return newServer(progress, clock, sidecarPath, offline, federalClient, governorClient, geocoderClient)
 }
 
-func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient, governorClient officials.GovernorClient) (http.Handler, error) {
+func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient, governorClient officials.GovernorClient, geocoderClient officials.GeocoderClient) (http.Handler, error) {
 	catalog, err := content.LoadCatalog()
 	if err != nil {
 		return nil, fmt.Errorf("loading study content: %w", err)
@@ -256,12 +258,12 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 		}
 		http.Redirect(w, r, "/flashcards", http.StatusSeeOther)
 	})
-	settingsPage := func(refreshError string) page {
+	settingsPage := func(refreshError, geocodeError string) page {
 		stored, err := progress.Load()
 		if err != nil {
 			stored = store.Empty()
 		}
-		p := page{Title: "Settings", Settings: true, States: snapshot.States, StateCode: stored.Profile.State, Representative: stored.Profile.Overrides[29], ZIP: stored.Profile.ZIP, District: stored.Profile.District, Districts: snapshot.DistrictCandidates(stored.Profile.ZIP), Offline: offline, RefreshError: refreshError}
+		p := page{Title: "Settings", Settings: true, States: snapshot.States, StateCode: stored.Profile.State, Representative: stored.Profile.Overrides[29], ZIP: stored.Profile.ZIP, District: stored.Profile.District, Districts: snapshot.DistrictCandidates(stored.Profile.ZIP), Offline: offline, RefreshError: refreshError, GeocodeError: geocodeError}
 		if sidecarPath != "" {
 			if sidecar, err := officials.LoadSidecar(sidecarPath); err == nil {
 				p.SidecarAsOf, p.SidecarSource = sidecar.AsOf, sidecar.Source
@@ -274,7 +276,7 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
 			return
 		}
-		render(w, settingsPage(""))
+		render(w, settingsPage("", ""))
 	})
 	mux.HandleFunc("POST /settings/state", func(w http.ResponseWriter, r *http.Request) {
 		if progress == nil {
@@ -392,8 +394,29 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 		ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 		defer cancel()
 		if _, err := officials.Refresh(ctx, federalClient, governorClient, stateByCode(stored.Profile.State), sidecarPath, clock.Now()); err != nil {
-			p := settingsPage(err.Error())
-			render(w, p)
+			render(w, settingsPage(err.Error(), ""))
+			return
+		}
+		http.Redirect(w, r, "/settings", http.StatusSeeOther)
+	})
+	mux.HandleFunc("POST /settings/address", func(w http.ResponseWriter, r *http.Request) {
+		if progress == nil {
+			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
+			return
+		}
+		if offline {
+			http.Error(w, "Address lookup is disabled while the app is running offline", http.StatusServiceUnavailable)
+			return
+		}
+		ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+		defer cancel()
+		district, err := geocoderClient.Fetch(ctx, r.FormValue("address"))
+		if err != nil {
+			render(w, settingsPage("", err.Error()))
+			return
+		}
+		if err := progress.Update(func(data *store.Data) { data.Profile.District = district }); err != nil {
+			http.Error(w, "Unable to save settings", http.StatusInternalServerError)
 			return
 		}
 		http.Redirect(w, r, "/settings", http.StatusSeeOther)
