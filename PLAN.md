@@ -1,6 +1,6 @@
 # N400 Civics Study App — Implementation Plan
 
-## Implementation status — September 20, 2026
+## Implementation status — September 21, 2026
 
 This section records the actual implementation. The phase descriptions below
 remain the target specification; they are not claims that every feature exists.
@@ -291,9 +291,22 @@ remain the target specification; they are not claims that every feature exists.
 - Grading now takes precedence over the remaining library. Its test contract is:
   every fixed official bullet must match **as an item**, while a question only
   passes when its required distinct-item count is met. “Answers will vary” and
-  “Visit…” are instructions rather than factual answers, so the first grading
-  engine reports the eight changing questions as unavailable until the officials
-  overlay supplies a resolved value; the user’s self-check remains authoritative.
+  “Visit…” are instructions rather than factual answers, never matchable
+  content, so grading reports a changing question as unavailable until the
+  officials resolver supplies a value for it (now the normal case for all
+  eight, per the officials-resolution work below); the user’s self-check
+  remains authoritative regardless.
+- Both the practice test and flashcards originally showed a changing
+  question’s raw PDF answer text (“Answers will vary…”) in their
+  “correct answer” reveal even after grading against a real resolved value —
+  practice computed the resolved value for grading but never passed it to the
+  reveal; flashcards never resolved one at all. Both now share a small
+  `reviewedAnswers`/`resolvedValues` helper pair in `internal/web/server.go`
+  that swaps the resolved value in before rendering, so all three
+  answer-reveal surfaces (the question browser, practice, flashcards) show
+  the same thing they graded against. Flashcards also gained the “may
+  change, verify at uscis.gov” banner the other two already had, since it was
+  otherwise the only surface without one.
 
 ### Source corrections to the planning notes
 
@@ -1271,7 +1284,11 @@ Manual smoke before calling it done:
    update and show source + fetch date. Unplug the network and hit it again —
    clear per-source failure message, previous values intact, app still usable.
 10. Confirm the uscis.gov banner is present on all eight changing questions in
-   every state: bundled, freshly fetched, and hand-overridden.
+   every state: bundled, freshly fetched, and hand-overridden. Confirm the
+   *same resolved value* (not the generic "Answers will vary" text) appears
+   in all three places it can show up: the question browser, a practice
+   test's "correct answers" reveal after a miss, and a flashcard's "show
+   acceptable official answers" reveal.
 11. Run with `--offline` — no outbound connections (verify with `ss`/`tcpdump`),
    everything else works.
 12. Open `/learn` at phone width — no horizontal scroll.
