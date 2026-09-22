@@ -10,7 +10,7 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Four source-verified documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, Amendments I-XXVII, and — the first from the Citizen's Almanac — "Patriotic Anthems of the United States" (the national anthem, "America the Beautiful," and "The New Colossus"). The Almanac's remaining symbols (Pledge, Flag, Motto, Great Seal), seven speeches, and four landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, both senators in every state, and all 435 House members plus D.C.'s delegate; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Five source-verified documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, Amendments I-XXVII, and — from the Citizen's Almanac — "Patriotic Anthems of the United States" (national anthem, "America the Beautiful," "The New Colossus") and "Patriotic Symbols of the United States" (Pledge of Allegiance, Flag, Motto, Great Seal), together completing the Almanac's own anthems-and-symbols section. The Almanac's seven speeches and four landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, both senators in every state, and all 435 House members plus D.C.'s delegate; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). |
 | Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. The bundled House roster resolves Q29 from state + district (or from state alone for at-large/single-seat cases), and a Census address geocoder lets a learner resolve an exact district by street address instead of picking from a multi-district ZIP's candidate list. All eight changing questions now resolve to a concrete, source-labeled answer wherever their source data allows it. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
@@ -323,14 +323,15 @@ and flagged in chapter notes, not silently corrected.
    through the same manual > sidecar > bundled precedence.
 3. The Citizen's Almanac library documents are underway: "Patriotic Anthems
    of the United States" (national anthem, "America the Beautiful," "The New
-   Colossus") is published, source-verified against the rendered PDF pages
-   the same way every chapter has been, with a new `almanac-visual-supplement.json`
-   for its non-extractable decorative titles and an eight-page front-matter
-   offset documented in data/library/README.txt. Remaining: "Patriotic
-   Symbols of the United States" (Pledge of Allegiance, Flag, Motto, Great
-   Seal — pages 20-26, already page-verified during this session), the seven
-   speeches, and the four landmark Supreme Court cases, each carrying the
-   required citation.
+   Colossus") and "Patriotic Symbols of the United States" (Pledge of
+   Allegiance, Flag, Motto, Great Seal) are both published, source-verified
+   against the rendered PDF pages the same way every chapter has been, and
+   together complete the Almanac's own "Patriotic Anthems and Symbols of the
+   United States" section (pages 9-26). Both share a new
+   `almanac-visual-supplement.json` for non-extractable decorative titles and
+   an eight-page front-matter offset documented in data/library/README.txt.
+   Remaining: the Almanac's seven speeches and four landmark Supreme Court
+   cases, each carrying the required citation.
 
 ---
 
@@ -909,9 +910,27 @@ serif type rather than monospace) preserves each song's line breaks. It
 links Q123 (the national anthem's name, stated directly); "America the
 Beautiful" and "The New Colossus" have no dedicated question in the official
 128 and are included anyway, per this project's second goal of teaching the
-material, not only the test answers. Remaining: "Patriotic Symbols of the
-United States" (Pledge, Flag, Motto, Great Seal), the Almanac's seven
-speeches, and its four landmark cases, each carrying the required citation.
+material, not only the test answers.
+
+`patriotic-symbols.md` (pages 20–26) is the fifth document, completing the
+Almanac's "Patriotic Anthems and Symbols" section alongside
+`patriotic-anthems.md`: Pledge of Allegiance, Flag, Motto, and Great Seal,
+each with its own decorative title recorded in the same visual-supplement
+file and its own hyphenation fixes in the same `almanacTextFixes` map (every
+one of these seven pages has at least one hyphen-broken word, several
+spanning an interleaved image caption rather than sitting adjacent once
+joined). The Pledge's own text is transcribed as a ` ```verse ` block like
+the anthems. It links Q66 (loyalty shown by the Pledge, to "the Flag of the
+United States of America" and "the Republic for which it stands"), Q121 and
+Q122 (13 stripes and 50 stars, both stated on the Flag page), and Q124 (the
+meaning of "E Pluribus Unum," stated only on the Great Seal page — the
+Motto page names the phrase as the original 1776 motto but never translates
+it, so the link belongs to the page that actually states the fact, not the
+page that is topically about mottos). Neither the Motto nor the Great Seal
+has a dedicated question in the official 128; both are included anyway, per
+the same second-goal reasoning as "America the Beautiful" and "The New
+Colossus." Remaining: the Almanac's seven speeches and its four landmark
+cases, each carrying the required citation.
 
 -> *verify:* `TestLibrarySourceCoverage` (a per-page word inventory against
 `data/raw/constitution.txt`/`almanac.txt`, the same technique

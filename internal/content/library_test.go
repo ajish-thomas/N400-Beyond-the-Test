@@ -49,7 +49,7 @@ func TestLibraryGolden(t *testing.T) {
 			}
 		})
 	}
-	if len(c.Library) != 4 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "patriotic-anthems" || len(c.Library[2].Questions) != 1 || c.Library[3].ID != "us-constitution" || len(c.Library[3].Questions) != 10 {
+	if len(c.Library) != 5 || c.Library[0].ID != "amendments" || len(c.Library[0].Questions) != 13 || c.Library[1].ID != "declaration" || len(c.Library[1].Questions) != 5 || c.Library[2].ID != "patriotic-anthems" || len(c.Library[2].Questions) != 1 || c.Library[3].ID != "patriotic-symbols" || len(c.Library[3].Questions) != 4 || c.Library[4].ID != "us-constitution" || len(c.Library[4].Questions) != 10 {
 		t.Fatal("unexpected published library inventory")
 	}
 }
@@ -166,6 +166,41 @@ func TestLibrarySourceCoverage(t *testing.T) {
 		15: {
 			"A        s part of an auction held": "As part of an auction held",
 			"freedom and oppor- Inauguration of the Statue of Liberty in 1886, tunity. She saw the new statue": "freedom and opportunity Inauguration of the Statue of Liberty in 1886, She saw the new statue",
+		},
+		20: {
+			"T        he Pledge of Allegiance was first published": "The Pledge of Allegiance was first published",
+		},
+		21: {
+			"will be our coun- of America.                             try’s most powerful resource in": "will be our country's of America. most powerful resource in",
+		},
+		22: {
+			"A       s America fought for": "As America fought for",
+			"To emphasize the impor- the United States of America.                 tance of the American flag": "To emphasize the importance the United States of America. of the American flag",
+		},
+		23: {
+			"O         n July 30, 1956, President":               "On July 30, 1956, President",
+			"Dwight D. Eisenhower ap- proved a Joint Resolution": "Dwight D. Eisenhower approved a Joint Resolution",
+			"“In God We Trust” is also en- can be traced back nearly 200 years                                  graved on the wall above the": "“In God We Trust” is also engraved can be traced back nearly 200 years on the wall above the",
+			"and in- cluded on the redesigned two-cent": "and included on the redesigned two-cent",
+		},
+		24: {
+			"O         n July 4, 1776, the":                                   "On July 4, 1776, the",
+			"of America. Following the ap-":                                   "of America. Following the appointment",
+			"pointment of two additional com-":                                "of two additional committees",
+			"“out of many, one” in Latin and mittees, each building upon the": "“out of many, one” in Latin and each building upon the",
+		},
+		25: {
+			"The constel-":                        "The constellation",
+			"lation represents the fact that the": "represents the fact that the",
+			"The eagle alone sup-":                "The eagle alone supports",
+			"ports the shield to signify":         "the shield to signify",
+			"The color red signi-":                "The color red signifies",
+			"fies valor and bravery":              "valor and bravery",
+			"purity and inno-":                    "purity and innocence",
+			"cence, and the color blue signifies": ", and the color blue signifies",
+		},
+		26: {
+			"U.S. em- bassies worldwide": "U.S. embassies worldwide",
 		},
 	}
 	for _, doc := range c.Library {
