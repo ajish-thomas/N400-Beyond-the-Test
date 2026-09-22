@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"n400/internal/flashcard"
+	"n400/internal/officials"
 	"n400/internal/store"
 	"n400/internal/web"
 )
@@ -24,7 +25,7 @@ import (
 func main() {
 	port := flag.Int("port", 8400, "local HTTP port")
 	noBrowser := flag.Bool("no-browser", false, "do not open the default browser")
-	offline := flag.Bool("offline", false, "disable network lookups (this milestone has no outbound network code)")
+	offline := flag.Bool("offline", false, "disable the Settings refresh action; all other network lookups remain unimplemented")
 	flag.Parse()
 	if err := run(*port, *noBrowser, *offline); err != nil {
 		log.Fatal(err)
@@ -40,7 +41,9 @@ func run(port int, noBrowser, offline bool) error {
 		return fmt.Errorf("finding user config directory: %w", err)
 	}
 	progress := store.NewFile(filepath.Join(configDir, "n400", "progress.json"))
-	handler, err := web.NewWithStore(progress, flashcard.SystemClock{})
+	sidecarPath := officials.SidecarPath(configDir)
+	federalClient := officials.FederalClient{Endpoint: officials.WikidataEndpoint, HTTP: &http.Client{Timeout: 10 * time.Second}}
+	handler, err := web.NewWithStore(progress, flashcard.SystemClock{}, sidecarPath, offline, federalClient)
 	if err != nil {
 		return err
 	}
@@ -54,7 +57,7 @@ func run(port int, noBrowser, offline bool) error {
 	done := make(chan error, 1)
 	go func() { done <- server.Serve(listener) }()
 	url := fmt.Sprintf("http://127.0.0.1:%d", port)
-	log.Printf("N400: %s (offline=%t; no outbound lookups implemented)", url, offline)
+	log.Printf("N400: %s (offline=%t)", url, offline)
 	if !noBrowser {
 		if err := openBrowser(url); err != nil {
 			log.Printf("Open %s in your browser: %v", url, err)

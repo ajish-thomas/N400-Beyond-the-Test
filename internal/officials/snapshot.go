@@ -3,21 +3,24 @@
 package officials
 
 import (
+	"bufio"
 	"bytes"
+	"compress/gzip"
 	"embed"
 	"encoding/json"
 	"fmt"
 	"strings"
 )
 
-//go:embed data/officials.json data/states.json
+//go:embed data/officials.json data/states.json data/zcta_cd119.txt.gz
 var data embed.FS
 
 type Snapshot struct {
-	AsOf    string            `json:"as_of"`
-	Federal map[string]string `json:"federal"`
-	States  []State           `json:"states"`
-	Sources map[string]string `json:"sources"`
+	AsOf      string              `json:"as_of"`
+	Federal   map[string]string   `json:"federal"`
+	States    []State             `json:"states"`
+	Sources   map[string]string   `json:"sources"`
+	Districts map[string][]string `json:"-"`
 }
 
 type State struct {
@@ -65,7 +68,50 @@ func LoadSnapshot() (Snapshot, error) {
 		return Snapshot{}, fmt.Errorf("states snapshot must contain 50 states and DC")
 	}
 	snapshot.States = states
+	districts, err := loadDistricts()
+	if err != nil {
+		return Snapshot{}, err
+	}
+	snapshot.Districts = districts
 	return snapshot, nil
+}
+
+func loadDistricts() (map[string][]string, error) {
+	raw, err := data.Open("data/zcta_cd119.txt.gz")
+	if err != nil {
+		return nil, err
+	}
+	defer raw.Close()
+	zipped, err := gzip.NewReader(raw)
+	if err != nil {
+		return nil, fmt.Errorf("opening district crosswalk: %w", err)
+	}
+	defer zipped.Close()
+	districts := make(map[string][]string)
+	scanner := bufio.NewScanner(zipped)
+	for scanner.Scan() {
+		parts := strings.Split(scanner.Text(), "|")
+		if len(parts) != 2 || len(parts[0]) != 5 || len(parts[1]) != 4 {
+			return nil, fmt.Errorf("invalid district crosswalk row")
+		}
+		districts[parts[0]] = append(districts[parts[0]], parts[1][2:])
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("reading district crosswalk: %w", err)
+	}
+	if len(districts) == 0 {
+		return nil, fmt.Errorf("empty district crosswalk")
+	}
+	return districts, nil
+}
+
+// DistrictCandidates returns every congressional district overlapping a ZIP
+// Code Tabulation Area. A ZIP is never treated as one definitive district.
+func (s Snapshot) DistrictCandidates(zip string) []string {
+	if len(zip) != 5 {
+		return nil
+	}
+	return append([]string(nil), s.Districts[zip]...)
 }
 
 type Answer struct {
@@ -80,10 +126,15 @@ type Answer struct {
 // sidecar, then the dated bundled snapshot. Sidecar loading belongs to the
 // refresh client so network data never reaches a request path.
 type Resolver struct {
-	Snapshot Snapshot
-	Manual   map[int]string
-	Sidecar  map[int]string
+	Snapshot    Snapshot
+	Manual      map[int]string
+	Sidecar     map[int]string
+	SidecarAsOf string
 }
+
+// federalQuestionKeys maps each changing-federal-office question to its
+// snapshot/sidecar key, shared by resolution and the refresh sidecar.
+var federalQuestionKeys = map[int]string{30: "speaker", 38: "president", 39: "vice_president", 57: "chief_justice"}
 
 func (r Resolver) Resolve(questionID int, stateCode string) Answer {
 	answers := r.ResolveAll(questionID, stateCode)
@@ -101,7 +152,7 @@ func (r Resolver) ResolveAll(questionID int, stateCode string) []Answer {
 		return []Answer{{Text: answer, Source: "manual entry", Available: true}}
 	}
 	if answer := strings.TrimSpace(r.Sidecar[questionID]); answer != "" {
-		return []Answer{{Text: answer, Source: "local refreshed data", Available: true}}
+		return []Answer{{Text: answer, Source: "local refreshed data", AsOf: r.SidecarAsOf, Available: true}}
 	}
 	if questionID == 23 || questionID == 62 {
 		for _, state := range r.Snapshot.States {
@@ -118,7 +169,7 @@ func (r Resolver) ResolveAll(questionID int, stateCode string) []Answer {
 		}
 		return nil
 	}
-	key := map[int]string{30: "speaker", 38: "president", 39: "vice_president", 57: "chief_justice"}[questionID]
+	key := federalQuestionKeys[questionID]
 	if answer := strings.TrimSpace(r.Snapshot.Federal[key]); answer != "" {
 		return []Answer{{Text: answer, Source: "bundled officials snapshot", SourceURL: r.Snapshot.Sources[key], AsOf: r.Snapshot.AsOf, Available: true}}
 	}

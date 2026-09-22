@@ -10,8 +10,8 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot now covers four federal offices, state capitals, and both senators in every state; governors, representatives, and the Census crosswalk remain. |
-| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. Remaining: officials overlays/network clients. |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, and both senators in every state; the 119th Congress Census ZIP-to-district crosswalk is bundled. Governors and the House-member roster remain. |
+| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal refresh client, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. Remaining: governors, House roster, and Census address geocoding. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
 
@@ -26,19 +26,30 @@ remain the target specification; they are not claims that every feature exists.
   tests have advisory automatic grading and save answer history locally, as do
   Flashcard reviews.
 - All eight changing questions display the permanent USCIS verification link and
-  the original source instructions. No current officeholder names are bundled or
-  resolved yet. There are no outbound lookup clients; `--offline` is accepted in
-  preparation for them, not evidence that future network paths have been tested.
+  the original source instructions. Four federal officeholders and state senators
+  are bundled as a dated snapshot, refreshable from Wikidata; other changing
+  answers remain unavailable. `--offline` disables the refresh action; it does
+  not (and does not need to) touch the sidecar file read, which is local disk,
+  not network.
 - A dated 2026-09-21 bundled snapshot resolves President, Vice President,
   Speaker of the House, and Chief Justice, with its official source URL shown
   alongside the permanent USCIS verification banner. A local state selection
   resolves the state-capital question and displays both current senators, any
-  one of whom grades as correct for Q23. The resolver already enforces manual
+  one of whom grades as correct for Q23. The resolver enforces manual
   override, local sidecar, then bundled-data precedence; governor,
   representative, and district data remain unavailable until their sources are
-  added. Until ZIP/district selection is ready, Settings provides a local
-  manual representative entry paired with the official House lookup; it never
-  guesses a district from a state or ZIP.
+  added. Settings now saves a ZIP locally, shows every crosswalk candidate, and
+  requires a district choice when needed. It also provides a local manual
+  representative entry paired with the official House lookup; it never guesses
+  a district from a state or ZIP. A Settings **Refresh current officials**
+  action fetches the four federal offices from Wikidata through the bounded,
+  fixture-tested `FederalClient` and writes them to a local
+  `officials-live.json` sidecar (never overwriting the bundled snapshot),
+  labeled with its source and fetch date wherever it resolves an answer; a
+  **Reset to bundled** action removes the sidecar. A failed refresh renders the
+  Settings page inline with a clear error and leaves any previous sidecar
+  value untouched, and the action is unavailable outright when the app is
+  started with `--offline`.
 - Chapter content uses strictly decoded JSON front matter (a YAML subset) and a
   documented, limited Markdown syntax, rendered through escaped Go templates.
   Chapter links are authored once and reverse links are derived at startup.
@@ -277,8 +288,11 @@ and flagged in chapter notes, not silently corrected.
    for the non-federal photo credits deferred so far: the Polling Place
    Photo Project (Chapter 5) and the Jamestown Yorktown Foundation
    (Chapter 7); neither is blocking.
-2. Add officials/state snapshots and Census district data before the settings
-   and onboarding workflows that use them.
+2. Complete officials resolution: sidecar persistence, the Settings refresh
+   action, and the `--offline` guard are done. Remaining: add governors and
+   the House-member roster so the selected district resolves Q29
+   automatically, plus the optional Census address geocoder for a
+   multi-district ZIP.
 3. Return to the deferred Citizen's Almanac library documents after the study
    workflows are complete.
 
@@ -993,6 +1007,21 @@ fixtures — no test ever touches the live network.** Fixture tests cover: happy
 path, HTTP 500, timeout, malformed JSON, empty result set, and a schema change
 (unexpected field shape), each asserting the previous value survives and the
 failure is reported rather than swallowed.
+
+Implemented so far: the resolver honors manual -> sidecar -> bundled precedence,
+labeling the sidecar's resolved answers with its fetch date; the dated snapshot
+covers four federal offices, capitals, and state senators; the embedded 119th
+Congress Census crosswalk returns all ZIP candidates; and a Wikidata federal
+client performs a bounded query through an injected HTTP client with
+happy-path and HTTP-failure fixture tests. The Settings **Refresh current
+officials** action runs this client and atomically writes
+`officials-live.json` as the sidecar; **Reset to bundled** removes it; both are
+route-tested, including a failed refresh leaving a prior sidecar value intact
+and rendering its error inline. `--offline` disables the refresh route only —
+reading an existing sidecar is local disk I/O, not network, so it stays
+available offline. Still required before release: timeout/malformed/empty/
+schema-drift fixtures for the federal client, governor data, House roster, and
+address geocoding.
 
 ---
 

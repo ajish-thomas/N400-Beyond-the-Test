@@ -25,19 +25,33 @@ func TestSnapshotAndFederalResolution(t *testing.T) {
 	}
 }
 
+func TestDistrictCandidatesPreserveMultiDistrictZIPs(t *testing.T) {
+	snapshot, err := LoadSnapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	candidates := snapshot.DistrictCandidates("90002")
+	if len(candidates) != 4 || candidates[0] != "37" || candidates[3] != "44" {
+		t.Fatalf("90002 candidates = %v", candidates)
+	}
+	if got := snapshot.DistrictCandidates("00000"); got != nil {
+		t.Fatalf("unknown ZIP candidates = %v", got)
+	}
+}
+
 func TestResolverPrecedence(t *testing.T) {
 	snapshot, err := LoadSnapshot()
 	if err != nil {
 		t.Fatal(err)
 	}
-	resolver := Resolver{Snapshot: snapshot, Sidecar: map[int]string{38: "Sidecar President"}, Manual: map[int]string{38: "Manual President"}}
+	resolver := Resolver{Snapshot: snapshot, Sidecar: map[int]string{38: "Sidecar President"}, SidecarAsOf: "2026-09-22", Manual: map[int]string{38: "Manual President"}}
 	answer := resolver.Resolve(38, "")
 	if answer.Text != "Manual President" || answer.Source != "manual entry" {
 		t.Fatalf("manual precedence = %#v", answer)
 	}
 	delete(resolver.Manual, 38)
 	answer = resolver.Resolve(38, "")
-	if answer.Text != "Sidecar President" || answer.Source != "local refreshed data" {
+	if answer.Text != "Sidecar President" || answer.Source != "local refreshed data" || answer.AsOf != "2026-09-22" {
 		t.Fatalf("sidecar precedence = %#v", answer)
 	}
 }

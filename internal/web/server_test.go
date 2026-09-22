@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"n400/internal/content"
+	"n400/internal/officials"
 	"n400/internal/quiz"
 	"n400/internal/store"
 )
@@ -151,7 +152,7 @@ func TestBundledFederalAnswerAppearsWithUSCISVerification(t *testing.T) {
 	}
 	w := httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/38", nil))
-	for _, text := range []string{"Bundled answer as of 2026-09-21", "Donald J. Trump", "https://www.whitehouse.gov/administration/", "https://www.uscis.gov/citizenship/testupdates"} {
+	for _, text := range []string{"bundled officials snapshot, 2026-09-21", "Donald J. Trump", "https://www.whitehouse.gov/administration/", "https://www.uscis.gov/citizenship/testupdates"} {
 		if !strings.Contains(w.Body.String(), text) {
 			t.Errorf("federal answer page missing %q", text)
 		}
@@ -160,7 +161,7 @@ func TestBundledFederalAnswerAppearsWithUSCISVerification(t *testing.T) {
 
 func TestStateSettingResolvesCapital(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)})
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -178,7 +179,7 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 	}
 	w = httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/62", nil))
-	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Sacramento") || !strings.Contains(w.Body.String(), "Bundled answer as of") {
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Sacramento") || !strings.Contains(w.Body.String(), "bundled state snapshot, 2026-09-21") {
 		t.Fatalf("state capital answer: %d %s", w.Code, w.Body.String())
 	}
 	w = httptest.NewRecorder()
@@ -200,9 +201,82 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 	}
 }
 
+func TestSettingsRefreshUpdatesSidecarAndResets(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"results":{"bindings":[{"office":{"value":"http://www.wikidata.org/entity/Q11696"},"personLabel":{"value":"Live President"}},{"office":{"value":"http://www.wikidata.org/entity/Q11699"},"personLabel":{"value":"Live VP"}},{"office":{"value":"http://www.wikidata.org/entity/Q912994"},"personLabel":{"value":"Live Speaker"}},{"office":{"value":"http://www.wikidata.org/entity/Q11147"},"personLabel":{"value":"Live Chief Justice"}}]}}`))
+	}))
+	defer server.Close()
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	sidecarPath := t.TempDir() + "/officials-live.json"
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 22, 9, 0, 0, 0, time.UTC)}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("POST", "/settings/refresh", nil))
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("refresh: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/settings", nil))
+	if !strings.Contains(w.Body.String(), "last refreshed 2026-09-22") {
+		t.Fatalf("settings page missing refreshed date: %s", w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/38", nil))
+	if !strings.Contains(w.Body.String(), "Live President") || !strings.Contains(w.Body.String(), "local refreshed data, 2026-09-22") {
+		t.Fatalf("question page missing refreshed answer: %s", w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("POST", "/settings/reset-officials", nil))
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("reset: %d %s", w.Code, w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/38", nil))
+	if strings.Contains(w.Body.String(), "Live President") {
+		t.Fatalf("reset should fall back to the bundled snapshot: %s", w.Body.String())
+	}
+}
+
+func TestSettingsRefreshFailureIsNonFatal(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { http.Error(w, "down", http.StatusServiceUnavailable) }))
+	defer server.Close()
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	sidecarPath := t.TempDir() + "/officials-live.json"
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("POST", "/settings/refresh", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Could not refresh") {
+		t.Fatalf("refresh failure: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestSettingsRefreshDisabledOffline(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, t.TempDir()+"/officials-live.json", true, officials.FederalClient{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/settings", nil))
+	if strings.Contains(w.Body.String(), "Refresh current officials <") {
+		t.Fatalf("offline settings page should not offer a refresh button: %s", w.Body.String())
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("POST", "/settings/refresh", nil))
+	if w.Code != http.StatusServiceUnavailable {
+		t.Fatalf("refresh must be rejected offline: %d", w.Code)
+	}
+}
+
 func TestPracticeSavesAnswerHistory(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)})
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -260,7 +334,7 @@ func TestPracticeFeedbackShowsAnswersAfterTerminalMiss(t *testing.T) {
 func TestFlashcardFlowPersistsReview(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}
-	h, err := NewWithStore(progress, clock)
+	h, err := NewWithStore(progress, clock, "", false, officials.FederalClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -283,7 +357,7 @@ func TestFlashcardFlowPersistsReview(t *testing.T) {
 	if data.Cards[1].Box != 2 || data.Questions[1].Correct != 1 || !data.Questions[1].LastAnswered.Equal(clock.now) {
 		t.Fatalf("stored review = %#v %#v", data.Cards[1], data.Questions[1])
 	}
-	if _, err := NewWithStore(progress, nil); err == nil {
+	if _, err := NewWithStore(progress, nil, "", false, officials.FederalClient{}); err == nil {
 		t.Fatal("nil clock should be rejected")
 	}
 }

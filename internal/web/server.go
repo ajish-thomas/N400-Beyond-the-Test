@@ -3,6 +3,7 @@ package web
 
 import (
 	"bytes"
+	"context"
 	"embed"
 	"fmt"
 	"html/template"
@@ -48,6 +49,13 @@ type page struct {
 	States          []officials.State
 	StateCode       string
 	Representative  string
+	ZIP             string
+	District        string
+	Districts       []string
+	Offline         bool
+	SidecarAsOf     string
+	SidecarSource   string
+	RefreshError    string
 	Flashcards      bool
 	Flashcard       *flashcardView
 }
@@ -76,19 +84,22 @@ type flashcardView struct {
 }
 
 func New() (http.Handler, error) {
-	return newServer(nil, flashcard.SystemClock{})
+	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{})
 }
 
 // NewWithStore enables durable local study progress. The store is optional so
 // route tests and callers that only browse content need no filesystem setup.
-func NewWithStore(progress *store.FileStore, clock flashcard.Clock) (http.Handler, error) {
+// sidecarPath is where a refresh writes/reads the local live-officials
+// overlay ("" disables refresh and the sidecar entirely); offline disables
+// the Settings refresh action outright, matching the app's --offline flag.
+func NewWithStore(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient) (http.Handler, error) {
 	if clock == nil {
 		return nil, fmt.Errorf("flashcard clock is required")
 	}
-	return newServer(progress, clock)
+	return newServer(progress, clock, sidecarPath, offline, federalClient)
 }
 
-func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, error) {
+func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient) (http.Handler, error) {
 	catalog, err := content.LoadCatalog()
 	if err != nil {
 		return nil, fmt.Errorf("loading study content: %w", err)
@@ -99,6 +110,17 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		return nil, fmt.Errorf("loading officials snapshot: %w", err)
 	}
 	resolver := officials.Resolver{Snapshot: snapshot}
+	resolverFor := func(profile store.Profile) officials.Resolver {
+		active := resolver
+		active.Manual = profile.Overrides
+		if sidecarPath != "" {
+			if sidecar, err := officials.LoadSidecar(sidecarPath); err == nil {
+				active.Sidecar = sidecar.Overrides()
+				active.SidecarAsOf = sidecar.AsOf
+			}
+		}
+		return active
+	}
 	scheduler := flashcard.NewScheduler(clock)
 	var practiceMu sync.Mutex
 	practiceSessions := map[string]*practiceState{}
@@ -225,16 +247,25 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		}
 		http.Redirect(w, r, "/flashcards", http.StatusSeeOther)
 	})
+	settingsPage := func(refreshError string) page {
+		stored, err := progress.Load()
+		if err != nil {
+			stored = store.Empty()
+		}
+		p := page{Title: "Settings", Settings: true, States: snapshot.States, StateCode: stored.Profile.State, Representative: stored.Profile.Overrides[29], ZIP: stored.Profile.ZIP, District: stored.Profile.District, Districts: snapshot.DistrictCandidates(stored.Profile.ZIP), Offline: offline, RefreshError: refreshError}
+		if sidecarPath != "" {
+			if sidecar, err := officials.LoadSidecar(sidecarPath); err == nil {
+				p.SidecarAsOf, p.SidecarSource = sidecar.AsOf, sidecar.Source
+			}
+		}
+		return p
+	}
 	mux.HandleFunc("GET /settings", func(w http.ResponseWriter, r *http.Request) {
 		if progress == nil {
 			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
 			return
 		}
-		stored, err := progress.Load()
-		if err != nil {
-			stored = store.Empty()
-		}
-		render(w, page{Title: "Settings", Settings: true, States: snapshot.States, StateCode: stored.Profile.State, Representative: stored.Profile.Overrides[29]})
+		render(w, settingsPage(""))
 	})
 	mux.HandleFunc("POST /settings/state", func(w http.ResponseWriter, r *http.Request) {
 		if progress == nil {
@@ -272,6 +303,98 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		if err := progress.Update(func(data *store.Data) { data.Profile.Overrides[29] = name }); err != nil {
 			http.Error(w, "Unable to save settings", http.StatusInternalServerError)
 			return
+		}
+		http.Redirect(w, r, "/settings", http.StatusSeeOther)
+	})
+	mux.HandleFunc("POST /settings/zip", func(w http.ResponseWriter, r *http.Request) {
+		if progress == nil {
+			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
+			return
+		}
+		zip := strings.TrimSpace(r.FormValue("zip"))
+		if len(zip) != 5 {
+			http.Error(w, "Enter a five-digit ZIP code", http.StatusBadRequest)
+			return
+		}
+		for _, digit := range zip {
+			if digit < '0' || digit > '9' {
+				http.Error(w, "Enter a five-digit ZIP code", http.StatusBadRequest)
+				return
+			}
+		}
+		candidates := snapshot.DistrictCandidates(zip)
+		if len(candidates) == 0 {
+			http.Error(w, "ZIP code was not found in the bundled district crosswalk", http.StatusNotFound)
+			return
+		}
+		if err := progress.Update(func(data *store.Data) {
+			data.Profile.ZIP = zip
+			data.Profile.District = ""
+			if len(candidates) == 1 {
+				data.Profile.District = candidates[0]
+			}
+		}); err != nil {
+			http.Error(w, "Unable to save settings", http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/settings", http.StatusSeeOther)
+	})
+	mux.HandleFunc("POST /settings/district", func(w http.ResponseWriter, r *http.Request) {
+		if progress == nil {
+			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
+			return
+		}
+		district := strings.TrimSpace(r.FormValue("district"))
+		stored, err := progress.Load()
+		if err != nil {
+			http.Error(w, "Unable to load settings", http.StatusInternalServerError)
+			return
+		}
+		valid := false
+		for _, candidate := range snapshot.DistrictCandidates(stored.Profile.ZIP) {
+			if candidate == district {
+				valid = true
+				break
+			}
+		}
+		if !valid {
+			http.Error(w, "Choose one of the ZIP's district candidates", http.StatusBadRequest)
+			return
+		}
+		if err := progress.Update(func(data *store.Data) { data.Profile.District = district }); err != nil {
+			http.Error(w, "Unable to save settings", http.StatusInternalServerError)
+			return
+		}
+		http.Redirect(w, r, "/settings", http.StatusSeeOther)
+	})
+	mux.HandleFunc("POST /settings/refresh", func(w http.ResponseWriter, r *http.Request) {
+		if progress == nil {
+			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
+			return
+		}
+		if offline || sidecarPath == "" {
+			http.Error(w, "Refresh is disabled while the app is running offline", http.StatusServiceUnavailable)
+			return
+		}
+		ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+		defer cancel()
+		if _, err := officials.Refresh(ctx, federalClient, sidecarPath, clock.Now()); err != nil {
+			p := settingsPage(err.Error())
+			render(w, p)
+			return
+		}
+		http.Redirect(w, r, "/settings", http.StatusSeeOther)
+	})
+	mux.HandleFunc("POST /settings/reset-officials", func(w http.ResponseWriter, r *http.Request) {
+		if progress == nil {
+			http.Error(w, "Settings are unavailable", http.StatusServiceUnavailable)
+			return
+		}
+		if sidecarPath != "" {
+			if err := officials.ResetSidecar(sidecarPath); err != nil {
+				http.Error(w, "Unable to reset officials data", http.StatusInternalServerError)
+				return
+			}
 		}
 		http.Redirect(w, r, "/settings", http.StatusSeeOther)
 	})
@@ -331,14 +454,14 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		}
 		question := state.session.Questions[state.session.Answered]
 		stateCode := ""
-		activeResolver := resolver
+		active := resolver
 		if progress != nil {
 			if data, err := progress.Load(); err == nil {
 				stateCode = data.Profile.State
-				activeResolver.Manual = data.Profile.Overrides
+				active = resolverFor(data.Profile)
 			}
 		}
-		resolved := activeResolver.ResolveAll(question.ID, stateCode)
+		resolved := active.ResolveAll(question.ID, stateCode)
 		values := make([]string, 0, len(resolved))
 		for _, answer := range resolved {
 			values = append(values, answer.Text)
@@ -394,14 +517,14 @@ func newServer(progress *store.FileStore, clock flashcard.Clock) (http.Handler, 
 		p := page{Title: fmt.Sprintf("Question %d", id), Question: &q}
 		if q.Changing() {
 			stateCode := ""
-			activeResolver := resolver
+			active := resolver
 			if progress != nil {
 				if data, err := progress.Load(); err == nil {
 					stateCode = data.Profile.State
-					activeResolver.Manual = data.Profile.Overrides
+					active = resolverFor(data.Profile)
 				}
 			}
-			p.ResolvedAnswers = activeResolver.ResolveAll(q.ID, stateCode)
+			p.ResolvedAnswers = active.ResolveAll(q.ID, stateCode)
 		}
 		for _, chapterID := range q.Chapters {
 			for _, chapter := range catalog.Chapters {
