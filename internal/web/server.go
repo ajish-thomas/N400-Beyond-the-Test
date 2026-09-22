@@ -84,7 +84,7 @@ type flashcardView struct {
 }
 
 func New() (http.Handler, error) {
-	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{})
+	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{}, officials.GovernorClient{})
 }
 
 // NewWithStore enables durable local study progress. The store is optional so
@@ -92,14 +92,14 @@ func New() (http.Handler, error) {
 // sidecarPath is where a refresh writes/reads the local live-officials
 // overlay ("" disables refresh and the sidecar entirely); offline disables
 // the Settings refresh action outright, matching the app's --offline flag.
-func NewWithStore(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient) (http.Handler, error) {
+func NewWithStore(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient, governorClient officials.GovernorClient) (http.Handler, error) {
 	if clock == nil {
 		return nil, fmt.Errorf("flashcard clock is required")
 	}
-	return newServer(progress, clock, sidecarPath, offline, federalClient)
+	return newServer(progress, clock, sidecarPath, offline, federalClient, governorClient)
 }
 
-func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient) (http.Handler, error) {
+func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath string, offline bool, federalClient officials.FederalClient, governorClient officials.GovernorClient) (http.Handler, error) {
 	catalog, err := content.LoadCatalog()
 	if err != nil {
 		return nil, fmt.Errorf("loading study content: %w", err)
@@ -109,13 +109,21 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 	if err != nil {
 		return nil, fmt.Errorf("loading officials snapshot: %w", err)
 	}
+	stateByCode := func(code string) officials.State {
+		for _, state := range snapshot.States {
+			if state.Code == code {
+				return state
+			}
+		}
+		return officials.State{}
+	}
 	resolver := officials.Resolver{Snapshot: snapshot}
 	resolverFor := func(profile store.Profile) officials.Resolver {
 		active := resolver
 		active.Manual = profile.Overrides
 		if sidecarPath != "" {
 			if sidecar, err := officials.LoadSidecar(sidecarPath); err == nil {
-				active.Sidecar = sidecar.Overrides()
+				active.Sidecar = sidecar.Overrides(profile.State)
 				active.SidecarAsOf = sidecar.AsOf
 			}
 		}
@@ -376,9 +384,13 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 			http.Error(w, "Refresh is disabled while the app is running offline", http.StatusServiceUnavailable)
 			return
 		}
+		stored, err := progress.Load()
+		if err != nil {
+			stored = store.Empty()
+		}
 		ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 		defer cancel()
-		if _, err := officials.Refresh(ctx, federalClient, sidecarPath, clock.Now()); err != nil {
+		if _, err := officials.Refresh(ctx, federalClient, governorClient, stateByCode(stored.Profile.State), sidecarPath, clock.Now()); err != nil {
 			p := settingsPage(err.Error())
 			render(w, p)
 			return

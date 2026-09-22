@@ -27,6 +27,7 @@ type State struct {
 	Code     string   `json:"code"`
 	Name     string   `json:"name"`
 	Capital  string   `json:"capital"`
+	QID      string   `json:"qid"`
 	Senators []string `json:"senators"`
 }
 
@@ -61,6 +62,12 @@ func LoadSnapshot() (Snapshot, error) {
 		state.Senators = currentSenators[state.Code]
 		if len(state.Code) != 2 || state.Name == "" || state.Capital == "" || seen[state.Code] || (state.Code != "DC" && len(state.Senators) != 2) || (state.Code == "DC" && len(state.Senators) != 0) {
 			return Snapshot{}, fmt.Errorf("invalid or duplicate state %q", state.Code)
+		}
+		// D.C. has no governor (see the questions' own guidance text), so it
+		// deliberately carries no Wikidata identifier for a P6 lookup; every
+		// other state must have one for the governor refresh to work.
+		if (state.Code != "DC" && state.QID == "") || (state.Code == "DC" && state.QID != "") {
+			return Snapshot{}, fmt.Errorf("invalid governor identifier for state %q", state.Code)
 		}
 		seen[state.Code] = true
 	}

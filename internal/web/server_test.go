@@ -161,7 +161,7 @@ func TestBundledFederalAnswerAppearsWithUSCISVerification(t *testing.T) {
 
 func TestStateSettingResolvesCapital(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -201,19 +201,41 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 	}
 }
 
-func TestSettingsRefreshUpdatesSidecarAndResets(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func wikidataFixtureServer(t *testing.T, governor string) *httptest.Server {
+	t.Helper()
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"results":{"bindings":[{"office":{"value":"http://www.wikidata.org/entity/Q11696"},"personLabel":{"value":"Live President"}},{"office":{"value":"http://www.wikidata.org/entity/Q11699"},"personLabel":{"value":"Live VP"}},{"office":{"value":"http://www.wikidata.org/entity/Q912994"},"personLabel":{"value":"Live Speaker"}},{"office":{"value":"http://www.wikidata.org/entity/Q11147"},"personLabel":{"value":"Live Chief Justice"}}]}}`))
+		query := r.URL.Query().Get("query")
+		switch {
+		case strings.Contains(query, "P1308"):
+			_, _ = w.Write([]byte(`{"results":{"bindings":[{"office":{"value":"http://www.wikidata.org/entity/Q11696"},"personLabel":{"value":"Live President"}},{"office":{"value":"http://www.wikidata.org/entity/Q11699"},"personLabel":{"value":"Live VP"}},{"office":{"value":"http://www.wikidata.org/entity/Q912994"},"personLabel":{"value":"Live Speaker"}},{"office":{"value":"http://www.wikidata.org/entity/Q11147"},"personLabel":{"value":"Live Chief Justice"}}]}}`))
+		case strings.Contains(query, "P6"):
+			_, _ = w.Write([]byte(`{"results":{"bindings":[{"personLabel":{"value":"` + governor + `"}}]}}`))
+		default:
+			http.Error(w, "unrecognized query", http.StatusBadRequest)
+		}
 	}))
+}
+
+func TestSettingsRefreshUpdatesSidecarAndResets(t *testing.T) {
+	server := wikidataFixtureServer(t, "Live California Governor")
 	defer server.Close()
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	sidecarPath := t.TempDir() + "/officials-live.json"
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 22, 9, 0, 0, 0, time.UTC)}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()})
+	client := officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()}
+	governor := officials.GovernorClient{Endpoint: server.URL, HTTP: server.Client()}
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 22, 9, 0, 0, 0, time.UTC)}, sidecarPath, false, client, governor)
 	if err != nil {
 		t.Fatal(err)
 	}
 	w := httptest.NewRecorder()
+	req := httptest.NewRequest("POST", "/settings/state", strings.NewReader("state=CA"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save state: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("POST", "/settings/refresh", nil))
 	if w.Code != http.StatusSeeOther {
 		t.Fatalf("refresh: %d %s", w.Code, w.Body.String())
@@ -229,6 +251,11 @@ func TestSettingsRefreshUpdatesSidecarAndResets(t *testing.T) {
 		t.Fatalf("question page missing refreshed answer: %s", w.Body.String())
 	}
 	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/61", nil))
+	if !strings.Contains(w.Body.String(), "Live California Governor") {
+		t.Fatalf("question page missing refreshed governor: %s", w.Body.String())
+	}
+	w = httptest.NewRecorder()
 	h.ServeHTTP(w, httptest.NewRequest("POST", "/settings/reset-officials", nil))
 	if w.Code != http.StatusSeeOther {
 		t.Fatalf("reset: %d %s", w.Code, w.Body.String())
@@ -238,6 +265,11 @@ func TestSettingsRefreshUpdatesSidecarAndResets(t *testing.T) {
 	if strings.Contains(w.Body.String(), "Live President") {
 		t.Fatalf("reset should fall back to the bundled snapshot: %s", w.Body.String())
 	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/61", nil))
+	if strings.Contains(w.Body.String(), "Live California Governor") {
+		t.Fatalf("reset should clear the refreshed governor too: %s", w.Body.String())
+	}
 }
 
 func TestSettingsRefreshFailureIsNonFatal(t *testing.T) {
@@ -245,7 +277,7 @@ func TestSettingsRefreshFailureIsNonFatal(t *testing.T) {
 	defer server.Close()
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	sidecarPath := t.TempDir() + "/officials-live.json"
-	h, err := NewWithStore(progress, testClock{now: time.Now()}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()})
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, sidecarPath, false, officials.FederalClient{Endpoint: server.URL, HTTP: server.Client()}, officials.GovernorClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -258,7 +290,7 @@ func TestSettingsRefreshFailureIsNonFatal(t *testing.T) {
 
 func TestSettingsRefreshDisabledOffline(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Now()}, t.TempDir()+"/officials-live.json", true, officials.FederalClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Now()}, t.TempDir()+"/officials-live.json", true, officials.FederalClient{}, officials.GovernorClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -276,7 +308,7 @@ func TestSettingsRefreshDisabledOffline(t *testing.T) {
 
 func TestPracticeSavesAnswerHistory(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
-	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{})
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -334,7 +366,7 @@ func TestPracticeFeedbackShowsAnswersAfterTerminalMiss(t *testing.T) {
 func TestFlashcardFlowPersistsReview(t *testing.T) {
 	progress := store.NewFile(t.TempDir() + "/progress.json")
 	clock := testClock{now: time.Date(2026, time.September, 21, 9, 0, 0, 0, time.UTC)}
-	h, err := NewWithStore(progress, clock, "", false, officials.FederalClient{})
+	h, err := NewWithStore(progress, clock, "", false, officials.FederalClient{}, officials.GovernorClient{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -357,7 +389,7 @@ func TestFlashcardFlowPersistsReview(t *testing.T) {
 	if data.Cards[1].Box != 2 || data.Questions[1].Correct != 1 || !data.Questions[1].LastAnswered.Equal(clock.now) {
 		t.Fatalf("stored review = %#v %#v", data.Cards[1], data.Questions[1])
 	}
-	if _, err := NewWithStore(progress, nil, "", false, officials.FederalClient{}); err == nil {
+	if _, err := NewWithStore(progress, nil, "", false, officials.FederalClient{}, officials.GovernorClient{}); err == nil {
 		t.Fatal("nil clock should be rejected")
 	}
 }

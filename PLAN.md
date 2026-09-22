@@ -10,8 +10,8 @@ remain the target specification; they are not claims that every feature exists.
 | Phase 1: skeleton and extraction | Implemented | Loopback Go server; embedded assets; graceful shutdown; `--port`, `--no-browser`, `--offline`; four raw PDF text extractions; validated 128-question parser; optional-text/guidance separation; full-parse golden. |
 | Phase 2: chapters | All 12 chapters authored | Chapters 1–12 text editions are implemented and source-verified, with 25, 20, 12, 8, 14, 5, 4, 11, 8, 7, 15, and 11 question links respectively and thirty-six credited images total (five sourced externally as verified public-domain maps; Chapters 4–6 otherwise have none from the PDF itself). 107 of 128 official questions are linked to a chapter; the remaining 21 are not literally stated by any chapter's own prose and are deliberately unlinked rather than forced. The reference library (Phase 2's other component) remains. |
 | Phase 2: required counts | Implemented | All seven enumeration counts are authored and guard-tested; actual grading is not implemented. |
-| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, and both senators in every state; the 119th Congress Census ZIP-to-district crosswalk is bundled. Governors and the House-member roster remain. |
-| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal refresh client, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. Remaining: governors, House roster, and Census address geocoding. |
+| Phase 2: library and officials | In progress | The library authoring format and infrastructure are implemented, sharing chapters' Markdown/JSON parser via an extracted common core. Three source-verified founding documents are published: the Declaration of Independence, the Constitution's Preamble and Articles I-VII, and Amendments I-XXVII. The Almanac's speeches, symbols/anthems, and landmark cases are deliberately deferred. A dated snapshot covers four federal offices, state capitals, and both senators in every state; the 119th Congress Census ZIP-to-district crosswalk is bundled; state QIDs enable a live, per-state governor refresh (not bundled — see below). The House-member roster remains. |
+| Phase 3: engines | In progress | Advisory grading, deterministic official/65-20 quiz-session selection, a five-box Leitner scheduler, and atomic local progress storage are implemented and race-tested. The federal and governor refresh clients, local sidecar persistence, the Settings refresh/reset actions, and the `--offline` guard on refresh are implemented and fixture/route-tested. Remaining: House roster and Census address geocoding. |
 | Phase 4: web UI | Partially implemented | Home, question list/detail, 65/20 filter, answer reveal, self-check, Learn index, chapter reader, curated image routes, Library index/document reader, durable Flashcards, and official/65-20 Practice Test flows with local answer history are implemented. Welcome and Settings remain. |
 | Phase 5: build and release | Partially implemented | Make targets and README exist; six-platform build checked at the initial milestone. CI configuration and full release workflows remain. |
 
@@ -36,20 +36,38 @@ remain the target specification; they are not claims that every feature exists.
   alongside the permanent USCIS verification banner. A local state selection
   resolves the state-capital question and displays both current senators, any
   one of whom grades as correct for Q23. The resolver enforces manual
-  override, local sidecar, then bundled-data precedence; governor,
-  representative, and district data remain unavailable until their sources are
-  added. Settings now saves a ZIP locally, shows every crosswalk candidate, and
+  override, local sidecar, then bundled-data precedence; representative and
+  full district data remain unavailable until their sources are added.
+  Settings now saves a ZIP locally, shows every crosswalk candidate, and
   requires a district choice when needed. It also provides a local manual
   representative entry paired with the official House lookup; it never guesses
   a district from a state or ZIP. A Settings **Refresh current officials**
-  action fetches the four federal offices from Wikidata through the bounded,
-  fixture-tested `FederalClient` and writes them to a local
+  action fetches the four federal offices, plus the governor of the learner's
+  selected state (Q61), from Wikidata through the bounded, fixture-tested
+  `FederalClient`/`GovernorClient`, and writes them to a local
   `officials-live.json` sidecar (never overwriting the bundled snapshot),
   labeled with its source and fetch date wherever it resolves an answer; a
   **Reset to bundled** action removes the sidecar. A failed refresh renders the
   Settings page inline with a clear error and leaves any previous sidecar
-  value untouched, and the action is unavailable outright when the app is
-  started with `--offline`.
+  value untouched (including a previously refreshed governor for a *different*
+  state — refreshing accumulates one governor per state visited, it does not
+  replace the whole set), and the action is unavailable outright when the app
+  is started with `--offline`. Unlike the original Phase 2.5 plan, governors
+  are **not** bundled into `officials.json` as a static 50-state snapshot —
+  fetching one unverified name per state in bulk and shipping it as if it were
+  ground truth was judged riskier than resolving a single state live, on
+  demand, through the same source-and-date-labeled, resettable path already
+  built for the four federal offices. D.C. is excluded by construction: its
+  `states.json` entry carries no Wikidata QID (validated at load), so a
+  refresh silently skips the governor fetch for it, consistent with the
+  question's own guidance that D.C. has no governor. Both Wikidata clients
+  send an identifying `User-Agent` (required by Wikidata's usage policy;
+  requests without one are rejected with HTTP 403) and decode only the fields
+  they need from the real SPARQL JSON response — real responses nest
+  additional standard fields (a top-level `head`, `type`/`xml:lang` beside
+  every `value`) that a naive `DisallowUnknownFields` decode had rejected
+  outright before this was caught by live-network testing, not by the
+  existing fixture tests, which had (incorrectly) omitted those fields.
 - Chapter content uses strictly decoded JSON front matter (a YAML subset) and a
   documented, limited Markdown syntax, rendered through escaped Go templates.
   Chapter links are authored once and reverse links are derived at startup.
@@ -289,10 +307,10 @@ and flagged in chapter notes, not silently corrected.
    Photo Project (Chapter 5) and the Jamestown Yorktown Foundation
    (Chapter 7); neither is blocking.
 2. Complete officials resolution: sidecar persistence, the Settings refresh
-   action, and the `--offline` guard are done. Remaining: add governors and
-   the House-member roster so the selected district resolves Q29
-   automatically, plus the optional Census address geocoder for a
-   multi-district ZIP.
+   action, the `--offline` guard, and a live per-state governor refresh
+   (Q61) are done. Remaining: the House-member roster, so the selected
+   district resolves Q29 automatically instead of requiring a manual
+   entry, plus the optional Census address geocoder for a multi-district ZIP.
 3. Return to the deferred Citizen's Almanac library documents after the study
    workflows are complete.
 
@@ -1010,18 +1028,27 @@ failure is reported rather than swallowed.
 
 Implemented so far: the resolver honors manual -> sidecar -> bundled precedence,
 labeling the sidecar's resolved answers with its fetch date; the dated snapshot
-covers four federal offices, capitals, and state senators; the embedded 119th
-Congress Census crosswalk returns all ZIP candidates; and a Wikidata federal
-client performs a bounded query through an injected HTTP client with
-happy-path and HTTP-failure fixture tests. The Settings **Refresh current
-officials** action runs this client and atomically writes
-`officials-live.json` as the sidecar; **Reset to bundled** removes it; both are
-route-tested, including a failed refresh leaving a prior sidecar value intact
-and rendering its error inline. `--offline` disables the refresh route only —
-reading an existing sidecar is local disk I/O, not network, so it stays
-available offline. Still required before release: timeout/malformed/empty/
-schema-drift fixtures for the federal client, governor data, House roster, and
-address geocoding.
+covers four federal offices, capitals, and state senators; `states.json` now
+also carries each state's Wikidata QID (D.C. deliberately has none); and the
+embedded 119th Congress Census crosswalk returns all ZIP candidates. A
+Wikidata `FederalClient` (all four federal offices) and `GovernorClient` (one
+state's governor, by QID) each perform a bounded query through an injected
+HTTP client, with happy-path and HTTP-failure fixture tests; both send the
+`User-Agent` Wikidata's usage policy requires and decode only the fields they
+need, since a real response nests additional standard SPARQL fields a first
+strict-decoding attempt had rejected outright — caught only by testing against
+the live endpoint, not by the fixtures, which is now corrected in both the
+code and the fixtures. The Settings **Refresh current officials** action runs
+both clients — federal always, the governor only for the learner's currently
+selected state, skipped without error when that state has no QID (D.C.) — and
+atomically writes `officials-live.json` as the sidecar, preserving any other
+state's previously fetched governor; **Reset to bundled** removes it entirely;
+all of this is route- and fixture-tested, including a failed refresh (from
+either client) leaving a prior sidecar value intact and rendering its error
+inline. `--offline` disables the refresh route only — reading an existing
+sidecar is local disk I/O, not network, so it stays available offline. Still
+required before release: timeout/malformed/empty/schema-drift fixtures for
+both Wikidata clients, the House roster, and address geocoding.
 
 ---
 

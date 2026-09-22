@@ -6,16 +6,21 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
-// Sidecar is the local overlay for the four federal offices that change over
-// time. A refresh writes it; it never overwrites the embedded bundled
-// snapshot, and its absence is not an error — the app resolves from the
-// bundled snapshot alone until a refresh has ever run.
+// Sidecar is the local overlay for federal offices and the learner's state
+// governor, both of which change over time. A refresh writes it; it never
+// overwrites the embedded bundled snapshot, and its absence is not an error —
+// the app resolves from the bundled snapshot alone until a refresh has ever
+// run. Governors accumulates one entry per state the learner has ever
+// refreshed while selected, keyed by state code, so refreshing after
+// switching states does not lose an earlier state's value.
 type Sidecar struct {
-	AsOf    string            `json:"as_of"`
-	Source  string            `json:"source"`
-	Federal map[string]string `json:"federal"`
+	AsOf      string            `json:"as_of"`
+	Source    string            `json:"source"`
+	Federal   map[string]string `json:"federal"`
+	Governors map[string]string `json:"governors"`
 }
 
 // SidecarPath returns the local refresh overlay's location under a user
@@ -82,14 +87,18 @@ func ResetSidecar(path string) error {
 	return nil
 }
 
-// Overrides converts the sidecar's federal answers into the question-ID-keyed
-// map Resolver.Sidecar expects.
-func (s Sidecar) Overrides() map[int]string {
-	overrides := make(map[int]string, len(federalQuestionKeys))
+// Overrides converts the sidecar's federal answers, plus the governor for
+// stateCode if one has been refreshed, into the question-ID-keyed map
+// Resolver.Sidecar expects.
+func (s Sidecar) Overrides(stateCode string) map[int]string {
+	overrides := make(map[int]string, len(federalQuestionKeys)+1)
 	for questionID, key := range federalQuestionKeys {
 		if answer := s.Federal[key]; answer != "" {
 			overrides[questionID] = answer
 		}
+	}
+	if answer := s.Governors[strings.ToUpper(strings.TrimSpace(stateCode))]; answer != "" {
+		overrides[61] = answer
 	}
 	return overrides
 }

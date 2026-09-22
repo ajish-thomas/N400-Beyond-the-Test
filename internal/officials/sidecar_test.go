@@ -45,8 +45,21 @@ func TestSidecarRejectsCorruptFile(t *testing.T) {
 
 func TestSidecarOverridesMapsOfficeKeysToQuestionIDs(t *testing.T) {
 	sidecar := Sidecar{Federal: map[string]string{"president": "Live President", "vice_president": "Live VP"}}
-	overrides := sidecar.Overrides()
+	overrides := sidecar.Overrides("")
 	if overrides[38] != "Live President" || overrides[39] != "Live VP" || len(overrides) != 2 {
 		t.Fatalf("overrides = %#v", overrides)
+	}
+}
+
+func TestSidecarOverridesIncludesGovernorForSelectedStateOnly(t *testing.T) {
+	sidecar := Sidecar{Governors: map[string]string{"CA": "Live California Governor", "TX": "Live Texas Governor"}}
+	if overrides := sidecar.Overrides("CA"); overrides[61] != "Live California Governor" || len(overrides) != 1 {
+		t.Fatalf("CA overrides = %#v", overrides)
+	}
+	if overrides := sidecar.Overrides("tx"); overrides[61] != "Live Texas Governor" {
+		t.Fatalf("lowercase state code should still match: %#v", overrides)
+	}
+	if overrides := sidecar.Overrides("NY"); overrides[61] != "" {
+		t.Fatalf("a state with no refreshed governor must not resolve: %#v", overrides)
 	}
 }

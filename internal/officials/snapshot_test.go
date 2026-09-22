@@ -55,3 +55,22 @@ func TestResolverPrecedence(t *testing.T) {
 		t.Fatalf("sidecar precedence = %#v", answer)
 	}
 }
+
+func TestGovernorResolvesFromSidecarOverridesForSelectedStateOnly(t *testing.T) {
+	snapshot, err := LoadSnapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	sidecar := Sidecar{AsOf: "2026-09-22", Governors: map[string]string{"CA": "Live California Governor"}}
+	resolver := Resolver{Snapshot: snapshot, Sidecar: sidecar.Overrides("CA"), SidecarAsOf: sidecar.AsOf}
+	if answer := resolver.Resolve(61, "CA"); answer.Text != "Live California Governor" || answer.Source != "local refreshed data" || answer.AsOf != "2026-09-22" {
+		t.Fatalf("California governor = %#v", answer)
+	}
+	unrefreshed := Resolver{Snapshot: snapshot, Sidecar: sidecar.Overrides("TX")}
+	if answer := unrefreshed.Resolve(61, "TX"); answer.Available {
+		t.Fatalf("a state with no refreshed governor must be unavailable: %#v", answer)
+	}
+	if answer := unrefreshed.Resolve(61, "DC"); answer.Available {
+		t.Fatalf("D.C. has no governor and must be unavailable: %#v", answer)
+	}
+}

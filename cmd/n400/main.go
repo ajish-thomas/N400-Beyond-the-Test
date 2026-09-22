@@ -43,7 +43,8 @@ func run(port int, noBrowser, offline bool) error {
 	progress := store.NewFile(filepath.Join(configDir, "n400", "progress.json"))
 	sidecarPath := officials.SidecarPath(configDir)
 	federalClient := officials.FederalClient{Endpoint: officials.WikidataEndpoint, HTTP: &http.Client{Timeout: 10 * time.Second}}
-	handler, err := web.NewWithStore(progress, flashcard.SystemClock{}, sidecarPath, offline, federalClient)
+	governorClient := officials.GovernorClient{Endpoint: officials.WikidataEndpoint, HTTP: &http.Client{Timeout: 10 * time.Second}}
+	handler, err := web.NewWithStore(progress, flashcard.SystemClock{}, sidecarPath, offline, federalClient, governorClient)
 	if err != nil {
 		return err
 	}
