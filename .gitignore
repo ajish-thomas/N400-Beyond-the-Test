@@ -2,5 +2,6 @@
 /n400
 /n400.exe
 /PLAN.md
+/*.pdf
 /internal/content/data/images/_extracted/
 !go.mod
