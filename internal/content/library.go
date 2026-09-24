@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"sort"
 	"strings"
 )
 
@@ -21,6 +22,7 @@ type LibraryDoc struct {
 	Source         string            `json:"source"`
 	Citation       string            `json:"citation,omitempty"`
 	Questions      []int             `json:"questions"`
+	Images         []string          `json:"images,omitempty"`
 	SourceStart    int               `json:"source_start"`
 	SourceEnd      int               `json:"source_end"`
 	EditorialNotes []string          `json:"editorial_notes"`
@@ -162,5 +164,14 @@ func loadLibrary() ([]LibraryDoc, error) {
 	if len(docs) == 0 {
 		return nil, fmt.Errorf("no library documents found")
 	}
+	sort.SliceStable(docs, func(i, j int) bool {
+		return LibraryYear(docs[i].ID) < LibraryYear(docs[j].ID)
+	})
 	return docs, nil
+}
+
+// libraryYear is editorial navigation metadata, not source text.
+func LibraryYear(id string) int {
+	years := map[string]int{"declaration": 1776, "patriotic-symbols": 1776, "us-constitution": 1787, "amendments": 1791, "washington-farewell-address": 1796, "patriotic-anthems": 1814, "lincoln-first-inaugural-address": 1861, "gettysburg-address": 1863, "four-freedoms": 1941, "kennedy-inaugural-address": 1961, "i-have-a-dream": 1963, "remarks-at-the-brandenburg-gate": 1987}
+	return years[id]
 }

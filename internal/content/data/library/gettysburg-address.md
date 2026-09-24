@@ -1,0 +1,42 @@
+---
+{
+  "id": "gettysburg-address",
+  "title": "Gettysburg Address",
+  "kind": "speech",
+  "source": "citizens-almanac",
+  "citation": "U.S. Department of Homeland Security, U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's Almanac, Washington, DC, 2014.",
+  "questions": [93, 94],
+  "images": ["ext-library-gettysburg"],
+  "source_start": 33,
+  "source_end": 34,
+  "editorial_notes": [
+    "This is the third of the Almanac's seven presidential and historical speeches (pages 27-44). The Almanac prints a historical introduction followed by the address text; this text edition transcribes that printed selection only.",
+    "The decorative cursive title ('Gettysburg Address (1863)') and its 'Abraham Lincoln' attribution line are vector art with no extractable PDF text layer. Their transcription is recorded in data/raw/almanac-visual-supplement.json. The ordinary 'Gettysburg Address' heading on page 34 is extractable body text.",
+    "One introduction sentence splits across the page 33/34 boundary in the source itself: 'General Lee’s soldiers fought the Union’s' / 'Army of the Potomac...'. It is authored as a matching split across two blocks.",
+    "Q93 is linked because the introduction directly identifies the Battle of Gettysburg. Q94 is linked because it identifies Abraham Lincoln's Gettysburg Address and states that Lincoln delivered this speech."
+  ]
+}
+---
+<!-- page:33 -->
+## Gettysburg Address (1863)
+
+by Abraham Lincoln
+
+Considered one of the most important speeches in American history, Abraham Lincoln’s Gettysburg Address successfully expressed the principles of liberty and equality that the United States was founded upon and proudly honored those that fought and perished for the survival of the Union. During his remarks, he spoke of “a new birth of freedom” for the Nation. Lincoln delivered this speech at the dedication of the Soldiers’ National Cemetery at Gettysburg on November 19, 1863. The entire speech lasted just two minutes.
+
+The Battle of Gettysburg took place July 1-3, 1863, in the rural town of Gettysburg, Pennsylvania, roughly 50 miles northwest of Baltimore, Maryland. Confederate forces, led by General Robert E. Lee’s Army of Northern Virginia invaded Union territory, seeking to take the war out of Virginia and put the Union army in a vulnerable defensive position. General Lee’s soldiers fought the Union’s
+
+![Lincoln's address at the dedication of the Gettysburg National Cemetery, November 19, 1863.](ext-library-gettysburg)
+
+> Crowd at Gettysburg, November 19, 1863. President Abraham Lincoln in the center. Courtesy of the National Archives, NARA File # 111-B-4975
+
+<!-- page:34 -->
+Army of the Potomac under the command of General George G. Meade. When the fighting ended on July 3, the two sides suffered more than 45,000 casualties, making it one of the bloodiest battles to date. Confederate forces retreated back to Virginia on the night of July 4, 1863, and the Battle of Gettysburg is considered by most scholars to be the turning point in the American Civil War.
+
+## Gettysburg Address
+
+Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
+
+Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that the nation might live. It is altogether fitting and proper that we should do this.
+
+But, in a larger sense, we can not dedicate—we can not consecrate—we can not hallow—this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us—that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion—that we here highly resolve that these dead shall not have died in vain—that this nation, under God, shall have a new birth of freedom—and that government of the people, by the people, for the people, shall not perish from the earth.

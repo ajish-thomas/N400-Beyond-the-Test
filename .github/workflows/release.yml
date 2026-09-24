@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release assets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+          cache: true
+      - run: make test
+      - run: go vet ./...
+      - run: make build-all
+      - name: Package binaries and checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_dir=dist
+          version_name="${GITHUB_REF_NAME#v}"
+          mkdir -p "$release_dir"
+          for target_os in linux darwin; do
+            for target_arch in amd64 arm64; do
+              tar -C bin -czf "$release_dir/n400_$version_name"_"$target_os"_"$target_arch".tar.gz "n400-$target_os-$target_arch"
+            done
+          done
+          for target_arch in amd64 arm64; do
+            zip -j "$release_dir/n400_$version_name"_windows_"$target_arch".zip "bin/n400-windows-$target_arch.exe"
+          done
+          (
+            cd "$release_dir"
+            sha256sum n400_* > SHA256SUMS
+          )
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --generate-notes --title "N400 $GITHUB_REF_NAME"

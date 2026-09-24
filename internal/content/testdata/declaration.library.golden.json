@@ -11,10 +11,13 @@
       11,
       79
     ],
+    "images": [
+      "ext-library-declaration"
+    ],
     "source_start": 7,
     "source_end": 13,
     "editorial_notes": [
-      "This is the reference library's first document, and the first to use the library authoring format (data/library/*.md), which shares its Markdown grammar and JSON front matter with the Learn chapters (data/chapters/*.md) via a common parser, but carries library-specific metadata (kind, source, citation) instead of a chapter number, objectives, and images.",
+      "This is the reference library's first document, and the first to use the library authoring format (data/library/*.md), which shares its Markdown grammar and JSON front matter with the Learn chapters (data/chapters/*.md) via a common parser, but carries library-specific metadata (kind, source, citation) instead of a chapter number and objectives.",
       "Text is transcribed from M-654 (rev. 07/25), pages 7-13, exactly as printed: original 1776 spelling and capitalization are retained (e.g. 'shewn', 'compleat', 'harrass', and the capitalization of common nouns like 'Truths' and 'Rights'), not modernized. Unlike the Study Guide, this booklet's Declaration pages are single-column with no two-column reflow needed; paragraph breaks were verified against the rendered PDF pages.",
       "The signature block (page 12) is transcribed as four short lines exactly as printed, rather than run together as continuous prose. The signers list (page 13) preserves the source's own state-by-state grouping and order (Georgia through Connecticut) rather than alphabetizing or renumbering it.",
       "Q78 ('Who wrote the Declaration of Independence?') is deliberately not linked: the document names Thomas Jefferson only as a Virginia signer, and never states that he drafted it. That fact is true and well documented, but it is not stated on these pages, so it is not linked here, consistent with this project's practice of linking only what a document's own text states."
@@ -29,6 +32,25 @@
       "Items": null,
       "ImageID": "",
       "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "The Declaration of Independence.",
+      "Page": 7,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ext-library-declaration",
+      "Image": {
+        "id": "ext-library-declaration",
+        "file": "ext-library-declaration.jpg",
+        "page": 7,
+        "caption": "The Declaration of Independence.",
+        "credit": "Courtesy of the National Archives.",
+        "chapters": [],
+        "library": [
+          "declaration"
+        ]
+      }
     },
     {
       "Kind": "paragraph",
@@ -457,7 +479,7 @@
       "Kind": "heading",
       "Text": "Signers of the Declaration of Independence",
       "Page": 13,
-      "Anchor": "section-48",
+      "Anchor": "section-49",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -466,7 +488,7 @@
       "Kind": "subheading",
       "Text": "Georgia",
       "Page": 13,
-      "Anchor": "section-49",
+      "Anchor": "section-50",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -497,7 +519,7 @@
       "Kind": "subheading",
       "Text": "North Carolina",
       "Page": 13,
-      "Anchor": "section-51",
+      "Anchor": "section-52",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -528,7 +550,7 @@
       "Kind": "subheading",
       "Text": "South Carolina",
       "Page": 13,
-      "Anchor": "section-53",
+      "Anchor": "section-54",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -563,7 +585,7 @@
       "Kind": "subheading",
       "Text": "Massachusetts",
       "Page": 13,
-      "Anchor": "section-55",
+      "Anchor": "section-56",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -602,7 +624,7 @@
       "Kind": "subheading",
       "Text": "Maryland",
       "Page": 13,
-      "Anchor": "section-57",
+      "Anchor": "section-58",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -637,7 +659,7 @@
       "Kind": "subheading",
       "Text": "Virginia",
       "Page": 13,
-      "Anchor": "section-59",
+      "Anchor": "section-60",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -684,7 +706,7 @@
       "Kind": "subheading",
       "Text": "Pennsylvania",
       "Page": 13,
-      "Anchor": "section-61",
+      "Anchor": "section-62",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -739,7 +761,7 @@
       "Kind": "subheading",
       "Text": "Delaware",
       "Page": 13,
-      "Anchor": "section-63",
+      "Anchor": "section-64",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -770,7 +792,7 @@
       "Kind": "subheading",
       "Text": "New York",
       "Page": 13,
-      "Anchor": "section-65",
+      "Anchor": "section-66",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -805,7 +827,7 @@
       "Kind": "subheading",
       "Text": "New Jersey",
       "Page": 13,
-      "Anchor": "section-67",
+      "Anchor": "section-68",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -844,7 +866,7 @@
       "Kind": "subheading",
       "Text": "New Hampshire",
       "Page": 13,
-      "Anchor": "section-69",
+      "Anchor": "section-70",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -875,7 +897,7 @@
       "Kind": "subheading",
       "Text": "Rhode Island",
       "Page": 13,
-      "Anchor": "section-71",
+      "Anchor": "section-72",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -902,7 +924,7 @@
       "Kind": "subheading",
       "Text": "Connecticut",
       "Page": 13,
-      "Anchor": "section-73",
+      "Anchor": "section-74",
       "Items": null,
       "ImageID": "",
       "Image": null

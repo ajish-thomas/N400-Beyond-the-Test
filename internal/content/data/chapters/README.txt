@@ -8,6 +8,18 @@ blocks (```verse; library documents only so far, for the Citizen's Almanac's
 songs and poems — see data/library/README.txt), :::sidebar blocks, and >
 printed captions for illustrations not reproduced. No raw HTML is trusted.
 
+Structural diagrams have checked-in D2 sources in `data/diagrams/` and light/dark
+SVG renderings in `internal/web/static/diagrams/`. They reproduce only the
+already-transcribed labels and relationships; the reader keeps each complete
+source-text transcription in a disclosure. Regenerate with
+`D2=/path/to/d2 make diagrams`; D2 is a development-only renderer, not a runtime
+dependency. The SVG canvas is transparent and `.d2-diagram` supplies the page
+background with `var(--bg)`. Do not accept D2's bundled purple dark palette:
+the `diagrams` target maps it to the application's charcoal, gray, cream, and
+coral tokens. Add a D2 rendering only when every source label and relationship
+can be represented faithfully; never introduce inferred content. After a
+diagram change, refresh the affected reader/content goldens and run `make test`.
+
 Each source page begins with <!-- page:N -->. Source page markers are increasing
 and lie within source_start/source_end. Figure captions and credit lines live in
 the image manifest; the Markdown caption must match exactly. Source-only notes

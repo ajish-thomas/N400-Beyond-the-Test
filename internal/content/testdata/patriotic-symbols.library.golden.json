@@ -11,6 +11,9 @@
       122,
       124
     ],
+    "images": [
+      "ext-library-great-seal"
+    ],
     "source_start": 20,
     "source_end": 26,
     "editorial_notes": [
@@ -255,6 +258,25 @@
       "Items": null,
       "ImageID": "",
       "Image": null
+    },
+    {
+      "Kind": "image",
+      "Text": "E pluribus unum.",
+      "Page": 24,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ext-library-great-seal",
+      "Image": {
+        "id": "ext-library-great-seal",
+        "file": "ext-library-great-seal.jpg",
+        "page": 24,
+        "caption": "E pluribus unum.",
+        "credit": "Courtesy of the Library of Congress.",
+        "chapters": [],
+        "library": [
+          "patriotic-symbols"
+        ]
+      }
     },
     {
       "Kind": "paragraph",

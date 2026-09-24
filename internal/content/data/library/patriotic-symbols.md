@@ -6,6 +6,7 @@
   "source": "citizens-almanac",
   "citation": "U.S. Department of Homeland Security, U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's Almanac, Washington, DC, 2014.",
   "questions": [66, 121, 122, 124],
+  "images": ["ext-library-great-seal"],
   "source_start": 20,
   "source_end": 26,
   "editorial_notes": [
@@ -76,6 +77,8 @@ The motto, "In God We Trust," can be traced back nearly 200 years in U.S. histor
 
 <!-- page:24 -->
 ### Great Seal of the United States
+
+![E pluribus unum.](ext-library-great-seal)
 
 On July 4, 1776, the Continental Congress appointed a committee to create a seal for the United States of America. Following the appointment of two additional committees, each building upon the other, the Great Seal was finalized and approved on June 20, 1782.
 

@@ -5,6 +5,7 @@
   "kind": "founding-document",
   "source": "declaration-constitution",
   "questions": [2,5,16,17,19,20,25,36,42,50],
+  "images": ["ext-library-constitution"],
   "source_start": 15,
   "source_end": 38,
   "editorial_notes": [
@@ -17,6 +18,8 @@
 }
 ---
 <!-- page:15 -->
+![Page 1 of the Constitution of the United States.](ext-library-constitution)
+
 We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.
 
 ## Article. I.

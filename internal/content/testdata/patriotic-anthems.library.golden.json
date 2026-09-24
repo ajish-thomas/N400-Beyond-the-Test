@@ -8,6 +8,9 @@
     "questions": [
       123
     ],
+    "images": [
+      "ext-library-star-spangled-banner"
+    ],
     "source_start": 9,
     "source_end": 15,
     "editorial_notes": [
@@ -30,10 +33,29 @@
       "Image": null
     },
     {
+      "Kind": "image",
+      "Text": "The Star-Spangled Banner.",
+      "Page": 9,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ext-library-star-spangled-banner",
+      "Image": {
+        "id": "ext-library-star-spangled-banner",
+        "file": "ext-library-star-spangled-banner.jpg",
+        "page": 9,
+        "caption": "The Star-Spangled Banner.",
+        "credit": "Courtesy of the Library of Congress.",
+        "chapters": [],
+        "library": [
+          "patriotic-anthems"
+        ]
+      }
+    },
+    {
       "Kind": "heading",
       "Text": "Patriotic Anthems and Symbols of the United States",
       "Page": 9,
-      "Anchor": "section-1",
+      "Anchor": "section-2",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -69,7 +91,7 @@
       "Kind": "subheading",
       "Text": "The Star-Spangled Banner (1814)",
       "Page": 10,
-      "Anchor": "section-5",
+      "Anchor": "section-6",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -177,7 +199,7 @@
       "Kind": "subheading",
       "Text": "America the Beautiful (1893)",
       "Page": 13,
-      "Anchor": "section-17",
+      "Anchor": "section-18",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -267,7 +289,7 @@
       "Kind": "subheading",
       "Text": "The New Colossus (1883)",
       "Page": 15,
-      "Anchor": "section-27",
+      "Anchor": "section-28",
       "Items": null,
       "ImageID": "",
       "Image": null

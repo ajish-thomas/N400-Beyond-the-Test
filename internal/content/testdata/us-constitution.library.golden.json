@@ -16,6 +16,9 @@
       42,
       50
     ],
+    "images": [
+      "ext-library-constitution"
+    ],
     "source_start": 15,
     "source_end": 38,
     "editorial_notes": [
@@ -37,6 +40,25 @@
       "Image": null
     },
     {
+      "Kind": "image",
+      "Text": "Page 1 of the Constitution of the United States.",
+      "Page": 15,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ext-library-constitution",
+      "Image": {
+        "id": "ext-library-constitution",
+        "file": "ext-library-constitution.jpg",
+        "page": 15,
+        "caption": "Page 1 of the Constitution of the United States.",
+        "credit": "Courtesy of the National Archives.",
+        "chapters": [],
+        "library": [
+          "us-constitution"
+        ]
+      }
+    },
+    {
       "Kind": "paragraph",
       "Text": "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.",
       "Page": 15,
@@ -49,7 +71,7 @@
       "Kind": "heading",
       "Text": "Article. I.",
       "Page": 15,
-      "Anchor": "section-2",
+      "Anchor": "section-3",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -661,7 +683,7 @@
       "Kind": "heading",
       "Text": "Article. II.",
       "Page": 24,
-      "Anchor": "section-70",
+      "Anchor": "section-71",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -850,7 +872,7 @@
       "Kind": "heading",
       "Text": "Article III.",
       "Page": 28,
-      "Anchor": "section-91",
+      "Anchor": "section-92",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -940,7 +962,7 @@
       "Kind": "heading",
       "Text": "Article. IV.",
       "Page": 30,
-      "Anchor": "section-101",
+      "Anchor": "section-102",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1030,7 +1052,7 @@
       "Kind": "heading",
       "Text": "Article. V.",
       "Page": 31,
-      "Anchor": "section-111",
+      "Anchor": "section-112",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1048,7 +1070,7 @@
       "Kind": "heading",
       "Text": "Article. VI.",
       "Page": 31,
-      "Anchor": "section-113",
+      "Anchor": "section-114",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1102,7 +1124,7 @@
       "Kind": "heading",
       "Text": "Article. VII.",
       "Page": 32,
-      "Anchor": "section-119",
+      "Anchor": "section-120",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1156,7 +1178,7 @@
       "Kind": "heading",
       "Text": "Signers of the Constitution of the United States of America",
       "Page": 33,
-      "Anchor": "section-125",
+      "Anchor": "section-126",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1165,7 +1187,7 @@
       "Kind": "subheading",
       "Text": "New Hampshire",
       "Page": 33,
-      "Anchor": "section-126",
+      "Anchor": "section-127",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1192,7 +1214,7 @@
       "Kind": "subheading",
       "Text": "Massachusetts",
       "Page": 33,
-      "Anchor": "section-128",
+      "Anchor": "section-129",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1219,7 +1241,7 @@
       "Kind": "subheading",
       "Text": "Connecticut",
       "Page": 33,
-      "Anchor": "section-130",
+      "Anchor": "section-131",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1246,7 +1268,7 @@
       "Kind": "subheading",
       "Text": "New York",
       "Page": 33,
-      "Anchor": "section-132",
+      "Anchor": "section-133",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1269,7 +1291,7 @@
       "Kind": "subheading",
       "Text": "New Jersey",
       "Page": 33,
-      "Anchor": "section-134",
+      "Anchor": "section-135",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1304,7 +1326,7 @@
       "Kind": "subheading",
       "Text": "Pennsylvania",
       "Page": 33,
-      "Anchor": "section-136",
+      "Anchor": "section-137",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1355,7 +1377,7 @@
       "Kind": "subheading",
       "Text": "Delaware",
       "Page": 33,
-      "Anchor": "section-138",
+      "Anchor": "section-139",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1394,7 +1416,7 @@
       "Kind": "subheading",
       "Text": "Maryland",
       "Page": 33,
-      "Anchor": "section-140",
+      "Anchor": "section-141",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1425,7 +1447,7 @@
       "Kind": "subheading",
       "Text": "Virginia",
       "Page": 33,
-      "Anchor": "section-142",
+      "Anchor": "section-143",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1452,7 +1474,7 @@
       "Kind": "subheading",
       "Text": "North Carolina",
       "Page": 33,
-      "Anchor": "section-144",
+      "Anchor": "section-145",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1483,7 +1505,7 @@
       "Kind": "subheading",
       "Text": "South Carolina",
       "Page": 33,
-      "Anchor": "section-146",
+      "Anchor": "section-147",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1518,7 +1540,7 @@
       "Kind": "subheading",
       "Text": "Georgia",
       "Page": 33,
-      "Anchor": "section-148",
+      "Anchor": "section-149",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1563,7 +1585,7 @@
       "Kind": "heading",
       "Text": "In Convention Monday",
       "Page": 35,
-      "Anchor": "section-152",
+      "Anchor": "section-153",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1671,7 +1693,7 @@
       "Kind": "heading",
       "Text": "Congress OF THE United States",
       "Page": 37,
-      "Anchor": "section-164",
+      "Anchor": "section-165",
       "Items": null,
       "ImageID": "",
       "Image": null

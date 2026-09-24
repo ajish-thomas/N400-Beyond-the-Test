@@ -5,6 +5,7 @@
   "kind": "founding-document",
   "source": "declaration-constitution",
   "questions": [4,13,14,24,26,40,59,60,64,65,68,70,99],
+  "images": ["ext-library-amendments"],
   "source_start": 39,
   "source_end": 53,
   "categories": [
@@ -23,6 +24,8 @@
 }
 ---
 <!-- page:39 -->
+![The Bill of Rights.](ext-library-amendments)
+
 ### Amendment I.
 
 Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.

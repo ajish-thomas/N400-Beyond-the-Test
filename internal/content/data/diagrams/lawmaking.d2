@@ -1,0 +1,13 @@
+direction: down
+style: { fill: transparent }
+idea: "A bill starts with an idea that people want to become a law"
+congress: "Congress writes a bill"
+house: "House of Representatives\nA majority of the 435 voting members approve"
+senate: "Senate\nA majority of the 100 voting members approve"
+signs: "The president signs the bill"
+law: "The bill becomes a law"
+vetoes: "The president vetoes the bill"
+idea -> congress -> house -> senate
+senate -> signs: YES
+senate -> vetoes: NO
+signs -> law

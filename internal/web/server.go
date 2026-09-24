@@ -30,6 +30,7 @@ type page struct {
 	Questions       []content.Question
 	Question        *content.Question
 	Home            bool
+	NeedsSetup      bool
 	Starred         bool
 	Previous        int
 	Next            int
@@ -115,6 +116,43 @@ func resolvedValues(active officials.Resolver, questionID int, stateCode string)
 	return values
 }
 
+// diagramAsset maps faithfully transcribed source diagrams to their checked-in
+// D2 renderings. The source transcription remains visible in a disclosure in
+// the reader, so users can compare the rendering with the official labels.
+func diagramAsset(text string) string {
+	if strings.HasPrefix(text, "U.S. Government\n├─ Legislative Branch (Congress)\n├─ Executive Branch (President)") {
+		return "government-branches"
+	}
+	if strings.HasPrefix(text, "Two Parts of Congress\nU.S.Congress") {
+		return "congress-two-parts"
+	}
+	if strings.HasPrefix(text, "3 Branches of Government\nConstitution (provided a separation of powers)") {
+		return "separation-of-powers"
+	}
+	if strings.HasPrefix(text, "Line of Succession\nPresident → Vice President → Speaker of the House") {
+		return "line-of-succession"
+	}
+	if strings.HasPrefix(text, "Federal Court System\n├─ U.S. Supreme Court") {
+		return "federal-court-system"
+	}
+	if strings.HasPrefix(text, "Voting Rights Timeline\nThe following bullets identify the Amendments") {
+		return "voting-rights-timeline"
+	}
+	if strings.HasPrefix(text, "How Congress Makes a Federal Law") {
+		return "lawmaking"
+	}
+	if strings.HasPrefix(text, "U.S. Government\n├─ Legislative Branch (Congress)\n│  └─ U.S. Congress") {
+		return "legislative-branches"
+	}
+	if strings.HasPrefix(text, "House of Representatives\nWyoming\n1 voting member") {
+		return "house-membership"
+	}
+	if strings.HasPrefix(text, "U.S. Congress\nTwo Parts\n├─ U.S. House of Representatives") {
+		return "legislative-comparison"
+	}
+	return ""
+}
+
 func New() (http.Handler, error) {
 	return newServer(nil, flashcard.SystemClock{}, "", true, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
 }
@@ -167,7 +205,10 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 	var practiceMu sync.Mutex
 	practiceSessions := map[string]*practiceState{}
 	nextPracticeID := 0
-	tmpl, err := template.ParseFS(assets, "templates/*.gohtml")
+	tmpl, err := template.New("page").Funcs(template.FuncMap{
+		"diagramAsset": diagramAsset,
+		"libraryYear":  content.LibraryYear,
+	}).ParseFS(assets, "templates/*.gohtml")
 	if err != nil {
 		return nil, fmt.Errorf("loading templates: %w", err)
 	}
@@ -567,7 +608,14 @@ func newServer(progress *store.FileStore, clock flashcard.Clock, sidecarPath str
 		practicePage(w, r.PathValue("id"), state)
 	})
 	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
-		render(w, page{Title: "Your civics study desk", Home: true})
+		p := page{Title: "Your civics study desk", Home: true}
+		if progress != nil {
+			data, err := progress.Load()
+			if err == nil {
+				p.NeedsSetup = data.Profile.State == ""
+			}
+		}
+		render(w, p)
 	})
 	mux.HandleFunc("GET /questions", func(w http.ResponseWriter, r *http.Request) {
 		p := page{Title: "The 128 civics questions", Starred: r.URL.Query().Get("deck") == "6520"}

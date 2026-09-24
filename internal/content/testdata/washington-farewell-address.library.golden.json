@@ -8,6 +8,9 @@
     "questions": [
       86
     ],
+    "images": [
+      "ext-library-washington-farewell"
+    ],
     "source_start": 28,
     "source_end": 29,
     "editorial_notes": [
@@ -28,10 +31,29 @@
       "Image": null
     },
     {
+      "Kind": "image",
+      "Text": "Washington's farewell address.",
+      "Page": 28,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ext-library-washington-farewell",
+      "Image": {
+        "id": "ext-library-washington-farewell",
+        "file": "ext-library-washington-farewell.jpg",
+        "page": 28,
+        "caption": "Washington's farewell address.",
+        "credit": "Courtesy of the Library of Congress.",
+        "chapters": [],
+        "library": [
+          "washington-farewell-address"
+        ]
+      }
+    },
+    {
       "Kind": "heading",
       "Text": "Farewell Address (1796)",
       "Page": 28,
-      "Anchor": "section-1",
+      "Anchor": "section-2",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -112,7 +134,7 @@
       "Kind": "heading",
       "Text": "Excerpts",
       "Page": 29,
-      "Anchor": "section-10",
+      "Anchor": "section-11",
       "Items": null,
       "ImageID": "",
       "Image": null

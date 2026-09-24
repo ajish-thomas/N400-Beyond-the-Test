@@ -5,10 +5,11 @@
   "kind": "founding-document",
   "source": "declaration-constitution",
   "questions": [8,9,10,11,79],
+  "images": ["ext-library-declaration"],
   "source_start": 7,
   "source_end": 13,
   "editorial_notes": [
-    "This is the reference library's first document, and the first to use the library authoring format (data/library/*.md), which shares its Markdown grammar and JSON front matter with the Learn chapters (data/chapters/*.md) via a common parser, but carries library-specific metadata (kind, source, citation) instead of a chapter number, objectives, and images.",
+    "This is the reference library's first document, and the first to use the library authoring format (data/library/*.md), which shares its Markdown grammar and JSON front matter with the Learn chapters (data/chapters/*.md) via a common parser, but carries library-specific metadata (kind, source, citation) instead of a chapter number and objectives.",
     "Text is transcribed from M-654 (rev. 07/25), pages 7-13, exactly as printed: original 1776 spelling and capitalization are retained (e.g. 'shewn', 'compleat', 'harrass', and the capitalization of common nouns like 'Truths' and 'Rights'), not modernized. Unlike the Study Guide, this booklet's Declaration pages are single-column with no two-column reflow needed; paragraph breaks were verified against the rendered PDF pages.",
     "The signature block (page 12) is transcribed as four short lines exactly as printed, rather than run together as continuous prose. The signers list (page 13) preserves the source's own state-by-state grouping and order (Georgia through Connecticut) rather than alphabetizing or renumbering it.",
     "Q78 ('Who wrote the Declaration of Independence?') is deliberately not linked: the document names Thomas Jefferson only as a Virginia signer, and never states that he drafted it. That fact is true and well documented, but it is not stated on these pages, so it is not linked here, consistent with this project's practice of linking only what a document's own text states."
@@ -16,6 +17,8 @@
 }
 ---
 <!-- page:7 -->
+![The Declaration of Independence.](ext-library-declaration)
+
 Action of Second Continental Congress, July 4, 1776
 
 The Unanimous Declaration of the thirteen united States of America

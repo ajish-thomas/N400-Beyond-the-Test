@@ -6,6 +6,7 @@
   "source": "citizens-almanac",
   "citation": "U.S. Department of Homeland Security, U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's Almanac, Washington, DC, 2014.",
   "questions": [123],
+  "images": ["ext-library-star-spangled-banner"],
   "source_start": 9,
   "source_end": 15,
   "editorial_notes": [
@@ -19,6 +20,8 @@
 }
 ---
 <!-- page:9 -->
+![The Star-Spangled Banner.](ext-library-star-spangled-banner)
+
 ## Patriotic Anthems and Symbols of the United States
 
 Beginning early in our Nation's history, citizens have used songs, poems, and symbols to express the ideals and values of the United States. From solemn oaths, such as the Pledge of Allegiance and the Oath of Allegiance, which one must take to become a citizen, to the more informal tradition of singing "The Star-Spangled Banner" before sporting events, spoken expressions have always been an important part of American civic life. As you will learn in this section, these songs and poems often came from a writer's personal interpretation of America's ideals, as with the story of Emma Lazarus and "The New Colossus."

@@ -6,6 +6,7 @@
   "source": "citizens-almanac",
   "citation": "U.S. Department of Homeland Security, U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's Almanac, Washington, DC, 2014.",
   "questions": [86],
+  "images": ["ext-library-washington-farewell"],
   "source_start": 28,
   "source_end": 29,
   "editorial_notes": [
@@ -17,6 +18,8 @@
 }
 ---
 <!-- page:28 -->
+![Washington's farewell address.](ext-library-washington-farewell)
+
 ## Farewell Address (1796)
 
 by George Washington

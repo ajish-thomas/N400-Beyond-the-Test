@@ -1,5 +1,65 @@
 External image sources
 
+ext-library-gettysburg.jpg — Library of Congress item 2012648250:
+https://www.loc.gov/item/2012648250/ ; direct image:
+https://tile.loc.gov/storage-services/service/pnp/ds/03100/03106v.jpg ;
+rights: “No known restrictions on publication.” Verified 2026-09-21.
+
+ext-library-lincoln-inaugural.jpg — Library of Congress item mal0773800:
+https://www.loc.gov/item/mal0773800/ ; direct image:
+https://tile.loc.gov/image-services/iiif/service:mss:mal:077:0773800:001/full/pct:25/0/default.jpg ;
+rights: LoC’s digital scans of the Abraham Lincoln Papers are public domain.
+Verified 2026-09-21.
+
+ext-library-declaration.jpg — National Archives, Declaration of Independence:
+https://www.archives.gov/founding-docs/downloads ; original image:
+https://www.archives.gov/files/founding-docs/downloads/Declaration_Pg1of1_AC.jpg ;
+rights: “These images are in the public domain and no permission is required
+to use them. Please credit the National Archives as the original source.”
+Derivative: resized to a 1600-pixel maximum dimension, stripped of metadata,
+JPEG quality 88. Verified 2026-09-22.
+
+ext-library-constitution.jpg — National Archives, Constitution, page 1:
+https://www.archives.gov/founding-docs/downloads ; original image:
+https://www.archives.gov/files/founding-docs/downloads/Constitution_Pg1of4_AC.jpg ;
+rights: “These images are in the public domain and no permission is required
+to use them. Please credit the National Archives as the original source.”
+Derivative: resized to a 1600-pixel maximum dimension, stripped of metadata,
+JPEG quality 88. Verified 2026-09-22.
+
+ext-library-amendments.jpg — National Archives, Bill of Rights:
+https://www.archives.gov/founding-docs/downloads ; original image:
+https://www.archives.gov/files/founding-docs/downloads/Bill_of_Rights_Pg1of1_AC.jpg ;
+rights: “These images are in the public domain and no permission is required
+to use them. Please credit the National Archives as the original source.”
+Derivative: resized to a 1600-pixel maximum dimension, stripped of metadata,
+JPEG quality 88. Verified 2026-09-22.
+
+ext-library-washington-farewell.jpg — Library of Congress item 2003666401:
+https://www.loc.gov/pictures/item/2003666401/ ; direct image:
+https://tile.loc.gov/storage-services/service/pnp/pga/04500/04583v.jpg ;
+rights: “No known restrictions on publication.” Verified 2026-09-22.
+
+ext-library-star-spangled-banner.jpg — Library of Congress item 2012649666:
+https://www.loc.gov/pictures/item/2012649666/ ; direct image:
+https://tile.loc.gov/storage-services/service/pnp/pga/08800/08894v.jpg ;
+rights: “No known restrictions on publication.” Verified 2026-09-22.
+
+ext-library-four-freedoms.jpg — Library of Congress item 98517353:
+https://www.loc.gov/pictures/item/98517353/ ; direct image:
+https://cdn.loc.gov/service/pnp/cph/3f00000/3f05000/3f05400/3f05436v.jpg ;
+rights: “No known restrictions on publication.” Verified 2026-09-22.
+
+ext-library-kennedy.jpg — Library of Congress item 96523447:
+https://www.loc.gov/pictures/item/96523447/ ; direct image:
+https://cdn.loc.gov/service/pnp/ppmsca/38600/38698v.jpg ;
+rights: “No known restrictions on publication.” Verified 2026-09-22.
+
+ext-library-great-seal.jpg — Library of Congress item 2014648403:
+https://www.loc.gov/pictures/item/2014648403/ ; direct image:
+https://tile.loc.gov/storage-services/service/pnp/pga/01400/01404v.jpg ;
+rights: “No known restrictions on publication.” Verified 2026-09-22.
+
 Every other image in this directory is extracted from the Study Guide PDF
 itself (see cmd/ingest/curated.go). The five files below are the sole
 exception: genuinely public-domain reference maps sourced from outside the

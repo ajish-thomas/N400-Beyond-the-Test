@@ -20,6 +20,7 @@ type Image struct {
 	Caption  string   `json:"caption"`
 	Credit   string   `json:"credit"`
 	Chapters []string `json:"chapters"`
+	Library  []string `json:"library,omitempty"`
 	Width    int      `json:"-"`
 	Height   int      `json:"-"`
 }
@@ -83,8 +84,8 @@ func (c *Catalog) validate(files fs.FS) error {
 		if img.File != path.Base(img.File) || (path.Ext(img.File) != ".jpg" && path.Ext(img.File) != ".png") {
 			return fmt.Errorf("invalid image filename %q", img.File)
 		}
-		if img.Caption == "" || img.Credit == "" || len(img.Chapters) == 0 {
-			return fmt.Errorf("image %s missing caption, credit, or chapter", img.ID)
+		if img.Caption == "" || img.Credit == "" || (len(img.Chapters) == 0 && len(img.Library) == 0) {
+			return fmt.Errorf("image %s missing caption, credit, or owner", img.ID)
 		}
 		credit := strings.ToLower(img.Credit)
 		if strings.Contains(credit, "associated press") || strings.EqualFold(strings.TrimSpace(img.Credit), "AP") {
@@ -132,6 +133,7 @@ func (c *Catalog) validate(files fs.FS) error {
 		c.Questions[i].Library = nil
 	}
 	libraryIDs := map[string]bool{}
+	usedImages := map[string]bool{}
 	for _, doc := range c.Library {
 		if libraryIDs[doc.ID] {
 			return fmt.Errorf("duplicate library document %s", doc.ID)
@@ -148,13 +150,29 @@ func (c *Catalog) validate(files fs.FS) error {
 			seen[id] = true
 			c.Questions[id-1].Library = append(c.Questions[id-1].Library, doc.ID)
 		}
+		seenImages := map[string]bool{}
 		for j := range doc.Blocks {
-			if doc.Blocks[j].Kind == "image" {
-				return fmt.Errorf("library document %s: images are not supported", doc.ID)
+			block := &doc.Blocks[j]
+			if block.Kind != "image" {
+				continue
+			}
+			img := imageIDs[block.ImageID]
+			if img == nil || !slices.Contains(doc.Images, img.ID) || !slices.Contains(img.Library, doc.ID) {
+				return fmt.Errorf("library document %s: unresolved image %s", doc.ID, block.ImageID)
+			}
+			if block.Page != img.Page || block.Text != img.Caption {
+				return fmt.Errorf("image %s: source page/caption mismatch", img.ID)
+			}
+			block.Image = img
+			seenImages[img.ID] = true
+			usedImages[img.ID] = true
+		}
+		for _, id := range doc.Images {
+			if !seenImages[id] {
+				return fmt.Errorf("library document %s: unused image %s", doc.ID, id)
 			}
 		}
 	}
-	usedImages := map[string]bool{}
 	for i := range c.Chapters {
 		ch := &c.Chapters[i]
 		seen := map[int]bool{}

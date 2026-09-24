@@ -1,5 +1,95 @@
 [
   {
+    "id": "ext-library-four-freedoms",
+    "file": "ext-library-four-freedoms.jpg",
+    "page": 35,
+    "caption": "Freedom of expression, of religion, from want, from fear everywhere in the world.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["four-freedoms"]
+  },
+  {
+    "id": "ext-library-kennedy",
+    "file": "ext-library-kennedy.jpg",
+    "page": 38,
+    "caption": "President John F. Kennedy, head-and-shoulders portrait, facing front.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["kennedy-inaugural-address"]
+  },
+  {
+    "id": "ext-library-great-seal",
+    "file": "ext-library-great-seal.jpg",
+    "page": 24,
+    "caption": "E pluribus unum.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["patriotic-symbols"]
+  },
+  {
+    "id": "ext-library-declaration",
+    "file": "ext-library-declaration.jpg",
+    "page": 7,
+    "caption": "The Declaration of Independence.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": [],
+    "library": ["declaration"]
+  },
+  {
+    "id": "ext-library-constitution",
+    "file": "ext-library-constitution.jpg",
+    "page": 15,
+    "caption": "Page 1 of the Constitution of the United States.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": [],
+    "library": ["us-constitution"]
+  },
+  {
+    "id": "ext-library-amendments",
+    "file": "ext-library-amendments.jpg",
+    "page": 39,
+    "caption": "The Bill of Rights.",
+    "credit": "Courtesy of the National Archives.",
+    "chapters": [],
+    "library": ["amendments"]
+  },
+  {
+    "id": "ext-library-washington-farewell",
+    "file": "ext-library-washington-farewell.jpg",
+    "page": 28,
+    "caption": "Washington's farewell address.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["washington-farewell-address"]
+  },
+  {
+    "id": "ext-library-star-spangled-banner",
+    "file": "ext-library-star-spangled-banner.jpg",
+    "page": 9,
+    "caption": "The Star-Spangled Banner.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["patriotic-anthems"]
+  },
+  {
+    "id": "ext-library-gettysburg",
+    "file": "ext-library-gettysburg.jpg",
+    "page": 33,
+    "caption": "Lincoln's address at the dedication of the Gettysburg National Cemetery, November 19, 1863.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["gettysburg-address"]
+  },
+  {
+    "id": "ext-library-lincoln-inaugural",
+    "file": "ext-library-lincoln-inaugural.jpg",
+    "page": 30,
+    "caption": "First page of Abraham Lincoln’s final version of the First Inaugural Address.",
+    "credit": "Courtesy of the Library of Congress.",
+    "chapters": [],
+    "library": ["lincoln-first-inaugural-address"]
+  },
+  {
     "id": "ch01-signing",
     "file": "ch01-signing.jpg",
     "page": 9,

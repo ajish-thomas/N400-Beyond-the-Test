@@ -1,0 +1,25 @@
+direction: down
+style: { fill: transparent }
+constitution: "Constitution (provided a separation of powers)"
+legislative: "Legislative Branch (makes federal laws)"
+congress: "Congress"
+senate: "Senate"
+house: "House of Representatives"
+executive: "Executive Branch (enforces federal laws)"
+president: "President"
+vice-president: "Vice President"
+cabinet: "Cabinet"
+judicial: "Judicial Branch (reviews federal laws)"
+supreme: "Supreme Court"
+other-courts: "Other Federal Courts"
+constitution -> legislative
+constitution -> executive
+constitution -> judicial
+legislative -> congress
+congress -> senate
+congress -> house
+executive -> president
+president -> vice-president
+president -> cabinet
+judicial -> supreme
+judicial -> other-courts

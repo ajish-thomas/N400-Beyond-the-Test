@@ -12,8 +12,7 @@ than monospace, since it is verse, not a diagram), parsed by the same
 `splitDocument`/`parseBlocks` functions in `chapters.go`. `ParseLibraryDoc`
 (`library.go`)
 decodes front matter into `LibraryDoc` instead of `Chapter`; it has no
-chapter number, objectives, or images, and adds three fields chapters don't
-need:
+chapter number or objectives, and adds three fields chapters don't need:
 
 - `kind`: `founding-document`, `speech`, `symbol`, or `case`.
 - `source`: `declaration-constitution` (from `DOI-Constitution-M-654.pdf`) or
@@ -23,12 +22,15 @@ need:
   Almanac text is reusable only with this citation attached; a document that
   gets it wrong or omits it fails to parse rather than publish uncredited.
 
-Images are not supported in library documents (`catalog.go`'s validate()
-rejects any `image` block here): the Declaration/Constitution booklet's two
-images are cover art, not captioned illustrations, and Almanac images are
-never usable at all (its own notice states they are not public domain
-outside that publication) — this project's `--images`/`--curated-images`
-pipeline in `cmd/ingest` never extracts from it.
+Library images are permitted only as independently sourced, explicitly
+rights-cleared supplements. They must be listed in a document's `images`
+front-matter field, resolve through `data/images/manifest.json`, and carry
+their source and rights statement in `data/images/EXTERNAL-SOURCES.txt`.
+They are never extracted from the source booklets: the Declaration/Constitution
+booklet's cover art is not reused, and Citizen's Almanac images are never
+usable because its notice states they are not public domain outside that
+publication. The `--images`/`--curated-images` pipeline in `cmd/ingest` still
+never extracts Almanac images.
 
 Source word coverage is checked per page against checked-in raw text
 (`data/raw/constitution.txt` or `data/raw/almanac.txt`, chosen by `source`),
@@ -215,5 +217,25 @@ accepted answers directly ("Father of Our Country," quoted, and "the first
 president of the United States"), joining the four Learn chapters that
 already link it.
 
-Remaining: six more of the Citizen's Almanac's speeches and its four
+`lincoln-first-inaugural-address.md` (pages 30-32) is the seventh document and
+the second of the Almanac's speeches. It preserves the Almanac's historical
+introduction and two excerpted paragraphs, rather than importing the complete
+1861 address from another source. The first excerpt splits across the page
+31/32 boundary; as with the other documents, the text edition keeps that split
+as two blocks. The introduction does not literally state any accepted answer
+to Q94, so it has no official-question link.
+
+`gettysburg-address.md` (pages 33-34) is the eighth document and the third
+Almanac speech. Its introduction directly identifies the Battle of Gettysburg
+and says Lincoln delivered the Gettysburg Address, so it links Q93 and Q94.
+
+`four-freedoms.md` (pages 35-37) is the ninth document and the fourth Almanac
+speech. It links Q104 because its introduction states that America entered
+World War II; it does not overstate the timing claim required by Q105.
+
+`kennedy-inaugural-address.md` (pages 38-40) is the tenth document and the
+fifth Almanac speech. It links Q108 for the source's explicit identification
+of the Soviet Union as America's Cold War rival.
+
+Remaining: two more of the Citizen's Almanac's speeches and its four
 landmark Supreme Court cases, each carrying the required citation.

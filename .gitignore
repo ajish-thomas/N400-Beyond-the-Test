@@ -1,5 +1,6 @@
 /bin/
 /n400
 /n400.exe
+/PLAN.md
 /internal/content/data/images/_extracted/
 !go.mod

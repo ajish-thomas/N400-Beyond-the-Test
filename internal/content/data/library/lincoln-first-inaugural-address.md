@@ -1,0 +1,43 @@
+---
+{
+  "id": "lincoln-first-inaugural-address",
+  "title": "First Inaugural Address",
+  "kind": "speech",
+  "source": "citizens-almanac",
+  "citation": "U.S. Department of Homeland Security, U.S. Citizenship and Immigration Services, Office of Citizenship, The Citizen's Almanac, Washington, DC, 2014.",
+  "questions": [],
+  "images": ["ext-library-lincoln-inaugural"],
+  "source_start": 30,
+  "source_end": 32,
+  "editorial_notes": [
+    "This is the second of the Almanac's seven presidential and historical speeches (pages 27-44). The Almanac prints a historical introduction followed by two excerpts, rather than the complete March 4, 1861 address; this text edition transcribes precisely that selection and does not add text from another edition of the speech.",
+    "The decorative cursive title ('First Inaugural Address (1861)') and its 'Abraham Lincoln' attribution line are vector art with no extractable PDF text layer. Their transcription is recorded in data/raw/almanac-visual-supplement.json. The ordinary 'Excerpts' heading is extractable body text.",
+    "The first excerpt splits across the page 31/32 boundary in the source itself, and is correspondingly authored as two blocks: '...by any extreme of' / 'wickedness or folly...'.",
+    "No official-question link is authored. Although the introduction identifies Lincoln as the sixteenth president and discusses the secession crisis, it does not literally state any of Q94's accepted answers (leading the United States during the Civil War, freeing the slaves, serving as president during the Civil War, or delivering the Gettysburg Address)."
+  ]
+}
+---
+<!-- page:30 -->
+## First Inaugural Address (1861)
+
+by Abraham Lincoln
+
+Abraham Lincoln was sworn in as the 16th president of the United States on March 4, 1861. This was a difficult time in our Nation’s history. The issues of how much control the federal government should have over the states and whether to permit slavery in the newly acquired western territories divided the Union. In December 1860, shortly after Lincoln’s election was declared final, the state of South Carolina seceded from the Union. By February 1861, six additional states seceded and formed the Confederate States of America under provisional president Jefferson Davis.
+
+In an effort to calm the fears of the Southern states, Lincoln turned to four historic documents when preparing his inaugural remarks. Each of these references were concerned with states’ rights: Daniel Webster’s 1830 reply to Robert Y. Hayne; President Andrew Jackson’s Nullification Proclamation of 1832; Henry Clay’s compromise speech of 1850; and the Constitution of the United States. Lincoln believed that secession was illegal, and as chief executive, it was his responsibility to preserve the Union. The resulting speech was a message of unity to a troubled nation.
+
+![First page of Abraham Lincoln’s final version of the First Inaugural Address.](ext-library-lincoln-inaugural)
+
+> President Abraham Lincoln. Courtesy of the National Archives, NARA File # 111-B-3656
+
+<!-- page:31 -->
+> Inauguration of President Abraham Lincoln on the steps of the U.S. Capitol, March 4, 1861. Courtesy of the Library of Congress, LC-USZ62-48090
+
+## Excerpts
+
+…By the frame of the government under which we live, this same people have wisely given their public servants but little power for mischief; and have, with equal wisdom, provided for the return of that little to their own hands at very short intervals. While the people retain their virtue and vigilance, no administration, by any extreme of
+
+<!-- page:32 -->
+wickedness or folly, can very seriously injure the government in the short space of four years....
+
+I am loath to close. We are not enemies, but friends. We must not be enemies. Though passion may have strained, it must not break our bonds of affection. The mystic chords of memory, stretching from every battle-field, and patriot grave, to every living heart and hearth-stone, all over this broad land, will yet swell the chorus of the Union, when again touched, as surely they will be, by the better angels of our nature.

@@ -19,6 +19,9 @@
       70,
       99
     ],
+    "images": [
+      "ext-library-amendments"
+    ],
     "source_start": 39,
     "source_end": 53,
     "editorial_notes": [
@@ -152,10 +155,29 @@
       "Image": null
     },
     {
+      "Kind": "image",
+      "Text": "The Bill of Rights.",
+      "Page": 39,
+      "Anchor": "",
+      "Items": null,
+      "ImageID": "ext-library-amendments",
+      "Image": {
+        "id": "ext-library-amendments",
+        "file": "ext-library-amendments.jpg",
+        "page": 39,
+        "caption": "The Bill of Rights.",
+        "credit": "Courtesy of the National Archives.",
+        "chapters": [],
+        "library": [
+          "amendments"
+        ]
+      }
+    },
+    {
       "Kind": "subheading",
       "Text": "Amendment I.",
       "Page": 39,
-      "Anchor": "section-1",
+      "Anchor": "section-2",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -173,7 +195,7 @@
       "Kind": "subheading",
       "Text": "Amendment II.",
       "Page": 39,
-      "Anchor": "section-3",
+      "Anchor": "section-4",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -191,7 +213,7 @@
       "Kind": "subheading",
       "Text": "Amendment III.",
       "Page": 39,
-      "Anchor": "section-5",
+      "Anchor": "section-6",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -209,7 +231,7 @@
       "Kind": "subheading",
       "Text": "Amendment IV.",
       "Page": 39,
-      "Anchor": "section-7",
+      "Anchor": "section-8",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -245,7 +267,7 @@
       "Kind": "subheading",
       "Text": "Amendment V.",
       "Page": 40,
-      "Anchor": "section-11",
+      "Anchor": "section-12",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -263,7 +285,7 @@
       "Kind": "subheading",
       "Text": "Amendment VI.",
       "Page": 40,
-      "Anchor": "section-13",
+      "Anchor": "section-14",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -281,7 +303,7 @@
       "Kind": "subheading",
       "Text": "Amendment VII.",
       "Page": 40,
-      "Anchor": "section-15",
+      "Anchor": "section-16",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -308,7 +330,7 @@
       "Kind": "subheading",
       "Text": "Amendment VIII.",
       "Page": 41,
-      "Anchor": "section-18",
+      "Anchor": "section-19",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -326,7 +348,7 @@
       "Kind": "subheading",
       "Text": "Amendment IX.",
       "Page": 41,
-      "Anchor": "section-20",
+      "Anchor": "section-21",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -344,7 +366,7 @@
       "Kind": "subheading",
       "Text": "Amendment X.",
       "Page": 41,
-      "Anchor": "section-22",
+      "Anchor": "section-23",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -362,7 +384,7 @@
       "Kind": "subheading",
       "Text": "Amendment XI.",
       "Page": 41,
-      "Anchor": "section-24",
+      "Anchor": "section-25",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -380,7 +402,7 @@
       "Kind": "subheading",
       "Text": "Amendment XII.",
       "Page": 41,
-      "Anchor": "section-26",
+      "Anchor": "section-27",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -461,7 +483,7 @@
       "Kind": "subheading",
       "Text": "Amendment XIII.",
       "Page": 43,
-      "Anchor": "section-35",
+      "Anchor": "section-36",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -488,7 +510,7 @@
       "Kind": "subheading",
       "Text": "Amendment XIV.",
       "Page": 43,
-      "Anchor": "section-38",
+      "Anchor": "section-39",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -596,7 +618,7 @@
       "Kind": "subheading",
       "Text": "Amendment XV.",
       "Page": 45,
-      "Anchor": "section-50",
+      "Anchor": "section-51",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -623,7 +645,7 @@
       "Kind": "subheading",
       "Text": "Amendment XVI.",
       "Page": 45,
-      "Anchor": "section-53",
+      "Anchor": "section-54",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -641,7 +663,7 @@
       "Kind": "subheading",
       "Text": "Amendment XVII.",
       "Page": 45,
-      "Anchor": "section-55",
+      "Anchor": "section-56",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -722,7 +744,7 @@
       "Kind": "subheading",
       "Text": "Amendment XVIII.",
       "Page": 46,
-      "Anchor": "section-64",
+      "Anchor": "section-65",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -785,7 +807,7 @@
       "Kind": "subheading",
       "Text": "Amendment XIX.",
       "Page": 47,
-      "Anchor": "section-71",
+      "Anchor": "section-72",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -812,7 +834,7 @@
       "Kind": "subheading",
       "Text": "Amendment XX.",
       "Page": 47,
-      "Anchor": "section-74",
+      "Anchor": "section-75",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -911,7 +933,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXI.",
       "Page": 48,
-      "Anchor": "section-85",
+      "Anchor": "section-86",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -965,7 +987,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXII.",
       "Page": 49,
-      "Anchor": "section-91",
+      "Anchor": "section-92",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1010,7 +1032,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXIII.",
       "Page": 50,
-      "Anchor": "section-96",
+      "Anchor": "section-97",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1046,7 +1068,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXIV.",
       "Page": 50,
-      "Anchor": "section-100",
+      "Anchor": "section-101",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1100,7 +1122,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXV.",
       "Page": 51,
-      "Anchor": "section-106",
+      "Anchor": "section-107",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1181,7 +1203,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXVI.",
       "Page": 52,
-      "Anchor": "section-115",
+      "Anchor": "section-116",
       "Items": null,
       "ImageID": "",
       "Image": null
@@ -1226,7 +1248,7 @@
       "Kind": "subheading",
       "Text": "Amendment XXVII.",
       "Page": 53,
-      "Anchor": "section-120",
+      "Anchor": "section-121",
       "Items": null,
       "ImageID": "",
       "Image": null

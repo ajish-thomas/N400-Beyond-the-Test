@@ -30,6 +30,27 @@ See `PLAN.md` for the full implementation specification.
 - **Completeness:** no information lost in translation from PDF to app.
 - If a fact seems wrong in the source, surface it — do not silently correct it.
 
+### Diagrams
+- Use a D2 rendering only for a source diagram whose labels and relationships
+  can be reproduced faithfully. Never add nodes, links, explanations, or
+  inferred relationships; retain the complete source-text transcription in the
+  reader as the accessible fallback and comparison record.
+- Keep the D2 source in `internal/content/data/diagrams/` and check in both
+  generated SVG variants under `internal/web/static/diagrams/`. Render them
+  through the existing light/dark image pairing; do not rely on a single SVG to
+  adapt itself at runtime.
+- The SVG canvas must be transparent. The reader supplies the page background
+  through `.d2-diagram { background: var(--bg) }`, so it exactly follows the
+  selected theme.
+- D2's bundled dark theme is purple and is not part of this product's visual
+  system. Generate with `make diagrams` (using `D2=/path/to/d2` when needed):
+  its required palette mapping produces app-consistent dark assets — charcoal
+  surfaces (`#23231f`/`#2b2c26`), gray borders and labels (`#505147`/`#b4b2a3`),
+  cream text (`#eeeadd`), and coral accents/arrows (`#f19c77`). Do not bypass
+  that generation step or hand-edit a generated SVG.
+- After adding or changing a diagram, update the applicable reader and content
+  goldens, then run `make test`.
+
 ## Rules that must not be broken
 
 These encode real constraints discovered during planning. Violating any of them

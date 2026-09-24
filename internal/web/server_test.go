@@ -58,7 +58,7 @@ func TestRoutes(t *testing.T) {
 		status   int
 		contains string
 	}{
-		{"/", 200, "Your civics"},
+		{"/", 200, "Practice test"},
 		{"/questions", 200, "128 questions."},
 		{"/questions?deck=6520", 200, "20 questions."},
 		{"/questions/1", 200, "Republic"},
@@ -66,7 +66,8 @@ func TestRoutes(t *testing.T) {
 		{"/static/app.css", 200, "prefers-color-scheme"},
 		{"/static/theme.js", 200, "n400-theme"},
 		{"/learn", 200, "12 of 12 chapters"},
-		{"/learn/legislative", 200, "How Congress Makes a Federal Law"},
+		{"/learn/legislative", 200, "/static/diagrams/legislative-branches-light.svg"},
+		{"/static/diagrams/lawmaking-light.svg", 200, "<svg"},
 		{"/learn/executive", 200, "Commander in Chief"},
 		{"/learn/judicial", 200, "Statue of Lady Justice"},
 		{"/learn/rights", 200, "Federalist Papers"},
@@ -79,13 +80,17 @@ func TestRoutes(t *testing.T) {
 		{"/learn/symbols-holidays", 200, "Statue of Liberty"},
 		{"/learn/constitution", 200, "The U.S. Constitution was written in 1787."},
 		{"/learn/missing", 404, "404"},
-		{"/library", 200, "6 documents"},
+		{"/library", 200, "11 documents"},
 		{"/library/amendments", 200, "Amendment XXVII"},
 		{"/library/declaration", 200, "Button Gwinnett"},
 		{"/library/us-constitution", 200, "Alexander Hamilton"},
 		{"/library/patriotic-anthems", 200, "I lift my lamp beside the golden door"},
 		{"/library/patriotic-symbols", 200, "and justice for all."},
 		{"/library/washington-farewell-address", 200, "institutions for the general diffusion"},
+		{"/library/lincoln-first-inaugural-address", 200, "better angels of our nature"},
+		{"/library/gettysburg-address", 200, "government of the people"},
+		{"/library/four-freedoms", 200, "freedom from fear"},
+		{"/library/kennedy-inaugural-address", 200, "what you can do for your country"},
 		{"/library/missing", 404, "404"},
 		{"/images/missing.jpg", 404, "404"},
 		{"/images/manifest.json", 404, "404"},
@@ -201,6 +206,31 @@ func TestStateSettingResolvesCapital(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest("GET", "/questions/29", nil))
 	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Example Representative") {
 		t.Fatalf("representative answer: %d %s", w.Code, w.Body.String())
+	}
+}
+
+func TestWelcomeSetupPromptTracksStateProfile(t *testing.T) {
+	progress := store.NewFile(t.TempDir() + "/progress.json")
+	h, err := NewWithStore(progress, testClock{now: time.Date(2026, time.September, 22, 9, 0, 0, 0, time.UTC)}, "", false, officials.FederalClient{}, officials.GovernorClient{}, officials.GeocoderClient{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/", nil))
+	if w.Code != http.StatusOK || !strings.Contains(w.Body.String(), "Set your state for personalized answers.") {
+		t.Fatalf("first-run welcome: %d %s", w.Code, w.Body.String())
+	}
+	req := httptest.NewRequest("POST", "/settings/state", strings.NewReader("state=CA"))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, req)
+	if w.Code != http.StatusSeeOther {
+		t.Fatalf("save state: %d", w.Code)
+	}
+	w = httptest.NewRecorder()
+	h.ServeHTTP(w, httptest.NewRequest("GET", "/", nil))
+	if strings.Contains(w.Body.String(), "Set your state for personalized answers.") {
+		t.Fatal("welcome prompt remained after saving a state")
 	}
 }
 
@@ -457,7 +487,10 @@ func TestPracticeSavesAnswerHistory(t *testing.T) {
 }
 
 func TestPracticeFeedbackShowsAnswersAfterTerminalMiss(t *testing.T) {
-	templates, err := template.ParseFS(assets, "templates/*.gohtml")
+	templates, err := template.New("page").Funcs(template.FuncMap{
+		"diagramAsset": diagramAsset,
+		"libraryYear":  content.LibraryYear,
+	}).ParseFS(assets, "templates/*.gohtml")
 	if err != nil {
 		t.Fatal(err)
 	}
