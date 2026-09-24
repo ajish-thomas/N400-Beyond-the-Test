@@ -76,6 +76,20 @@ Study text, PDFs, images, and other source-derived assets are **not** covered
 by that code license. See [CONTENT-NOTICE.md](CONTENT-NOTICE.md) for the
 important boundaries, including the exclusion of Citizen’s Almanac images.
 
+### Source documents
+
+N400 is built from checked-in, source-reviewed text derived from these USCIS
+publications:
+
+- *2025 Civics Test: 128 Questions and Answers*
+- *One Nation, One People: The USCIS Civics Test Textbook* (2025 Civics Test
+  Study Guide)
+- *The Declaration of Independence and the Constitution of the United States*
+- *The Citizen’s Almanac*
+
+The PDFs are development-only reference materials. They are intentionally
+ignored by Git and are not included in this repository or its release archives.
+
 Every embedded image has a manifest entry, printed caption, credit, and
 provenance record. The library identifies its source editions and provides the
 required USCIS citation where applicable. Do not assume an image can be reused
