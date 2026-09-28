@@ -38,7 +38,10 @@ func (c FederalClient) Fetch(ctx context.Context) (map[string]string, error) {
 	if c.Endpoint == "" || c.HTTP == nil {
 		return nil, fmt.Errorf("federal refresh client is not configured")
 	}
-	query := `SELECT ?office ?personLabel WHERE { VALUES ?office { wd:Q11696 wd:Q11699 wd:Q912994 wd:Q11147 } ?office wdt:P1308 ?person . SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } }`
+	// Do not use Wikidata's label service here. Its fallback may return an
+	// entity identifier (for example, "Q22686") in personLabel, which is not
+	// an answer a learner can use. An explicit English label is required.
+	query := `SELECT ?office ?personLabel WHERE { VALUES ?office { wd:Q11696 wd:Q11699 wd:Q912994 wd:Q11147 } ?office wdt:P1308 ?person . ?person <http://www.w3.org/2000/01/rdf-schema#label> ?personLabel . FILTER(LANG(?personLabel) = "en") }`
 	u, err := url.Parse(c.Endpoint)
 	if err != nil {
 		return nil, fmt.Errorf("parsing refresh endpoint: %w", err)
@@ -87,9 +90,14 @@ func (c FederalClient) Fetch(ctx context.Context) (map[string]string, error) {
 	for _, binding := range payload.Results.Bindings {
 		parts := strings.Split(strings.TrimSuffix(binding.Office.Value, "/"), "/")
 		key := federalOfficeKeys[parts[len(parts)-1]]
-		if key != "" && strings.TrimSpace(binding.PersonLabel.Value) != "" {
-			answers[key] = strings.TrimSpace(binding.PersonLabel.Value)
+		if key == "" {
+			continue
 		}
+		name, err := officialName(binding.PersonLabel.Value)
+		if err != nil {
+			return nil, fmt.Errorf("validating %s refresh value: %w", key, err)
+		}
+		answers[key] = name
 	}
 	if len(answers) != len(federalOfficeKeys) {
 		return nil, fmt.Errorf("federal refresh returned %d of %d offices", len(answers), len(federalOfficeKeys))

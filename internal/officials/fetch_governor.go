@@ -13,6 +13,20 @@ import (
 
 var wikidataQID = regexp.MustCompile(`^Q[0-9]+$`)
 
+// officialName accepts a displayed human name, but never a raw Wikidata
+// entity ID. A raw ID means the remote response did not resolve its label and
+// must not replace a previously usable answer.
+func officialName(value string) (string, error) {
+	name := strings.TrimSpace(value)
+	if name == "" {
+		return "", fmt.Errorf("empty name")
+	}
+	if wikidataQID.MatchString(name) {
+		return "", fmt.Errorf("received Wikidata entity ID %q instead of a name", name)
+	}
+	return name, nil
+}
+
 // GovernorClient fetches the current governor of one state, identified by its
 // Wikidata QID (P6, head of government, on the state's own entity). Callers
 // invoke it only from an explicit refresh action, for whichever single state
@@ -29,7 +43,7 @@ func (c GovernorClient) Fetch(ctx context.Context, stateQID string) (string, err
 	if !wikidataQID.MatchString(stateQID) {
 		return "", fmt.Errorf("invalid state identifier %q", stateQID)
 	}
-	query := fmt.Sprintf(`SELECT ?personLabel WHERE { wd:%s wdt:P6 ?person . SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } }`, stateQID)
+	query := fmt.Sprintf(`SELECT ?personLabel WHERE { wd:%s wdt:P6 ?person . ?person <http://www.w3.org/2000/01/rdf-schema#label> ?personLabel . FILTER(LANG(?personLabel) = "en") }`, stateQID)
 	u, err := url.Parse(c.Endpoint)
 	if err != nil {
 		return "", fmt.Errorf("parsing refresh endpoint: %w", err)
@@ -72,9 +86,9 @@ func (c GovernorClient) Fetch(ctx context.Context, stateQID string) (string, err
 	if len(payload.Results.Bindings) == 0 {
 		return "", fmt.Errorf("governor refresh returned no result for %s", stateQID)
 	}
-	name := strings.TrimSpace(payload.Results.Bindings[0].PersonLabel.Value)
-	if name == "" {
-		return "", fmt.Errorf("governor refresh returned an empty name for %s", stateQID)
+	name, err := officialName(payload.Results.Bindings[0].PersonLabel.Value)
+	if err != nil {
+		return "", fmt.Errorf("validating governor refresh value for %s: %w", stateQID, err)
 	}
 	return name, nil
 }

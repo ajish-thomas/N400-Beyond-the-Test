@@ -46,6 +46,17 @@ func TestGovernorClientRejectsEmptyResult(t *testing.T) {
 	}
 }
 
+func TestGovernorClientRejectsEntityIDInsteadOfName(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"results":{"bindings":[{"personLabel":{"value":"Q12345"}}]}}`))
+	}))
+	defer server.Close()
+	if _, err := (GovernorClient{Endpoint: server.URL, HTTP: server.Client()}).Fetch(context.Background(), "Q99"); err == nil || !strings.Contains(err.Error(), "entity ID") {
+		t.Fatalf("expected entity-ID rejection, got %v", err)
+	}
+}
+
 func TestGovernorClientRejectsInvalidQID(t *testing.T) {
 	if _, err := (GovernorClient{Endpoint: "http://example.invalid", HTTP: http.DefaultClient}).Fetch(context.Background(), "'; DROP"); err == nil {
 		t.Fatal("expected rejection of a non-QID state identifier")

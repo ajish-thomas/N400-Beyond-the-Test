@@ -43,6 +43,16 @@ func TestSidecarRejectsCorruptFile(t *testing.T) {
 	}
 }
 
+func TestSidecarRejectsEntityIDInsteadOfName(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "officials-live.json")
+	if err := os.WriteFile(path, []byte(`{"as_of":"2026-09-22","federal":{"president":"Q22686"}}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := LoadSidecar(path); err == nil {
+		t.Fatal("expected entity-ID sidecar rejection")
+	}
+}
+
 func TestSidecarOverridesMapsOfficeKeysToQuestionIDs(t *testing.T) {
 	sidecar := Sidecar{Federal: map[string]string{"president": "Live President", "vice_president": "Live VP"}}
 	overrides := sidecar.Overrides("")

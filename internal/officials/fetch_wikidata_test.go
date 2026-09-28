@@ -37,3 +37,14 @@ func TestFederalClientRejectsFailure(t *testing.T) {
 		t.Fatal("expected failure")
 	}
 }
+
+func TestFederalClientRejectsEntityIDInsteadOfName(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"results":{"bindings":[{"office":{"value":"http://www.wikidata.org/entity/Q11696"},"personLabel":{"value":"Q22686"}},{"office":{"value":"http://www.wikidata.org/entity/Q11699"},"personLabel":{"value":"Vice President"}},{"office":{"value":"http://www.wikidata.org/entity/Q912994"},"personLabel":{"value":"Speaker"}},{"office":{"value":"http://www.wikidata.org/entity/Q11147"},"personLabel":{"value":"Chief Justice"}}]}}`))
+	}))
+	defer server.Close()
+	if _, err := (FederalClient{Endpoint: server.URL, HTTP: server.Client()}).Fetch(context.Background()); err == nil || !strings.Contains(err.Error(), "entity ID") {
+		t.Fatalf("expected entity-ID rejection, got %v", err)
+	}
+}

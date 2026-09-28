@@ -45,11 +45,17 @@ func LoadSidecar(path string) (Sidecar, error) {
 	if err := decoder.Decode(&sidecar); err != nil {
 		return Sidecar{}, fmt.Errorf("decoding local refreshed officials: %w", err)
 	}
+	if err := validateSidecar(sidecar); err != nil {
+		return Sidecar{}, fmt.Errorf("validating local refreshed officials: %w", err)
+	}
 	return sidecar, nil
 }
 
 // SaveSidecar atomically writes a freshly fetched overlay.
 func SaveSidecar(path string, sidecar Sidecar) error {
+	if err := validateSidecar(sidecar); err != nil {
+		return fmt.Errorf("validating local refreshed officials: %w", err)
+	}
 	dir := filepath.Dir(path)
 	if err := os.MkdirAll(dir, 0o700); err != nil {
 		return fmt.Errorf("creating local settings directory: %w", err)
@@ -76,6 +82,35 @@ func SaveSidecar(path string, sidecar Sidecar) error {
 		return fmt.Errorf("replacing local refreshed officials atomically: %w", err)
 	}
 	return nil
+}
+
+func validateSidecar(sidecar Sidecar) error {
+	for key, value := range sidecar.Federal {
+		if !knownFederalOfficeKey(key) {
+			return fmt.Errorf("unknown federal office %q", key)
+		}
+		if _, err := officialName(value); err != nil {
+			return fmt.Errorf("invalid %s value: %w", key, err)
+		}
+	}
+	for state, value := range sidecar.Governors {
+		if len(state) != 2 || strings.ToUpper(state) != state {
+			return fmt.Errorf("invalid governor state code %q", state)
+		}
+		if _, err := officialName(value); err != nil {
+			return fmt.Errorf("invalid governor value for %s: %w", state, err)
+		}
+	}
+	return nil
+}
+
+func knownFederalOfficeKey(key string) bool {
+	for _, known := range federalOfficeKeys {
+		if key == known {
+			return true
+		}
+	}
+	return false
 }
 
 // ResetSidecar removes the local overlay, so resolution falls back to the
